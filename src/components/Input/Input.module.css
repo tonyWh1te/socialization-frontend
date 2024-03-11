@@ -1,0 +1,11 @@
+.wrapper {
+  @apply h-20;
+}
+
+.input {
+  @apply w-full rounded-[10px] border border-[#E8E8E8] bg-[#9CA5FA] px-4 py-2 text-2xl outline-none transition-all duration-300 ease-out placeholder:text-[#717171] focus:border-[#505cc9] invalid:data-[focused=true]:border-[#ff0000];
+}
+
+.error {
+  @apply invisible inline-block w-full pt-1 text-end font-medium text-[#ff0000];
+}
