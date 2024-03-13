@@ -34,5 +34,6 @@ module.exports = {
         ExportDeclaration: { multiline: true, minProperties: 3 },
       },
     ],
+    'jsx-a11y/no-static-element-interactions': ['error', { allowExpressionValues: true }],
   },
 };
