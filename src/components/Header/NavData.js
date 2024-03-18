@@ -20,7 +20,7 @@ export const links = [
 export const mobileLinks = [
   {
     title: 'Личный кабинет',
-    path: '/account',
+    path: '/profile',
   },
   {
     title: 'Выход',

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 import { UserCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { mobileLinks, links } from './NavData';
 import styles from './Header.module.css';
@@ -57,12 +58,12 @@ const Header = () => {
                     key={link.title}
                     className={styles.item}
                   >
-                    <a
+                    <Link
+                      to={link.path}
                       className={styles.link}
-                      href={link.path}
                     >
                       {link.title}
-                    </a>
+                    </Link>
                   </li>
                 ))}
                 <li className={styles.mobile}>
@@ -72,12 +73,12 @@ const Header = () => {
                         key={link.title}
                         className={styles.mobileItem}
                       >
-                        <a
+                        <Link
+                          to={link.path}
                           className={styles.mobileLink}
-                          href={link.path}
                         >
                           {link.title}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -85,12 +86,12 @@ const Header = () => {
               </ul>
             </nav>
             <div className={styles.user}>
-              <a
-                href={accountLink.path}
+              <Link
+                to={accountLink.path}
                 aria-label={accountLink.title}
               >
                 <UserCircleIcon className={`${styles.icon} ${styles.userIcon}`} />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
