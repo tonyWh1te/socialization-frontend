@@ -5,10 +5,12 @@ import styles from './Input.module.css';
 const Input = (props) => {
   const {
     name,
+    placeholder,
     onChange,
     value,
     errorMessage,
     required,
+    className,
     wrapperClassNames = '',
     type = 'text',
     ...inputProps
@@ -23,7 +25,7 @@ const Input = (props) => {
   const wrapperClasses = clsx(styles.wrapper, {
     [wrapperClassNames]: !!wrapperClassNames,
   });
-  const inputClasses = clsx('peer', styles.input);
+  const inputClasses = clsx('peer', styles.input, className);
   const errorClasses = clsx('peer-invalid:peer-data-[focused=true]:visible', styles.error);
 
   return (
@@ -43,6 +45,7 @@ const Input = (props) => {
         data-focused={focused}
         value={value}
         required={required}
+        placeholder={placeholder}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...inputProps}
       />

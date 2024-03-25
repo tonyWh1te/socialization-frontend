@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         main: ['Playfair Display', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
+        neucha: ['Neucha', 'sans-serif'],
       },
       colors: {
         'main-gray': '#545454',
