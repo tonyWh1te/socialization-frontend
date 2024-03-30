@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { Home, Users, Components, Organizations, Profile, Auth } from '../pages';
+import { Home, Users, Components, Organizations, Profile, AuthPage } from '../pages';
 import { Layout } from '../components';
 import ROUTES from './RouterConfig';
 
@@ -7,7 +7,7 @@ const Router = () => (
   <Routes>
     <Route
       path={ROUTES.Auth}
-      element={<Auth />}
+      element={<AuthPage />}
     />
     <Route element={<Layout />}>
       <Route

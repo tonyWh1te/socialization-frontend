@@ -1,16 +1,16 @@
-import React from 'react';
 import { useMediaQuery } from 'react-responsive';
-import styles from './Auth.module.css';
-import Input from '../components/UI/Input/Input';
-import Button from '../components/UI/Button/Button';
-import bg1Mobile from '../images/background/bg1Mobile.svg';
-import bg2Mobile from '../images/background/bg2Mobile.svg';
-import bg3Mobile from '../images/background/bg3Mobile.svg';
-import bg1Desktop from '../images/background/bg1Desktop.svg';
-import bg2Desktop from '../images/background/bg2Desktop.svg';
-import bg3Desktop from '../images/background/bg3Desktop.svg';
+import { Button, Input } from '../../../../UI';
+import {
+  bg1Desktop,
+  bg1Mobile,
+  bg2Desktop,
+  bg2Mobile,
+  bg3Desktop,
+  bg3Mobile,
+} from '../../../../assets';
+import styles from './AuthForm.module.css';
 
-const Auth = () => {
+const AuthForm = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
 
   const bg1 = isMobile ? bg1Mobile : bg1Desktop;
@@ -25,13 +25,20 @@ const Auth = () => {
           wrapperClassNames={styles.loginInput}
           name="login"
           placeholder="Логин"
+          required
         />
         <Input
           wrapperClassNames={styles.loginInput}
           name="password"
           placeholder="Пароль"
+          required
         />
-        <Button className={styles.loginButton}>Войти</Button>
+        <Button
+          className={styles.loginButton}
+          type="submit"
+        >
+          Войти
+        </Button>
       </form>
       <div className={styles.background}>
         <img
@@ -54,4 +61,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default AuthForm;

@@ -27,5 +27,6 @@ module.exports = {
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'object-curly-newline': 'off',
     'jsx-a11y/no-static-element-interactions': ['error', { allowExpressionValues: true }],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
 };

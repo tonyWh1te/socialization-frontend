@@ -8,7 +8,7 @@
 }
 
 span {
-  @apply font-neucha mb-10 mt-20 text-[28px];
+  @apply mb-10 mt-20 font-neucha text-[28px];
 }
 
 .loginButton {
