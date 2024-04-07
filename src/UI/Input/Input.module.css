@@ -3,7 +3,7 @@
 }
 
 .input {
-  @apply h-[62px] w-[100%] rounded-[17px] border border-[#231C1C] bg-[#fff] px-4 py-2 text-2xl font-[24px] outline-none transition-all duration-300 ease-out placeholder:text-[24px] placeholder:text-[#5c5c5c] focus:border-[#505cc9] invalid:data-[focused=true]:border-[#ff0000];
+  @apply h-[62px] w-[100%] rounded-[17px] border border-[#231C1C] bg-[#fff] px-4 py-2 text-2xl outline-none transition-all duration-300 ease-out placeholder:text-[24px] placeholder:text-[#5c5c5c] focus:border-[#505cc9] invalid:data-[focused=true]:border-[#ff0000] invalid:data-[focused=true]:bg-[#ff0000]/15;
 }
 
 .error {

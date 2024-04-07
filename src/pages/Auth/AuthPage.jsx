@@ -1,4 +1,4 @@
-import { AuthForm } from '../../modules/AuthForm/index';
+import { AuthForm } from '../../modules/AuthForm';
 
 const AuthPage = () => <AuthForm />;
 

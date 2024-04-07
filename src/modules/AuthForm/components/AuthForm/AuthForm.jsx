@@ -1,63 +1,64 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import { Button, Input } from '../../../../UI';
-import {
-  bg1Desktop,
-  bg1Mobile,
-  bg2Desktop,
-  bg2Mobile,
-  bg3Desktop,
-  bg3Mobile,
-} from '../../../../assets';
-import styles from './AuthForm.module.css';
+import { useLoginMutation } from '../../api/authApiSlice';
+import { setCredentials } from '../../slice/authSlice';
+import AuthFormLayout from '../AuthFormLayout/AuthFormLayout';
+
+const DEFAULT_PATH = '/';
 
 const AuthForm = () => {
-  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
+  const initialState = {
+    login: '',
+    password: '',
+  };
 
-  const bg1 = isMobile ? bg1Mobile : bg1Desktop;
-  const bg2 = isMobile ? bg2Mobile : bg2Desktop;
-  const bg3 = isMobile ? bg3Mobile : bg3Desktop;
+  const [formData, setFormData] = useState(initialState);
+
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const from = location.state?.from?.pathname || DEFAULT_PATH;
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const onChangeFormData = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const resetForm = () => {
+    setFormData(initialState);
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const userData = await login(formData).unwrap();
+
+      dispatch(setCredentials({ ...userData }));
+      resetForm();
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <div className={styles.wrapper}>
-      <form className={styles.form}>
-        <span>Авторизация</span>
-        <Input
-          wrapperClassNames={styles.loginInput}
-          name="login"
-          placeholder="Логин"
-          required
-        />
-        <Input
-          wrapperClassNames={styles.loginInput}
-          name="password"
-          placeholder="Пароль"
-          required
-        />
-        <Button
-          className={styles.loginButton}
-          type="submit"
-        >
-          Войти
-        </Button>
-      </form>
-      <div className={styles.background}>
-        <img
-          className={styles.backgroundImage1}
-          src={bg1}
-          alt="bg1"
-        />
-        <img
-          className={styles.backgroundImage2}
-          src={bg2}
-          alt="bg2"
-        />
-        <img
-          className={styles.backgroundImage3}
-          src={bg3}
-          alt="bg3"
-        />
-      </div>
-    </div>
+    <AuthFormLayout
+      isMobile={isMobile}
+      isLoading={isLoading}
+      formData={formData}
+      onChangeFormData={onChangeFormData}
+      onSubmit={onSubmit}
+    />
   );
 };
 

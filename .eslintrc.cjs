@@ -28,5 +28,7 @@ module.exports = {
     'object-curly-newline': 'off',
     'jsx-a11y/no-static-element-interactions': ['error', { allowExpressionValues: true }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
+    'import/no-cycle': [2, { maxDepth: 1 }],
   },
 };
