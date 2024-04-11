@@ -11,6 +11,7 @@ const Input = (props) => {
     errorMessage,
     required,
     className,
+    rightIcon,
     wrapperClassNames = '',
     type = 'text',
     ...inputProps
@@ -25,7 +26,7 @@ const Input = (props) => {
   const wrapperClasses = clsx(styles.wrapper, {
     [wrapperClassNames]: !!wrapperClassNames,
   });
-  const inputClasses = clsx('peer', styles.input, className);
+  const inputClasses = clsx('peer', styles.input, className, { 'pr-10': rightIcon });
   const errorClasses = clsx('peer-invalid:peer-data-[focused=true]:visible', styles.error);
 
   return (
@@ -49,7 +50,7 @@ const Input = (props) => {
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...inputProps}
       />
-
+      {rightIcon && <div className={styles.rightIcon}>{rightIcon}</div>}
       <span className={errorClasses}>{errorMessage}</span>
     </div>
   );

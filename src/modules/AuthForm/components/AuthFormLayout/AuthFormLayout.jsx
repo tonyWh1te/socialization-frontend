@@ -1,3 +1,4 @@
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 import { Button, Input } from '../../../../UI';
 import {
   bg1Desktop,
@@ -10,13 +11,35 @@ import {
 import styles from './AuthFormLayout.module.css';
 
 const AuthFormLayout = (props) => {
-  const { isLoading, isMobile, formData, onChangeFormData, onSubmit } = props;
+  const {
+    isLoading,
+    isMobile,
+    formData,
+    onChangeFormData,
+    onSubmit,
+    onShowPassword,
+    showPassword,
+  } = props;
 
   const submitBtnContent = isLoading ? 'Загрузка...' : 'Войти';
 
   const bg1 = isMobile ? bg1Mobile : bg1Desktop;
   const bg2 = isMobile ? bg2Mobile : bg2Desktop;
   const bg3 = isMobile ? bg3Mobile : bg3Desktop;
+
+  const rightIconPassword = showPassword ? (
+    <EyeSlashIcon
+      className={styles.icon}
+      onClick={onShowPassword}
+    />
+  ) : (
+    <EyeIcon
+      className={styles.icon}
+      onClick={onShowPassword}
+    />
+  );
+
+  const typePasswordInput = showPassword ? 'text' : 'password';
 
   return (
     <div className={styles.wrapper}>
@@ -31,6 +54,7 @@ const AuthFormLayout = (props) => {
           wrapperClassNames={styles.loginInput}
           name="login"
           placeholder="Логин"
+          errorMessage="Поле Логин обязательно для заполнения"
           required
         />
         <Input
@@ -38,8 +62,10 @@ const AuthFormLayout = (props) => {
           onChange={onChangeFormData}
           wrapperClassNames={styles.loginInput}
           name="password"
-          type="password"
+          type={typePasswordInput}
           placeholder="Пароль"
+          rightIcon={rightIconPassword}
+          errorMessage="Поле Пароль обязательно для заполнения"
           required
         />
         <Button

@@ -38,3 +38,7 @@ span {
   @apply absolute bottom-0;
   z-index: 4;
 }
+
+.icon {
+  @apply h-6 w-6;
+}

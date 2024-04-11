@@ -6,6 +6,14 @@
   @apply h-[62px] w-[100%] rounded-[17px] border border-[#231C1C] bg-[#fff] px-4 py-2 text-2xl outline-none transition-all duration-300 ease-out placeholder:text-[24px] placeholder:text-[#5c5c5c] focus:border-[#505cc9] invalid:data-[focused=true]:border-[#ff0000] invalid:data-[focused=true]:bg-[#ff0000]/15;
 }
 
+.rightIcon {
+  @apply absolute bottom-[18px] right-0 top-0 flex cursor-pointer items-center pr-3;
+}
+
 .error {
-  @apply invisible inline-block w-full pt-1 text-end font-medium text-[#ff0000];
+  @apply invisible inline-block w-full pt-1 text-end text-base font-medium text-[#ff0000];
+}
+
+span.error {
+  @apply m-0;
 }

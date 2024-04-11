@@ -15,6 +15,7 @@ const AuthForm = () => {
   };
 
   const [formData, setFormData] = useState(initialState);
+  const [showPassword, setShowPassword] = useState(false);
 
   const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
   const dispatch = useDispatch();
@@ -24,6 +25,10 @@ const AuthForm = () => {
   const from = location.state?.from?.pathname || DEFAULT_PATH;
 
   const [login, { isLoading }] = useLoginMutation();
+
+  const onShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const onChangeFormData = (e) => {
     const { name, value } = e.target;
@@ -58,6 +63,8 @@ const AuthForm = () => {
       formData={formData}
       onChangeFormData={onChangeFormData}
       onSubmit={onSubmit}
+      onShowPassword={onShowPassword}
+      showPassword={showPassword}
     />
   );
 };
