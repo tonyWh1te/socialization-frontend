@@ -1,5 +1,5 @@
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
-import { Button, Input } from '../../../../UI';
+import { Button, Input, SpinnerMini } from '../../../../UI';
 import {
   bg1Desktop,
   bg1Mobile,
@@ -21,7 +21,7 @@ const AuthFormLayout = (props) => {
     showPassword,
   } = props;
 
-  const submitBtnContent = isLoading ? 'Загрузка...' : 'Войти';
+  const submitBtnContent = isLoading ? <SpinnerMini /> : 'Войти';
 
   const bg1 = isMobile ? bg1Mobile : bg1Desktop;
   const bg2 = isMobile ? bg2Mobile : bg2Desktop;
@@ -70,6 +70,7 @@ const AuthFormLayout = (props) => {
         />
         <Button
           className={styles.loginButton}
+          disabled={isLoading}
           type="submit"
         >
           {submitBtnContent}

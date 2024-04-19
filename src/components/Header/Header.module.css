@@ -31,7 +31,7 @@
 }
 
 .icon {
-  @apply h-10 w-10 fill-main-gray;
+  @apply fill-dark-gray h-10 w-10;
 }
 
 .userIcon {
@@ -43,7 +43,7 @@
 }
 
 .menuButton span {
-  @apply block h-1 w-full rounded-full bg-main-gray;
+  @apply bg-dark-gray block h-1 w-full rounded-full;
 }
 
 .menuClose {

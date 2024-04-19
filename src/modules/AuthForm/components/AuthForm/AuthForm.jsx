@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import { useLoginMutation } from '../../api/authApiSlice';
-import { setCredentials } from '../../slice/authSlice';
+import { useLoginMutation, useLazyGetUserInfoQuery } from '../../api/authApiSlice';
+import { setToken, setUserCredentials } from '../../slice/authSlice';
 import AuthFormLayout from '../AuthFormLayout/AuthFormLayout';
 
 const DEFAULT_PATH = '/';
@@ -24,7 +24,8 @@ const AuthForm = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || DEFAULT_PATH;
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading: isLoadingTokens }] = useLoginMutation();
+  const [getUserInfo, { isLoading: isLoadingUserInfo }] = useLazyGetUserInfoQuery();
 
   const onShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -46,9 +47,12 @@ const AuthForm = () => {
     e.preventDefault();
 
     try {
-      const userData = await login(formData).unwrap();
+      const tokenData = await login(formData).unwrap();
+      dispatch(setToken({ ...tokenData }));
 
-      dispatch(setCredentials({ ...userData }));
+      const user = await getUserInfo().unwrap();
+      dispatch(setUserCredentials(user));
+
       resetForm();
       navigate(from, { replace: true });
     } catch (error) {
@@ -59,7 +63,7 @@ const AuthForm = () => {
   return (
     <AuthFormLayout
       isMobile={isMobile}
-      isLoading={isLoading}
+      isLoading={isLoadingTokens || isLoadingUserInfo}
       formData={formData}
       onChangeFormData={onChangeFormData}
       onSubmit={onSubmit}

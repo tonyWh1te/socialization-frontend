@@ -40,5 +40,5 @@ span {
 }
 
 .icon {
-  @apply h-6 w-6;
+  @apply fill-dark-gray h-6 w-6;
 }

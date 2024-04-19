@@ -1,12 +1,16 @@
+import { useState } from 'react';
 import { useLocation, Outlet, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser } from '../../modules/AuthForm';
 
-const RequireAuth = () => {
+/**
+ * Маршрутизаиця пользователя в зависимости от роли и авторизации
+ */
+const RequireAuth = ({ allowedRoles }) => {
   const location = useLocation();
   const user = useSelector(selectCurrentUser);
 
-  return user?.token ? (
+  return user ? (
     <Outlet />
   ) : (
     <Navigate

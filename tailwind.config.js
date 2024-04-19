@@ -9,7 +9,7 @@ export default {
         neucha: ['Neucha', 'sans-serif'],
       },
       colors: {
-        'main-gray': '#545454',
+        'dark-gray': '#5c5c5c',
       },
       keyframes: {
         wiggle: {

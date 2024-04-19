@@ -30,5 +30,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
     'import/no-cycle': [2, { maxDepth: 1 }],
+    'operator-linebreak': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 };
