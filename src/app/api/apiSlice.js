@@ -1,16 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { updateToken, logout } from '../../modules/AuthForm';
+import { updateToken, logout } from '../../modules/Auth';
+import { getLocalStorageItem } from '../../utils/helpers';
 
-const API_URL = 'https://abb84c0f7ff172d6.mokky.dev';
-// const API_URL =
-//   process.env.NODE_ENV === 'development' ? 'api-sozialization' : 'http://5.35.89.117:8084';
+const API_URL =
+  process.env.NODE_ENV === 'development' ? 'api-sozialization' : 'http://5.35.89.117:8084';
 
 // при каждом запросе передаем токен
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   credentials: 'include',
   prepareHeaders: (headers, { getState, endpoint }) => {
-    const { access } = getState().auth;
+    const access = getState().auth.access || JSON.parse(getLocalStorageItem('auth'))?.access || '';
 
     console.log('endpoint', endpoint);
     console.log('prepareHeaders', access);
@@ -27,10 +27,14 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.originalStatus === 401) {
+  if (result?.error?.status === 401) {
     console.log('sending refresh token');
 
-    const refreshResult = await baseQuery('/refresh_token/', api, extraOptions);
+    const refreshResult = await baseQuery(
+      { url: '/refresh_token/', method: 'POST' },
+      api,
+      extraOptions,
+    );
 
     console.log('refreshResult', refreshResult);
 

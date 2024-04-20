@@ -1,6 +1,10 @@
 import Router from '../routes/Router';
-import { AuthInit } from '../modules/AuthForm';
+import { AuthInit } from '../modules/Auth';
 
-const App = () => <Router />;
+const App = () => (
+  <AuthInit>
+    <Router />
+  </AuthInit>
+);
 
 export default App;

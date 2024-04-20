@@ -31,6 +31,7 @@ module.exports = {
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
     'import/no-cycle': [2, { maxDepth: 1 }],
     'operator-linebreak': 'off',
+    'implicit-arrow-linebreak': 'off',
     'react-hooks/exhaustive-deps': 'warn',
   },
 };
