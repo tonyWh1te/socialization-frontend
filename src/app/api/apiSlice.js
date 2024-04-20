@@ -10,13 +10,17 @@ const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   credentials: 'include',
   prepareHeaders: (headers, { getState, endpoint }) => {
-    const access = getState().auth.access || JSON.parse(getLocalStorageItem('auth'))?.access || '';
-
     console.log('endpoint', endpoint);
-    console.log('prepareHeaders', access);
 
-    if (access) {
-      headers.set('Authorization', `JWT ${access}`);
+    if (endpoint !== 'refresh') {
+      const access =
+        getState().auth.access || JSON.parse(getLocalStorageItem('auth'))?.access || '';
+
+      console.log('prepareHeaders', access);
+
+      if (access) {
+        headers.set('Authorization', `JWT ${access}`);
+      }
     }
 
     return headers;
@@ -30,9 +34,11 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   if (result?.error?.status === 401) {
     console.log('sending refresh token');
 
+    const refresh = JSON.parse(getLocalStorageItem('auth'))?.refresh;
+
     const refreshResult = await baseQuery(
-      { url: '/refresh_token/', method: 'POST' },
-      api,
+      { url: '/refresh_token/', method: 'POST', body: { refresh } },
+      { ...api, endpoint: 'refresh' },
       extraOptions,
     );
 
@@ -40,7 +46,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     // если запрос прошел успешно, обновляем токен
     if (refreshResult?.data) {
-      api.dispatch(updateToken({ token: refreshResult.data.token }));
+      api.dispatch(updateToken({ access: refreshResult.data.access }));
 
       // повторяем запрос с обновленным токеном
       result = await baseQuery(args, api, extraOptions);
