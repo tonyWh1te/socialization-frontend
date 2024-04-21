@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { useLocation, Outlet, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocalStorage } from '@rehooks/local-storage';
 import { selectCurrentUser } from '../../modules/Auth';
 
@@ -12,8 +11,18 @@ const RequireAuth = ({ allowedRoles }) => {
   const [auth] = useLocalStorage('auth', null);
   const user = useSelector(selectCurrentUser) || auth?.user || null;
 
-  return user ? (
+  const allowedRoutes = allowedRoles.includes(user?.role) ? (
     <Outlet />
+  ) : (
+    <Navigate
+      to="/unauthorized"
+      state={{ from: location }}
+      replace
+    />
+  );
+
+  return user ? (
+    allowedRoutes
   ) : (
     <Navigate
       to="/auth"
