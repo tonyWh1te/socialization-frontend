@@ -1,6 +1,6 @@
 import React from 'react';
-import './Homes.scss';
-import Header from '../../components/Header/Header.js';
+import './Home.scss';
+import Header from '../../components/Header/Header';
 
 function Home() {
   return (
