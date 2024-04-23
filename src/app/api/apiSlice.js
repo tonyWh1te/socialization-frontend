@@ -2,8 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { updateToken, logout } from '../../modules/Auth';
 import { getLocalStorageItem } from '../../utils/helpers';
 
-const API_URL =
-  process.env.NODE_ENV === 'development' ? 'api-sozialization' : 'http://5.35.89.117:8084';
+const API_URL = import.meta.env.VITE_SERVER_URL;
 
 // при каждом запросе передаем токен
 const baseQuery = fetchBaseQuery({
