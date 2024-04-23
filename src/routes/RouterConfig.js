@@ -1,8 +1,8 @@
 const ROUTES = {
   Home: '/',
   Users: '/users',
-  Components: '/components',
-  Organizations: '/organizations',
+  Games: '/games',
+  Tests: '/tests',
   Profile: '/profile',
   Auth: '/auth',
 };

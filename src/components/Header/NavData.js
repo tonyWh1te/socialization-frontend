@@ -8,12 +8,12 @@ export const links = [
     path: '/users',
   },
   {
-    title: 'Компоненты',
-    path: '/components',
+    title: 'Игры',
+    path: '/games',
   },
   {
-    title: 'Организации',
-    path: '/organizations',
+    title: 'Тесты',
+    path: '/tests',
   },
 ];
 

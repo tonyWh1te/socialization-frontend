@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { Home, Users, Components, Organizations, Profile, AuthPage } from '../pages';
+import { Home, Users, Games, Tests, Profile, AuthPage } from '../pages';
 import { Layout, RequireAuth } from '../components';
 import ROUTES from './RouterConfig';
 
@@ -24,12 +24,12 @@ const Router = () => (
           element={<Users />}
         />
         <Route
-          path={ROUTES.Components}
-          element={<Components />}
+          path={ROUTES.Games}
+          element={<Games />}
         />
         <Route
-          path={ROUTES.Organizations}
-          element={<Organizations />}
+          path={ROUTES.Tests}
+          element={<Tests />}
         />
         <Route
           path={ROUTES.Profile}

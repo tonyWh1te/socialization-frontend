@@ -21,7 +21,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'no-unused-vars': 'warn',
-    'func-names': 'off',
+    'func-names': 'on',
     'object-shorthand': 'off',
     'no-console': 'warn',
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],

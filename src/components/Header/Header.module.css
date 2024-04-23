@@ -1,5 +1,5 @@
 .header {
-  @apply bg-[#a2a9e1] font-inter;
+  @apply bg-[#fff] font-neucha text-[24px];
 }
 
 .containerFluid {
@@ -11,7 +11,7 @@
 }
 
 .list {
-  @apply absolute left-0 top-0  z-20 flex h-screen w-56 -translate-x-full flex-col gap-y-7 bg-[#7981BD] pl-7 pt-11 transition-transform duration-300 ease-in-out;
+  @apply absolute left-0 top-0 z-20 flex h-screen w-56 -translate-x-full flex-col gap-y-7 bg-[#7981BD] pl-7 pt-11 transition-transform duration-300 ease-in-out;
 }
 
 .list.listOpen {
@@ -23,7 +23,7 @@
 }
 
 .item {
-  @apply rounded-full px-2 py-1 transition-colors duration-200 ease-in-out hover:text-white;
+  @apply rounded-full bg-[pink] px-2 py-1 transition-colors duration-200 ease-in-out hover:text-white;
 }
 
 .active {
@@ -31,7 +31,7 @@
 }
 
 .icon {
-  @apply fill-dark-gray h-10 w-10;
+  @apply h-10 w-10 fill-dark-gray;
 }
 
 .userIcon {
@@ -43,7 +43,7 @@
 }
 
 .menuButton span {
-  @apply bg-dark-gray block h-1 w-full rounded-full;
+  @apply block h-1 w-full rounded-full bg-dark-gray;
 }
 
 .menuClose {
