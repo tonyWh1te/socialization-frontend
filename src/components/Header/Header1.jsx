@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { UserCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { mobileLinks, links } from './NavData';
-import styles from './Header.module.css';
+import styles from './Header1.module.css';
 
 const Header = () => {
   const [active, setActive] = useState(false);
