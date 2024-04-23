@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-width: 100%;
+  min-width: 844px;
   min-height: 106px;
   max-height: 106px;
   padding-left: 40px;
@@ -44,8 +44,10 @@
   }
 
   .userProfile {
-    width: 65px;
-    height: 60px;
+    min-width: 65px;
+    max-width: 65px;
+    min-height: 60px;
+    max-height: 60px;
     cursor: pointer;
   }
 }
