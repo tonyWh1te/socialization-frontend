@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --toastify-font-family: Neucha, sans-serif;
+  }
+
   html,
   body {
     -webkit-font-smoothing: antialiased;

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { toast } from 'react-toastify';
 import { updateToken, logout } from '../../modules/Auth';
 import { getLocalStorageItem } from '../../utils/helpers';
 
@@ -50,6 +51,10 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       // повторяем запрос с обновленным токеном
       result = await baseQuery(args, api, extraOptions);
     } else {
+      if (refreshResult?.error?.status === 401) {
+        toast.warning('Срок действия токена истек. Пожалуйста, войдите в систему еще раз');
+      }
+
       api.dispatch(logout());
     }
   }

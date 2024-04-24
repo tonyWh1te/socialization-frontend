@@ -7,7 +7,7 @@ const store = configureStore({
     auth: authFormReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: !import.meta.env.PROD,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(loginListener.middleware).concat(apiSlice.middleware),
 });
