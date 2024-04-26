@@ -21,10 +21,13 @@ module.exports = {
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'no-unused-vars': 'warn',
-    'func-names': 'on',
+    'func-names': 'off',
     'object-shorthand': 'off',
     'no-console': 'warn',
-    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
+    'react/function-component-definition': [
+      2,
+      { namedComponents: ['arrow-function', 'function-declaration'] },
+    ],
     'object-curly-newline': 'off',
     'jsx-a11y/no-static-element-interactions': ['error', { allowExpressionValues: true }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
@@ -33,5 +36,6 @@ module.exports = {
     'operator-linebreak': 'off',
     'implicit-arrow-linebreak': 'off',
     'react-hooks/exhaustive-deps': 'warn',
+    indent: 'off',
   },
 };

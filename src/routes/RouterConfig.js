@@ -9,7 +9,7 @@ export const ROUTES = {
 };
 
 export const ROLES = {
-  Observed: 'observed ',
+  Observed: 'observed',
   Tutor: 'tutor',
   Admin: 'admin',
 };

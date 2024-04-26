@@ -1,53 +1,35 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
-import React from 'react';
-import styles from './Header.module.scss';
+import { links } from './NavData';
 import UserIcon from '../../assets/icons/user-icon.svg';
+import styles from './Header.module.scss';
 
 function Header() {
-  const [currentActive, setCurrentActive] = useState('/');
-
-  const navigate = useNavigate();
-
-  const navigateHandler = (index) => {
-    setCurrentActive(index);
-    navigate(index);
-  };
+  const menuItemClasses =
+    () =>
+    ({ isActive }) =>
+      clsx(styles.navItem, { [styles.navItemCurrent]: isActive });
 
   return (
     <div className={styles.header}>
       <div className={styles.navContainer}>
-        <div
-          className={`${styles.navItem} ${currentActive === '/' ? styles.navItemCurrent : ''}`}
-          onClick={() => navigateHandler('/')}
-        >
-          Главная
-        </div>
-        <div
-          className={`${styles.navItem} ${currentActive === '/users' ? styles.navItemCurrent : ''}`}
-          onClick={() => navigateHandler('/users')}
-        >
-          Пользователи
-        </div>
-        <div
-          className={`${styles.navItem} ${currentActive === '/games' ? styles.navItemCurrent : ''}`}
-          onClick={() => navigateHandler('/games')}
-        >
-          Игры
-        </div>
-        <div
-          className={`${styles.navItem} ${currentActive === '/tests' ? styles.navItemCurrent : ''}`}
-          onClick={() => navigateHandler('/tests')}
-        >
-          Тесты
-        </div>
+        {links.map((link) => (
+          <NavLink
+            key={link.title}
+            to={link.path}
+            className={menuItemClasses()}
+          >
+            {link.title}
+          </NavLink>
+        ))}
       </div>
       <div className={styles.userProfile}>
-        <img
-          src={UserIcon}
-          onClick={() => navigateHandler('/profile')}
-        ></img>
+        <NavLink to="/profile">
+          <img
+            src={UserIcon}
+            alt="user"
+          />
+        </NavLink>
       </div>
     </div>
   );
