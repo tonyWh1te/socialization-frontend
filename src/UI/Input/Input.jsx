@@ -12,6 +12,7 @@ const Input = (props) => {
     required,
     className,
     rightIcon,
+    label,
     wrapperClassNames = '',
     type = 'text',
     ...inputProps
@@ -34,6 +35,15 @@ const Input = (props) => {
       className={wrapperClasses}
       role="presentation"
     >
+      {label && (
+        <label
+          htmlFor={name}
+          className={styles.label}
+        >
+          {label}
+        </label>
+      )}
+
       <input
         className={inputClasses}
         type={type}

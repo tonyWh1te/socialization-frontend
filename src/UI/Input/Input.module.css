@@ -1,13 +1,17 @@
 .wrapper {
-  @apply relative h-[82px];
+  @apply relative;
 }
 
 .input {
-  @apply placeholder:text-dark-gray h-[62px] w-[100%] rounded-[17px] border border-[#231C1C] bg-[#fff] px-4 py-2 text-2xl outline-none transition-all duration-300 ease-out placeholder:text-[24px] focus:border-[#505cc9] invalid:data-[focused=true]:border-[#ff0000] invalid:data-[focused=true]:bg-[#ff0000]/15;
+  @apply h-[62px] w-[100%] rounded-[17px] border border-[#231C1C] bg-[#fff] px-4 py-2 text-2xl outline-none transition-all duration-300 ease-out placeholder:text-[24px] placeholder:text-dark-gray focus:border-[#505cc9] invalid:data-[focused=true]:border-[#ff0000] invalid:data-[focused=true]:bg-[#ff0000]/15;
 }
 
 .rightIcon {
   @apply absolute bottom-[18px] right-0 top-0 flex cursor-pointer items-center pr-3;
+}
+
+.label {
+  @apply mb-2 block font-medium text-gray-800;
 }
 
 .error {
