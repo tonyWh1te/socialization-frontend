@@ -1,3 +1,4 @@
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import styles from './Modal.module.css';
 
@@ -25,6 +26,10 @@ const Modal = ({ children, active, setActive }) => {
         className={styles.content}
         onClick={onClickContent}
       >
+        <XMarkIcon
+          className={styles.closeIcon}
+          onClick={onClose}
+        />
         {children}
       </div>
       {/* eslint-enable */}

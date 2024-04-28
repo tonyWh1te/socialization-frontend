@@ -13,3 +13,7 @@
 .modalActive .content {
   @apply scale-100;
 }
+
+.closeIcon {
+  @apply absolute right-1 top-1 w-6 stroke-2;
+}
