@@ -1,0 +1,3 @@
+.list {
+  @apply m-auto max-w-[800px];
+}
