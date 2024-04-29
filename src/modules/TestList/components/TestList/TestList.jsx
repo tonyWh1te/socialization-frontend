@@ -11,8 +11,8 @@ const TestList = () => {
   const [showModal, setShowModal] = useState(false);
   const { data: tests, isLoading, isError } = useGetTestsQuery();
 
-  const onAddTest = () => {
-    setShowModal(true);
+  const toggleModal = () => {
+    setShowModal((prev) => !prev);
   };
 
   if (isLoading) {
@@ -26,7 +26,7 @@ const TestList = () => {
   return (
     <>
       <div className={styles.list}>
-        <ButtonAddTest onClick={onAddTest} />
+        <ButtonAddTest onClick={toggleModal} />
         {tests.map((test) => (
           <TestListItem
             key={test.id}
@@ -39,7 +39,7 @@ const TestList = () => {
           active={showModal}
           setActive={setShowModal}
         >
-          <CreateTestForm />
+          <CreateTestForm toggleModal={toggleModal} />
         </Modal>
       </Portal>
     </>

@@ -26,10 +26,12 @@ const Modal = ({ children, active, setActive }) => {
         className={styles.content}
         onClick={onClickContent}
       >
-        <XMarkIcon
-          className={styles.closeIcon}
+        <button
+          type="button"
           onClick={onClose}
-        />
+        >
+          <XMarkIcon className={styles.closeIcon} />
+        </button>
         {children}
       </div>
       {/* eslint-enable */}
