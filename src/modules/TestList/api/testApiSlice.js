@@ -15,7 +15,16 @@ const testApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Tests'],
     }),
+    addTest: builder.mutation({
+      query: (test) => ({
+        url: `${QUERY_URL}/tests`,
+        method: 'POST',
+        body: test,
+      }),
+      transformResponse: (response) => response.id,
+      invalidatesTags: ['Tests'],
+    }),
   }),
 });
 
-export const { useGetTestsQuery, useDeleteTestMutation } = testApiSlice;
+export const { useGetTestsQuery, useDeleteTestMutation, useAddTestMutation } = testApiSlice;
