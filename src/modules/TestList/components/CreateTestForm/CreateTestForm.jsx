@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { useAddTestMutation } from '../../api/testApiSlice';
 import { Input } from '../../../../UI';
 import styles from './CreateTestForm.module.css';
@@ -12,6 +13,8 @@ const CreateTestForm = ({ toggleModal }) => {
 
   const [testData, setTestData] = useState(initialState);
   const [addTest, { isLoading: isCreating }] = useAddTestMutation();
+
+  const navigate = useNavigate();
 
   const onReset = () => {
     setTestData(initialState);
@@ -36,6 +39,7 @@ const CreateTestForm = ({ toggleModal }) => {
 
       onReset();
       toggleModal();
+      navigate(`/tests/${testId}/edit`);
     } catch (error) {
       toast.error(error?.data?.detail || 'Что-то пошло не так');
     }
@@ -51,7 +55,6 @@ const CreateTestForm = ({ toggleModal }) => {
           name="title"
           type="text"
           label="Название"
-          errorMessage="Поле Название не может быть пустым"
           onChange={onChange}
           value={testData.title}
           required
