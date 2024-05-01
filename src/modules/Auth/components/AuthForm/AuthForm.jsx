@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useMediaQuery } from 'react-responsive';
 import { useLoginMutation, useLazyGetUserInfoQuery } from '../../api/authApiSlice';
 import { setToken, setUserCredentials } from '../../slice/authSlice';
+import { overallValidator } from '../../../../utils/helpers';
 import AuthFormLayout from '../AuthFormLayout/AuthFormLayout';
 
 const DEFAULT_PATH = '/';
@@ -16,6 +17,7 @@ const AuthForm = () => {
   };
 
   const [formData, setFormData] = useState(initialState);
+  const [formErrors, setformErrors] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false);
 
   const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
@@ -32,6 +34,13 @@ const AuthForm = () => {
     setShowPassword((prev) => !prev);
   };
 
+  const handleError = (field, error) => {
+    setformErrors((prev) => ({
+      ...prev,
+      [field]: error,
+    }));
+  };
+
   const onChangeFormData = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -46,6 +55,29 @@ const AuthForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    const { login: loginValue, password } = formData;
+
+    const { isValid: loginValid, message: loginErrorMessage } = overallValidator(
+      loginValue.trim(),
+      {
+        isRequired: true,
+      },
+    );
+
+    const { isValid: passwordValid, message: passwordErrorMessage } = overallValidator(
+      password.trim(),
+      {
+        isRequired: true,
+      },
+    );
+
+    if (!loginValid || !passwordValid) {
+      handleError('login', loginErrorMessage);
+      handleError('password', passwordErrorMessage);
+
+      return;
+    }
 
     try {
       const tokenData = await login(formData).unwrap();
@@ -70,6 +102,8 @@ const AuthForm = () => {
       onSubmit={onSubmit}
       onShowPassword={onShowPassword}
       showPassword={showPassword}
+      formErrors={formErrors}
+      handleError={handleError}
     />
   );
 };

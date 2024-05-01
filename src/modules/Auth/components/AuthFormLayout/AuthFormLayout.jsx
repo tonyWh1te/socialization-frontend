@@ -19,6 +19,8 @@ const AuthFormLayout = (props) => {
     onSubmit,
     onShowPassword,
     showPassword,
+    formErrors,
+    handleError,
   } = props;
 
   const submitBtnContent = isLoading ? <SpinnerMini /> : 'Войти';
@@ -54,7 +56,8 @@ const AuthFormLayout = (props) => {
           wrapperClassNames={styles.loginInput}
           name="login"
           placeholder="Логин"
-          errorMessage="Поле Логин обязательно для заполнения"
+          submissionError={formErrors.login}
+          resetSubmissionError={() => handleError('login', '')}
           required
         />
         <Input
@@ -65,7 +68,8 @@ const AuthFormLayout = (props) => {
           type={typePasswordInput}
           placeholder="Пароль"
           rightIcon={rightIconPassword}
-          errorMessage="Поле Пароль обязательно для заполнения"
+          submissionError={formErrors.password}
+          resetSubmissionError={() => handleError('password', '')}
           required
         />
         <Button

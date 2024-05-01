@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import clsx from 'clsx';
+import { overallValidator } from '../../utils/helpers';
 import styles from './Input.module.css';
 
 const Input = (props) => {
@@ -8,27 +9,52 @@ const Input = (props) => {
     placeholder,
     onChange,
     value,
-    errorMessage,
-    required,
     className,
     rightIcon,
     label,
+    validator = null,
+    submissionError = '', // свойство нужно на случай, когда нужно показать ошибку при подтверждении формы
+    resetSubmissionError = null,
+    required = false,
     wrapperClassNames = '',
     type = 'text',
     ...inputProps
   } = props;
+  const [touched, setTouched] = useState(false);
+  const [isValid, setIsValid] = useState({ isValid: true });
 
-  const [focused, setFocused] = useState(false);
+  const validationHandler = (inputValue, validatorCallback) => {
+    const validatorResponse = overallValidator(inputValue, {
+      isRequired: required,
+      individualValidator: validatorCallback,
+    });
 
-  const onFocus = () => {
-    setFocused(true);
+    setIsValid(validatorResponse);
   };
+
+  const onChangeHandler = (onChangeCallback, validatorCallback) => (e) => {
+    const inputValue = e.target.value;
+
+    onChangeCallback(e);
+    validationHandler(inputValue, validatorCallback);
+  };
+
+  const onTouch = () => {
+    validationHandler(value, validator);
+    setTouched(true);
+  };
+
+  const hasValidationErrors = !isValid?.isValid && touched;
 
   const wrapperClasses = clsx(styles.wrapper, {
     [wrapperClassNames]: !!wrapperClassNames,
   });
-  const inputClasses = clsx('peer', styles.input, className, { 'pr-10': rightIcon });
-  const errorClasses = clsx('peer-invalid:peer-data-[focused=true]:visible', styles.error);
+  const inputClasses = clsx(
+    styles.input,
+    { 'pr-10': rightIcon },
+    { 'border-[#ff0000] bg-[#ff0000]/15': hasValidationErrors || submissionError },
+    className,
+  );
 
   return (
     <div
@@ -48,12 +74,11 @@ const Input = (props) => {
         className={inputClasses}
         type={type}
         aria-label={name}
-        data-testid={name}
         tabIndex={0}
         name={name}
-        onChange={onChange}
-        onBlur={onFocus}
-        data-focused={focused}
+        onChange={onChangeHandler(onChange, validator)}
+        onBlur={onTouch}
+        onFocus={resetSubmissionError}
         value={value}
         required={required}
         placeholder={placeholder}
@@ -61,7 +86,12 @@ const Input = (props) => {
         {...inputProps}
       />
       {rightIcon && <div className={styles.rightIcon}>{rightIcon}</div>}
-      <span className={errorClasses}>{errorMessage}</span>
+
+      {hasValidationErrors && !submissionError && (
+        <span className={styles.error}>{isValid?.message}</span>
+      )}
+
+      {submissionError && <span className={styles.error}>{submissionError}</span>}
     </div>
   );
 };
