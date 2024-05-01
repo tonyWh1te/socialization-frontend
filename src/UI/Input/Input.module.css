@@ -1,5 +1,5 @@
 .wrapper {
-  @apply relative h-[82px];
+  @apply h-[115px];
 }
 
 .input {
@@ -7,7 +7,7 @@
 }
 
 .rightIcon {
-  @apply absolute bottom-[18px] right-0 top-0 flex cursor-pointer items-center pr-3;
+  @apply absolute bottom-0 right-0 top-0 flex cursor-pointer items-center pr-3;
 }
 
 .label {

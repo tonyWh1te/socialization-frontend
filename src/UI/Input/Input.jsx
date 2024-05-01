@@ -70,22 +70,24 @@ const Input = (props) => {
         </label>
       )}
 
-      <input
-        className={inputClasses}
-        type={type}
-        aria-label={name}
-        tabIndex={0}
-        name={name}
-        onChange={onChangeHandler(onChange, validator)}
-        onBlur={onTouch}
-        onFocus={resetSubmissionError}
-        value={value}
-        required={required}
-        placeholder={placeholder}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...inputProps}
-      />
-      {rightIcon && <div className={styles.rightIcon}>{rightIcon}</div>}
+      <div className="relative">
+        <input
+          className={inputClasses}
+          type={type}
+          aria-label={name}
+          tabIndex={0}
+          name={name}
+          onChange={onChangeHandler(onChange, validator)}
+          onBlur={onTouch}
+          onFocus={resetSubmissionError}
+          value={value}
+          required={required}
+          placeholder={placeholder}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...inputProps}
+        />
+        {rightIcon && <div className={styles.rightIcon}>{rightIcon}</div>}
+      </div>
 
       {hasValidationErrors && !submissionError && (
         <span className={styles.error}>{isValid?.message}</span>

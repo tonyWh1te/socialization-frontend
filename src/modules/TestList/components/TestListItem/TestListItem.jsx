@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useDeleteTestMutation } from '../../api/testApiSlice';
 import styles from './TestListItem.module.css';
 
@@ -18,12 +19,12 @@ const TestListItem = ({ test }) => {
           <p className={styles.description}>{test.description}</p>
         </div>
         <div className={styles.buttons}>
-          <button
+          <Link
             className={styles.button}
-            type="button"
+            to={`/tests/${test.id}/edit`}
           >
             Редактировать
-          </button>
+          </Link>
           <button
             className={styles.button}
             type="button"

@@ -16,7 +16,7 @@ span {
 }
 
 .loginInput {
-  @apply mb-[5px] mt-[25px] w-[288px];
+  @apply w-[288px];
 }
 
 .background {
@@ -40,5 +40,5 @@ span {
 }
 
 .icon {
-  @apply fill-dark-gray h-6 w-6;
+  @apply h-6 w-6 fill-dark-gray;
 }

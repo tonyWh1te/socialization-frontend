@@ -1,23 +1,22 @@
 import { apiSlice } from '../../../app/api/apiSlice';
 
-const QUERY_URL = 'https://abb84c0f7ff172d6.mokky.dev';
-
 const testApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTests: builder.query({
-      query: () => `${QUERY_URL}/tests`,
+      query: () => '/tests/',
       providesTags: ['Tests'],
+      transformResponse: (response) => response.results,
     }),
     deleteTest: builder.mutation({
       query: (id) => ({
-        url: `${QUERY_URL}/tests/${id}`,
+        url: `/tests/${id}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Tests'],
     }),
     addTest: builder.mutation({
       query: (test) => ({
-        url: `${QUERY_URL}/tests`,
+        url: '/tests/',
         method: 'POST',
         body: test,
       }),
