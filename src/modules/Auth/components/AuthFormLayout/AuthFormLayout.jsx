@@ -1,5 +1,6 @@
+import { Form } from 'formik';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
-import { Button, Input, SpinnerMini } from '../../../../UI';
+import { Button, InputText, SpinnerMini } from '../../../../UI';
 import {
   bg1Desktop,
   bg1Mobile,
@@ -12,18 +13,13 @@ import styles from './AuthFormLayout.module.css';
 
 const AuthFormLayout = (props) => {
   const {
-    isLoading,
     isMobile,
-    formData,
-    onChangeFormData,
-    onSubmit,
     onShowPassword,
     showPassword,
-    formErrors,
-    handleError,
+    formikProps: { isSubmitting, handleSubmit },
   } = props;
 
-  const submitBtnContent = isLoading ? <SpinnerMini /> : 'Войти';
+  const submitBtnContent = isSubmitting ? <SpinnerMini /> : 'Войти';
 
   const bg1 = isMobile ? bg1Mobile : bg1Desktop;
   const bg2 = isMobile ? bg2Mobile : bg2Desktop;
@@ -45,41 +41,32 @@ const AuthFormLayout = (props) => {
 
   return (
     <div className={styles.wrapper}>
-      <form
+      <Form
+        method="post"
         className={styles.form}
-        onSubmit={onSubmit}
       >
         <span>Авторизация</span>
-        <Input
-          value={formData.login}
-          onChange={onChangeFormData}
-          wrapperClassNames={styles.loginInput}
+        <InputText
           name="login"
           placeholder="Логин"
-          submissionError={formErrors.login}
-          resetSubmissionError={() => handleError('login', '')}
-          required
-        />
-        <Input
-          value={formData.password}
-          onChange={onChangeFormData}
           wrapperClassNames={styles.loginInput}
+        />
+        <InputText
           name="password"
-          type={typePasswordInput}
           placeholder="Пароль"
+          wrapperClassNames={styles.loginInput}
           rightIcon={rightIconPassword}
-          submissionError={formErrors.password}
-          resetSubmissionError={() => handleError('password', '')}
-          required
+          type={typePasswordInput}
         />
         <Button
           className={styles.loginButton}
-          disabled={isLoading}
+          disabled={isSubmitting}
+          onClick={handleSubmit}
           type="submit"
         >
           {submitBtnContent}
         </Button>
-      </form>
+      </Form>
       <div className={styles.background}>
         <img
           className={styles.backgroundImage1}
