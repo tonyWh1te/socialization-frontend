@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { Formik, Form } from 'formik';
 import { useAddTestMutation } from '../../api/testApiSlice';
-import { Input } from '../../../../UI';
-import styles from './CreateTestForm.module.css';
+import { InputText } from '../../../../UI';
+import { newTestSchema } from '../../utils/validation.helper';
 
 const CreateTestForm = ({ toggleModal }) => {
   const initialState = {
@@ -11,33 +11,15 @@ const CreateTestForm = ({ toggleModal }) => {
     description: '',
   };
 
-  const [testData, setTestData] = useState(initialState);
-  const [addTest, { isLoading: isCreating }] = useAddTestMutation();
+  const [addTest] = useAddTestMutation();
 
   const navigate = useNavigate();
 
-  const onReset = () => {
-    setTestData(initialState);
-  };
-
-  const onChange = (event) => {
-    setTestData((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
-    if (testData.title === '') {
-      return;
-    }
-
+  const onSubmit = async (values, { resetForm }) => {
     try {
-      const testId = await addTest(testData).unwrap();
+      const testId = await addTest(values).unwrap();
 
-      onReset();
+      resetForm({ values: initialState });
       toggleModal();
       navigate(`/tests/${testId}/edit`);
     } catch (error) {
@@ -45,30 +27,33 @@ const CreateTestForm = ({ toggleModal }) => {
     }
   };
 
-  const btnCreateText = isCreating ? 'Добавление...' : 'Добавить';
-
   return (
-    <div>
-      <h3 className={styles.title}>Создание теста</h3>
-      <form onSubmit={onSubmit}>
-        <Input
-          name="title"
-          type="text"
-          label="Название"
-          onChange={onChange}
-          value={testData.title}
-          required
-        />
-        <Input
-          name="description"
-          type="text"
-          label="Описание"
-          onChange={onChange}
-          value={testData.description}
-        />
-        <button type="submit">{btnCreateText}</button>
-      </form>
-    </div>
+    <Formik
+      initialValues={initialState}
+      onSubmit={onSubmit}
+      validationSchema={newTestSchema}
+    >
+      {({ isSubmitting, handleSubmit }) => (
+        <Form method="post">
+          <InputText
+            name="title"
+            type="text"
+            label="Название"
+          />
+          <InputText
+            name="description"
+            type="text"
+            label="Описание"
+          />
+          <button
+            onClick={handleSubmit}
+            type="submit"
+          >
+            {isSubmitting ? 'Добавление...' : 'Добавить'}
+          </button>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

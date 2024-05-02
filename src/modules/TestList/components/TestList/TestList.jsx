@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useGetTestsQuery } from '../../api/testApiSlice';
 import { Portal } from '../../../../components';
-import { Modal } from '../../../../UI';
+import { Modal, FormModalLayout } from '../../../../UI';
 import TestListItem from '../TestListItem/TestListItem';
 import ButtonAddTest from '../ButtonAddTest/ButtonAddTest';
 import CreateTestForm from '../CreateTestForm/CreateTestForm';
@@ -39,7 +39,10 @@ const TestList = () => {
           active={showModal}
           setActive={setShowModal}
         >
-          <CreateTestForm toggleModal={toggleModal} />
+          <FormModalLayout
+            title="Создание теста"
+            form={<CreateTestForm toggleModal={toggleModal} />}
+          />
         </Modal>
       </Portal>
     </>
