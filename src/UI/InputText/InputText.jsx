@@ -3,19 +3,26 @@ import clsx from 'clsx';
 import styles from './InputText.module.css';
 
 const InputText = ({ name, ...props }) => {
-  const { rightIcon, wrapperClassNames, className, label, ...inputProps } = props;
+  const { rightIcon, wrapperClassNames, className, label, as = 'input', ...inputProps } = props;
 
   const [field, meta] = useField(name);
 
   const hasErrors = meta.touched && meta.error;
 
-  const wrapperClasses = clsx(styles.wrapper, wrapperClassNames);
+  const wrapperClasses = clsx(
+    styles.wrapper,
+    wrapperClassNames,
+    { 'h-auto': as === 'textarea' },
+    { 'h-[82px]': !label && as !== 'textarea' },
+  );
   const inputClasses = clsx(
     styles.input,
     { 'pr-10': rightIcon },
     { 'border-[#ff0000] bg-[#ff0000]/15': hasErrors },
     className,
   );
+
+  const Component = as;
 
   return (
     <div
@@ -32,7 +39,7 @@ const InputText = ({ name, ...props }) => {
       )}
 
       <div className="relative">
-        <input
+        <Component
           className={inputClasses}
           aria-label={name}
           tabIndex={0}

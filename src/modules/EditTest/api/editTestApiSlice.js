@@ -10,7 +10,16 @@ const editTestApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getTest: builder.query({
-      query: (id) => `/tests/${id}/`,
+      query: (id) => `/tests/${id}/get_single_test/`,
+      transformResponse: (response) => {
+        const test = response.result;
+        const transformedQuestions = test.questions.map((question) => ({
+          ...question,
+          open: false,
+        }));
+
+        return { ...test, questions: transformedQuestions };
+      },
     }),
   }),
 });

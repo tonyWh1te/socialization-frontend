@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { useAddTestMutation } from '../../api/testApiSlice';
 import { InputText } from '../../../../UI';
 import { newTestSchema } from '../../utils/validation.helper';
@@ -41,6 +41,7 @@ const CreateTestForm = ({ toggleModal }) => {
             label="Название"
           />
           <InputText
+            as="textarea"
             name="description"
             type="text"
             label="Описание"

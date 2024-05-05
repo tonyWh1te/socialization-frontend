@@ -28,6 +28,7 @@ module.exports = {
       2,
       { namedComponents: ['arrow-function', 'function-declaration'] },
     ],
+    'react/jsx-curly-newline': 'off',
     'object-curly-newline': 'off',
     'jsx-a11y/no-static-element-interactions': ['error', { allowExpressionValues: true }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
