@@ -1,0 +1,39 @@
+.top {
+  @apply mb-4 flex items-start justify-between gap-x-5;
+}
+
+.questionTitle {
+  @apply text-lg placeholder:text-lg;
+}
+
+.questionTitleWrapper {
+  @apply !h-auto w-1/2;
+}
+
+.select {
+  @apply w-1/2 border p-3;
+}
+
+.icon {
+  @apply h-7 w-7 cursor-pointer;
+}
+
+.answers {
+  @apply flex flex-col gap-2;
+}
+
+.answerItem {
+  @apply flex justify-between;
+}
+
+.answerInput {
+  @apply mr-2;
+}
+
+.bottom {
+  @apply mt-5 flex justify-end gap-2;
+}
+
+.required {
+  @apply flex items-center gap-2;
+}

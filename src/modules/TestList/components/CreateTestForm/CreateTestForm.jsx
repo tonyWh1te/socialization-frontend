@@ -9,6 +9,7 @@ const CreateTestForm = ({ toggleModal }) => {
   const initialState = {
     title: '',
     description: '',
+    questions: [],
   };
 
   const [addTest] = useAddTestMutation();

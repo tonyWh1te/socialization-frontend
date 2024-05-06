@@ -1,27 +1,47 @@
-import { InputText } from '../../../../UI';
 import styles from './QuestionPreview.module.css';
 
 const QuestionPreview = ({ question }) => {
-  const { title, answers, type } = question;
+  const renderQuestionContent = (q) => {
+    const { type, answers } = q;
 
-  return (
-    <div className={styles.wrapper}>
-      <h5 className={styles.title}>{title}</h5>
-      <div className={styles.answers}>
-        {answers.map((answer) => (
+    switch (type) {
+      case 'text':
+        return (
+          <input
+            className={styles.answerText}
+            type="text"
+            disabled
+            placeholder="Ответ"
+          />
+        );
+      case 'radio':
+      case 'checkbox': {
+        const answersElements = answers.map((answer) => (
           <label
             key={answer.id}
-            htmlFor={answer.id}
+            htmlFor={`answer-key-${answer.id}`}
           >
             <input
+              className={styles.answerItem}
               type={type}
-              id={answer.id}
+              id={`answer-key-${answer.id}`}
               disabled
             />
             {answer.text}
           </label>
-        ))}
-      </div>
+        ));
+
+        return <div className={styles.answers}>{answersElements}</div>;
+      }
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className={styles.wrapper}>
+      <h5 className={styles.title}>{question.title}</h5>
+      {renderQuestionContent(question)}
     </div>
   );
 };

@@ -16,11 +16,11 @@ const testApiSlice = apiSlice.injectEndpoints({
     }),
     addTest: builder.mutation({
       query: (test) => ({
-        url: '/tests/',
+        url: '/tests/create_new_test/',
         method: 'POST',
         body: test,
       }),
-      transformResponse: (response) => response.id,
+      transformResponse: (response) => response.result.id,
       invalidatesTags: ['Tests'],
     }),
   }),

@@ -24,6 +24,14 @@ const TestEditor = ({ id }) => {
         required: true,
         open: true,
       },
+      {
+        id: 2,
+        title: 'super Title',
+        type: 'text',
+        answers: [],
+        required: true,
+        open: true,
+      },
       // {
       //   title: 'Title',
       //   type: 'input',
@@ -60,7 +68,7 @@ const TestEditor = ({ id }) => {
       <Container>
         <div className={styles.inner}>
           <Formik
-            initialValues={test}
+            initialValues={upgradeTest}
             onSubmit={() => {}}
           >
             <Form
@@ -82,13 +90,16 @@ const TestEditor = ({ id }) => {
               <FieldArray
                 name="questions"
                 render={(arrayHelpers) =>
-                  test.questions.map((question, index) => (
+                  upgradeTest.questions.map((question, index) => (
                     <TestCard
-                      key={question.title}
+                      key={question.id}
                       active={question.open}
                     >
                       {question.open ? (
-                        <QuestionEdit question={question} />
+                        <QuestionEdit
+                          question={question}
+                          index={index}
+                        />
                       ) : (
                         <QuestionPreview question={question} />
                       )}

@@ -11,9 +11,9 @@ const InputText = ({ name, ...props }) => {
 
   const wrapperClasses = clsx(
     styles.wrapper,
-    wrapperClassNames,
     { 'h-auto': as === 'textarea' },
     { 'h-[82px]': !label && as !== 'textarea' },
+    wrapperClassNames,
   );
   const inputClasses = clsx(
     styles.input,

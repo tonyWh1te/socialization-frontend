@@ -1,5 +1,5 @@
 .card {
-  @apply relative w-full cursor-pointer overflow-hidden rounded-lg bg-white p-6 shadow-md;
+  @apply relative w-full overflow-hidden rounded-lg bg-white p-6 shadow-md;
 }
 
 .active {
