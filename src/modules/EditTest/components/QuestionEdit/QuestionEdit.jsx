@@ -1,9 +1,18 @@
+import { nanoid } from '@reduxjs/toolkit';
 import { Field } from 'formik';
 import { XMarkIcon, Square2StackIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { InputText } from '../../../../UI';
 import styles from './QuestionEdit.module.css';
 
-const QuestionEdit = ({ question, index }) => {
+const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
+  const { remove, insert } = arrayHelpers;
+
+  const onControlQuestion =
+    (callback, ...args) =>
+    () => {
+      callback(...args);
+    };
+
   const renderQuestionContent = (q) => {
     const { type, answers } = q;
 
@@ -14,6 +23,7 @@ const QuestionEdit = ({ question, index }) => {
             className={styles.answerText}
             type="text"
             disabled
+            value=""
             placeholder="Ответ"
           />
         );
@@ -50,12 +60,12 @@ const QuestionEdit = ({ question, index }) => {
         <InputText
           wrapperClassNames={styles.questionTitleWrapper}
           className={styles.questionTitle}
-          name={`questions[${index}].title`}
+          name={`questions[${qIndex}].title`}
           placeholder="Вопрос"
         />
         <Field
           className={styles.select}
-          name={`questions[${index}].type`}
+          name={`questions[${qIndex}].type`}
           as="select"
         >
           <option
@@ -80,15 +90,25 @@ const QuestionEdit = ({ question, index }) => {
       </div>
       {renderQuestionContent(question)}
       <div className={styles.bottom}>
-        <Square2StackIcon className={styles.icon} />
-        <TrashIcon className={styles.icon} />
+        <Square2StackIcon
+          onClick={onControlQuestion(insert, qIndex + 1, { ...question, id: nanoid() })}
+          className={styles.icon}
+        />
+        <TrashIcon
+          className={styles.icon}
+          onClick={onControlQuestion(remove, qIndex)}
+        />
 
         <div className={styles.required}>
-          <label htmlFor={`questions[${index}].required`}>
+          <label
+            className={styles.switchLabel}
+            htmlFor={`questions[${qIndex}].required`}
+          >
             Обязательный вопрос
             <Field
+              className={styles.switch}
               type="checkbox"
-              name={`questions[${index}].required`}
+              name={`questions[${qIndex}].required`}
             />
           </label>
         </div>

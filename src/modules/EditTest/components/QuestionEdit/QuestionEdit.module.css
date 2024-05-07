@@ -15,7 +15,7 @@
 }
 
 .icon {
-  @apply h-7 w-7 cursor-pointer;
+  @apply h-7 w-7 cursor-pointer fill-gray-500;
 }
 
 .answers {
@@ -31,9 +31,13 @@
 }
 
 .bottom {
-  @apply mt-5 flex justify-end gap-2;
+  @apply mt-5 flex items-center justify-end gap-3 border-t-2 pt-4;
 }
 
 .required {
-  @apply flex items-center gap-2;
+  @apply flex items-center border-l-2 p-2;
+}
+
+.switch {
+  @apply ml-2;
 }

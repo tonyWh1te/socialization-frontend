@@ -1,5 +1,5 @@
 .wrapper {
-  @apply mt-6;
+  @apply py-6;
 }
 
 .inner {

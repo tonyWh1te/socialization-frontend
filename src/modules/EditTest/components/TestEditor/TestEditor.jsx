@@ -32,6 +32,14 @@ const TestEditor = ({ id }) => {
         required: true,
         open: true,
       },
+      {
+        id: 3,
+        title: 'super Title',
+        type: 'text',
+        answers: [],
+        required: true,
+        open: true,
+      },
       // {
       //   title: 'Title',
       //   type: 'input',
@@ -71,43 +79,46 @@ const TestEditor = ({ id }) => {
             initialValues={upgradeTest}
             onSubmit={() => {}}
           >
-            <Form
-              method="post"
-              className={styles.form}
-            >
-              <TestCard className={styles.formTop}>
-                <InputText
-                  name="title"
-                  placeholder="Название теста"
-                />
-                <InputText
-                  name="description"
-                  placeholder="Описание теста"
-                  as="textarea"
-                />
-              </TestCard>
+            {({ values: testValues }) => (
+              <Form
+                method="post"
+                className={styles.form}
+              >
+                <TestCard className={styles.formTop}>
+                  <InputText
+                    name="title"
+                    placeholder="Название теста"
+                  />
+                  <InputText
+                    name="description"
+                    placeholder="Описание теста"
+                    as="textarea"
+                  />
+                </TestCard>
 
-              <FieldArray
-                name="questions"
-                render={(arrayHelpers) =>
-                  upgradeTest.questions.map((question, index) => (
-                    <TestCard
-                      key={question.id}
-                      active={question.open}
-                    >
-                      {question.open ? (
-                        <QuestionEdit
-                          question={question}
-                          index={index}
-                        />
-                      ) : (
-                        <QuestionPreview question={question} />
-                      )}
-                    </TestCard>
-                  ))
-                }
-              />
-            </Form>
+                <FieldArray
+                  name="questions"
+                  render={(arrayHelpers) =>
+                    testValues.questions.map((question, index) => (
+                      <TestCard
+                        key={question.id}
+                        active={question.open}
+                      >
+                        {question.open ? (
+                          <QuestionEdit
+                            question={question}
+                            qIndex={index}
+                            arrayHelpers={arrayHelpers}
+                          />
+                        ) : (
+                          <QuestionPreview question={question} />
+                        )}
+                      </TestCard>
+                    ))
+                  }
+                />
+              </Form>
+            )}
           </Formik>
         </div>
       </Container>
