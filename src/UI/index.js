@@ -5,15 +5,5 @@ import ToastContainer from './ToastContainer/ToastContainer';
 import InputText from './InputText/InputText';
 import FormModalLayout from './layouts/FormModalLayout/FormModalLayout';
 import Container from './Container/Container';
-import Switch from './Switch/Switch';
 
-export {
-  Button,
-  Modal,
-  SpinnerMini,
-  ToastContainer,
-  InputText,
-  FormModalLayout,
-  Container,
-  Switch,
-};
+export { Button, Modal, SpinnerMini, ToastContainer, InputText, FormModalLayout, Container };

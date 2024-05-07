@@ -1,6 +1,6 @@
 import { Field } from 'formik';
 import { XMarkIcon, Square2StackIcon, TrashIcon } from '@heroicons/react/24/solid';
-import { InputText, Switch } from '../../../../UI';
+import { InputText } from '../../../../UI';
 import styles from './QuestionEdit.module.css';
 
 const QuestionEdit = ({ question, index }) => {
@@ -84,12 +84,13 @@ const QuestionEdit = ({ question, index }) => {
         <TrashIcon className={styles.icon} />
 
         <div className={styles.required}>
-          Обязательный вопрос
-          <Field
-            name={`questions[${index}].required`}
-            // eslint-disable-next-line
-            component={({ field }) => <Switch />}
-          />
+          <label htmlFor={`questions[${index}].required`}>
+            Обязательный вопрос
+            <Field
+              type="checkbox"
+              name={`questions[${index}].required`}
+            />
+          </label>
         </div>
       </div>
     </div>

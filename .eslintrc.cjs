@@ -38,5 +38,12 @@ module.exports = {
     'implicit-arrow-linebreak': 'off',
     'react-hooks/exhaustive-deps': 'warn',
     indent: 'off',
+    'jsx-a11y/label-has-associated-control': [
+      2,
+      {
+        controlComponents: ['Field'],
+        depth: 3,
+      },
+    ],
   },
 };
