@@ -12,6 +12,7 @@ const ListEditableAnswers = ({ type, qIndex }) => {
 
   const INITIAL_ANSWER = {
     text: `Ответ ${answers.length + 1}`,
+    point: 1,
   };
 
   return (

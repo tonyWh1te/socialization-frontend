@@ -59,6 +59,7 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
         const newAnswer = {
           id: nanoid(),
           text: 'Ответ 1',
+          point: 1,
         };
 
         const newAnswers = [newAnswer];

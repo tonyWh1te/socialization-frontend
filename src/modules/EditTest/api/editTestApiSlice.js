@@ -4,8 +4,8 @@ const editTestApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     editTest: builder.mutation({
       query: (test) => ({
-        url: `/tests/${test.id}/`,
-        method: 'PATCH',
+        url: `/tests/${test.id}/create_questions/`,
+        method: 'POST',
         body: test,
       }),
     }),
