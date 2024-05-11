@@ -7,37 +7,5 @@
 }
 
 .questionTitleWrapper {
-  @apply !h-auto w-1/2;
-}
-
-.select {
-  @apply w-1/2 border p-3;
-}
-
-.icon {
-  @apply h-7 w-7 cursor-pointer fill-gray-500;
-}
-
-.answers {
-  @apply flex flex-col gap-2;
-}
-
-.answerItem {
-  @apply flex justify-between;
-}
-
-.answerInput {
-  @apply mr-2;
-}
-
-.bottom {
-  @apply mt-5 flex items-center justify-end gap-3 border-t-2 pt-4;
-}
-
-.required {
-  @apply flex items-center border-l-2 p-2;
-}
-
-.switch {
-  @apply ml-2;
+  @apply w-1/2;
 }

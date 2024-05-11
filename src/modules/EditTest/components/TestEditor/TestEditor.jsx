@@ -1,13 +1,26 @@
 import { Formik, FieldArray, Form } from 'formik';
+import { nanoid } from '@reduxjs/toolkit';
 import { useGetTestQuery } from '../../api/editTestApiSlice';
-import { Container, InputText } from '../../../../UI';
+import { Container } from '../../../../UI';
 import TestCard from '../TestCard/TestCard';
 import QuestionPreview from '../QuestionPreview/QuestionPreview';
+import TestCardWrapper from '../TestCardWrapper/TestCardWrapper';
 import QuestionEdit from '../QuestionEdit/QuestionEdit';
+import FormTop from '../FormTop/FormTop';
+import { testSchema } from '../../utils/validation.helper';
+import { onFieldArrayControl } from '../../utils/form.helper';
 import styles from './TestEditor.module.css';
 
 const TestEditor = ({ id }) => {
   const { data: test, isLoading, isError } = useGetTestQuery(id);
+
+  const initQuestion = {
+    title: 'Вопрос',
+    type: 'text',
+    answers: [],
+    required: false,
+    open: false,
+  };
 
   const upgradeTest = {
     ...test,
@@ -22,7 +35,7 @@ const TestEditor = ({ id }) => {
           { id: 3, text: 'Answer3' },
         ],
         required: true,
-        open: true,
+        open: false,
       },
       {
         id: 2,
@@ -30,7 +43,7 @@ const TestEditor = ({ id }) => {
         type: 'text',
         answers: [],
         required: true,
-        open: true,
+        open: false,
       },
       {
         id: 3,
@@ -38,28 +51,8 @@ const TestEditor = ({ id }) => {
         type: 'text',
         answers: [],
         required: true,
-        open: true,
+        open: false,
       },
-      // {
-      //   title: 'Title',
-      //   type: 'input',
-      //   required: true,
-      // },
-      // {
-      //   title: 'Title',
-      //   type: 'textarea',
-      //   required: true,
-      // },
-      // {
-      //   title: 'Title',
-      //   type: 'checkbox',
-      //   answers: [
-      //     { id: 1, text: 'Answer1' },
-      //     { id: 2, text: 'Answer2' },
-      //     { id: 3, text: 'Answer3' },
-      //   ],
-      //   required: true,
-      // },
     ],
   };
 
@@ -78,42 +71,41 @@ const TestEditor = ({ id }) => {
           <Formik
             initialValues={upgradeTest}
             onSubmit={() => {}}
+            validationSchema={testSchema}
           >
             {({ values: testValues }) => (
               <Form
                 method="post"
                 className={styles.form}
               >
-                <TestCard className={styles.formTop}>
-                  <InputText
-                    name="title"
-                    placeholder="Название теста"
-                  />
-                  <InputText
-                    name="description"
-                    placeholder="Описание теста"
-                    as="textarea"
-                  />
-                </TestCard>
+                <FormTop />
 
                 <FieldArray
                   name="questions"
                   render={(arrayHelpers) =>
                     testValues.questions.map((question, index) => (
-                      <TestCard
+                      <TestCardWrapper
                         key={question.id}
-                        active={question.open}
+                        qIndex={index}
                       >
-                        {question.open ? (
-                          <QuestionEdit
-                            question={question}
-                            qIndex={index}
-                            arrayHelpers={arrayHelpers}
-                          />
-                        ) : (
-                          <QuestionPreview question={question} />
-                        )}
-                      </TestCard>
+                        <TestCard
+                          active={question.open}
+                          onClick={onFieldArrayControl(arrayHelpers.insert, index + 1, {
+                            id: nanoid(),
+                            ...initQuestion,
+                          })}
+                        >
+                          {question.open ? (
+                            <QuestionEdit
+                              question={question}
+                              qIndex={index}
+                              arrayHelpers={arrayHelpers}
+                            />
+                          ) : (
+                            <QuestionPreview question={question} />
+                          )}
+                        </TestCard>
+                      </TestCardWrapper>
                     ))
                   }
                 />

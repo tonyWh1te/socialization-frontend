@@ -37,11 +37,13 @@ const CreateTestForm = ({ toggleModal }) => {
       {({ isSubmitting, handleSubmit }) => (
         <Form method="post">
           <InputText
+            wrapperClassNames="h-[115px]"
             name="title"
             type="text"
             label="Название"
           />
           <InputText
+            wrapperClassNames="h-auto"
             as="textarea"
             name="description"
             type="text"

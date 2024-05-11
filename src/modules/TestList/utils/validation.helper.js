@@ -1,6 +1,6 @@
-import * as Yup from 'yup';
+import { object, string } from 'yup';
 
 // eslint-disable-next-line import/prefer-default-export
-export const newTestSchema = Yup.object({
-  title: Yup.string().trim().required('Обязательное поле'),
+export const newTestSchema = object({
+  title: string().trim().required('Обязательное поле'),
 });

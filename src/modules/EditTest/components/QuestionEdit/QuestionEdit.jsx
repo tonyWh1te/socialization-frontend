@@ -1,54 +1,56 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { Field } from 'formik';
-import { XMarkIcon, Square2StackIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { InputText } from '../../../../UI';
+import QuestionFooter from '../QuestionFooter/QuestionFooter';
+import ListEditableAnswers from '../ListEditableAnswers/ListEditableAnswers';
+import FormikSelect from '../FormikSelect/FormikSelect';
+import TextAnswerPreview from '../TextAnswerPreview/TextAnswerPreview';
 import styles from './QuestionEdit.module.css';
 
 const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
-  const { remove, insert } = arrayHelpers;
+  const selectOptions = [
+    {
+      value: 'text',
+      label: 'Текст',
+    },
+    {
+      value: 'radio',
+      label: 'Один из списка',
+    },
+    {
+      value: 'checkbox',
+      label: 'Несколько из списка',
+    },
+  ];
 
-  const onControlQuestion =
-    (callback, ...args) =>
-    () => {
-      callback(...args);
-    };
-
-  const renderQuestionContent = (q) => {
+  const renderQuestionContent = (q, index) => {
     const { type, answers } = q;
 
     switch (type) {
-      case 'text':
-        return (
-          <input
-            className={styles.answerText}
-            type="text"
-            disabled
-            value=""
-            placeholder="Ответ"
-          />
-        );
+      case 'text': {
+        answers.length = 0;
+
+        return <TextAnswerPreview />;
+      }
       case 'radio':
       case 'checkbox': {
-        const answersElements = answers.map((answer) => (
-          <div
-            className={styles.answerItem}
-            key={answer.id}
-          >
-            <label htmlFor={`answer-key-${answer.id}`}>
-              <input
-                className={styles.answerInput}
-                type={type}
-                id={`answer-key-${answer.id}`}
-                disabled
-              />
-              {answer.text}
-            </label>
-            <XMarkIcon className={styles.icon} />
-          </div>
-        ));
+        if (answers.length === 0) {
+          const initAnswer = {
+            id: nanoid(),
+            text: 'Ответ 1',
+          };
 
-        return <div className={styles.answers}>{answersElements}</div>;
+          answers.push(initAnswer);
+        }
+
+        return (
+          <ListEditableAnswers
+            qIndex={index}
+            answers={answers}
+            type={type}
+          />
+        );
       }
+
       default:
         return null;
     }
@@ -63,56 +65,18 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
           name={`questions[${qIndex}].title`}
           placeholder="Вопрос"
         />
-        <Field
-          className={styles.select}
+        <FormikSelect
           name={`questions[${qIndex}].type`}
-          as="select"
-        >
-          <option
-            className={styles.option}
-            value="text"
-          >
-            Текст
-          </option>
-          <option
-            className={styles.option}
-            value="radio"
-          >
-            Один из списка
-          </option>
-          <option
-            className={styles.option}
-            value="checkbox"
-          >
-            Несколько из списка
-          </option>
-        </Field>
-      </div>
-      {renderQuestionContent(question)}
-      <div className={styles.bottom}>
-        <Square2StackIcon
-          onClick={onControlQuestion(insert, qIndex + 1, { ...question, id: nanoid() })}
-          className={styles.icon}
+          options={selectOptions}
+          ariaLabel="Тип вопроса"
         />
-        <TrashIcon
-          className={styles.icon}
-          onClick={onControlQuestion(remove, qIndex)}
-        />
-
-        <div className={styles.required}>
-          <label
-            className={styles.switchLabel}
-            htmlFor={`questions[${qIndex}].required`}
-          >
-            Обязательный вопрос
-            <Field
-              className={styles.switch}
-              type="checkbox"
-              name={`questions[${qIndex}].required`}
-            />
-          </label>
-        </div>
       </div>
+      {renderQuestionContent(question, qIndex)}
+      <QuestionFooter
+        qIndex={qIndex}
+        question={question}
+        arrayHelpers={arrayHelpers}
+      />
     </div>
   );
 };

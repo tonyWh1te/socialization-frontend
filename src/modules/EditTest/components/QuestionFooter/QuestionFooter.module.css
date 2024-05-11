@@ -1,0 +1,15 @@
+.bottom {
+  @apply mt-5 flex items-center justify-end gap-3 border-t-2 pt-4;
+}
+
+.required {
+  @apply flex items-center border-l-2 p-2;
+}
+
+.switch {
+  @apply ml-2;
+}
+
+.icon {
+  @apply fill-gray-500;
+}

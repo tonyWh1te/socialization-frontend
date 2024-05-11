@@ -1,3 +1,4 @@
+import TextAnswerPreview from '../TextAnswerPreview/TextAnswerPreview';
 import styles from './QuestionPreview.module.css';
 
 const QuestionPreview = ({ question }) => {
@@ -6,14 +7,7 @@ const QuestionPreview = ({ question }) => {
 
     switch (type) {
       case 'text':
-        return (
-          <input
-            className={styles.answerText}
-            type="text"
-            disabled
-            placeholder="Ответ"
-          />
-        );
+        return <TextAnswerPreview />;
       case 'radio':
       case 'checkbox': {
         const answersElements = answers.map((answer) => (
@@ -40,7 +34,10 @@ const QuestionPreview = ({ question }) => {
 
   return (
     <div className={styles.wrapper}>
-      <h5 className={styles.title}>{question.title}</h5>
+      <h5 className={styles.title}>
+        {question.title}
+        {question.required ? <span className={styles.required}> *</span> : ''}
+      </h5>
       {renderQuestionContent(question)}
     </div>
   );

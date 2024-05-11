@@ -9,12 +9,7 @@ const InputText = ({ name, ...props }) => {
 
   const hasErrors = meta.touched && meta.error;
 
-  const wrapperClasses = clsx(
-    styles.wrapper,
-    { 'h-auto': as === 'textarea' },
-    { 'h-[82px]': !label && as !== 'textarea' },
-    wrapperClassNames,
-  );
+  const wrapperClasses = clsx(styles.wrapper, wrapperClassNames);
   const inputClasses = clsx(
     styles.input,
     { 'pr-10': rightIcon },

@@ -1,7 +1,19 @@
 .card {
-  @apply relative w-full overflow-hidden rounded-lg bg-white p-6 shadow-md;
+  @apply relative basis-full cursor-pointer overflow-hidden  rounded-lg bg-white p-6 shadow-md shadow-slate-500/50;
 }
 
 .active {
-  @apply before:absolute before:bottom-0 before:left-0 before:top-0 before:block before:h-full before:w-[6px] before:bg-[#505cc9] before:content-[''];
+  @apply before:absolute before:bottom-0 before:left-0 before:top-0 before:block before:h-full before:w-[6px]  before:bg-[#505cc9] before:content-[''];
+}
+
+.wrapper {
+  @apply relative flex w-full items-center justify-between gap-x-5;
+}
+
+.addButton {
+  @apply absolute -right-16 top-0 rounded-full p-2 transition-colors duration-300 hover:bg-gray-500/10;
+}
+
+.icon {
+  @apply fill-gray-500;
 }

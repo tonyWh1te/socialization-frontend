@@ -9,7 +9,3 @@
 .form {
   @apply flex basis-[700px] flex-col items-center gap-5;
 }
-
-.formTop {
-  @apply border-t-8 border-blue-900;
-}

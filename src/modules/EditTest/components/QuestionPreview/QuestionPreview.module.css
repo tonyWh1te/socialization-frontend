@@ -6,10 +6,10 @@
   @apply mb-2 text-2xl font-bold;
 }
 
-.answerText {
-  @apply w-2/5 border-b-2 bg-transparent text-lg font-medium;
-}
-
 .answerItem {
   @apply mr-2;
+}
+
+.required {
+  @apply align-top text-base text-red-500;
 }

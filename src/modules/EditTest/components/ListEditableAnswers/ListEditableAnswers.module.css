@@ -1,0 +1,23 @@
+.answers {
+  @apply flex flex-col gap-2;
+}
+
+.answerItem {
+  @apply flex items-center justify-between;
+}
+
+.answerInput {
+  @apply mr-2;
+}
+
+.answerInputText {
+  @apply mb-2 mr-2 h-auto basis-full;
+}
+
+.icon {
+  @apply fill-gray-500;
+}
+
+.button {
+  @apply self-end font-medium text-gray-500;
+}
