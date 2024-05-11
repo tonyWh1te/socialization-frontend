@@ -11,9 +11,5 @@
 }
 
 .addButton {
-  @apply absolute -right-16 top-0 rounded-full p-2 transition-colors duration-300 hover:bg-gray-500/10;
-}
-
-.icon {
-  @apply fill-gray-500;
+  @apply absolute -right-16 top-0;
 }

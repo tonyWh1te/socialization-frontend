@@ -10,7 +10,7 @@ const ListEditableAnswers = ({ type, qIndex }) => {
 
   const { answers } = testValues.questions[qIndex];
 
-  const initAnswer = {
+  const INITIAL_ANSWER = {
     id: nanoid(),
     text: `Ответ ${answers.length + 1}`,
   };
@@ -50,7 +50,7 @@ const ListEditableAnswers = ({ type, qIndex }) => {
             <button
               type="button"
               className={styles.button}
-              onClick={onFieldArrayControl(push, initAnswer)}
+              onClick={onFieldArrayControl(push, INITIAL_ANSWER)}
             >
               Добавить ответ
             </button>

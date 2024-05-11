@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import AddQuestionButton from '../AddQuestionButton/AddQuestionButton';
 import styles from './TestCard.module.css';
 
 const TestCard = ({ active, className, children, onClick }) => {
@@ -16,14 +17,12 @@ const TestCard = ({ active, className, children, onClick }) => {
         {children}
       </div>
       {active && (
-        <button
-          type="button"
+        <AddQuestionButton
           className={styles.addButton}
-          aria-label="Добавить вопрос"
           onClick={onClick}
         >
-          <PlusCircleIcon className={`icon h-8 w-8 ${styles.icon}`} />
-        </button>
+          <PlusCircleIcon className="icon h-8 w-8 fill-gray-500" />
+        </AddQuestionButton>
       )}
     </div>
   );

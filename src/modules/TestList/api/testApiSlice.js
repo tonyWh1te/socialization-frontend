@@ -16,7 +16,7 @@ const testApiSlice = apiSlice.injectEndpoints({
     }),
     addTest: builder.mutation({
       query: (test) => ({
-        url: '/tests/create_new_test/',
+        url: '/tests/create_test/',
         method: 'POST',
         body: test,
       }),

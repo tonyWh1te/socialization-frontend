@@ -1,26 +1,18 @@
 import { Formik, FieldArray, Form } from 'formik';
 import { nanoid } from '@reduxjs/toolkit';
+import { PlusCircleIcon } from '@heroicons/react/24/solid';
 import { useGetTestQuery } from '../../api/editTestApiSlice';
 import { Container } from '../../../../UI';
-import TestCard from '../TestCard/TestCard';
-import QuestionPreview from '../QuestionPreview/QuestionPreview';
-import TestCardWrapper from '../TestCardWrapper/TestCardWrapper';
-import QuestionEdit from '../QuestionEdit/QuestionEdit';
 import FormTop from '../FormTop/FormTop';
+import AddQuestionButton from '../AddQuestionButton/AddQuestionButton';
+import QuestionList from '../QuestionList/QuestionList';
 import { testSchema } from '../../utils/validation.helper';
 import { onFieldArrayControl } from '../../utils/form.helper';
+import { INITIAL_QUESTION } from '../../utils/constants';
 import styles from './TestEditor.module.css';
 
 const TestEditor = ({ id }) => {
   const { data: test, isLoading, isError } = useGetTestQuery(id);
-
-  const initQuestion = {
-    title: 'Вопрос',
-    type: 'text',
-    answers: [],
-    required: false,
-    open: false,
-  };
 
   const upgradeTest = {
     ...test,
@@ -69,7 +61,7 @@ const TestEditor = ({ id }) => {
       <Container>
         <div className={styles.inner}>
           <Formik
-            initialValues={upgradeTest}
+            initialValues={test}
             onSubmit={() => {}}
             validationSchema={testSchema}
           >
@@ -79,35 +71,27 @@ const TestEditor = ({ id }) => {
                 className={styles.form}
               >
                 <FormTop />
-
                 <FieldArray
                   name="questions"
-                  render={(arrayHelpers) =>
-                    testValues.questions.map((question, index) => (
-                      <TestCardWrapper
-                        key={question.id}
-                        qIndex={index}
+                  render={(arrayHelpers) => {
+                    const { questions } = testValues;
+
+                    return questions && questions.length > 0 ? (
+                      <QuestionList
+                        questions={questions}
+                        arrayHelpers={arrayHelpers}
+                      />
+                    ) : (
+                      <AddQuestionButton
+                        onClick={onFieldArrayControl(arrayHelpers.push, {
+                          id: nanoid(),
+                          ...INITIAL_QUESTION,
+                        })}
                       >
-                        <TestCard
-                          active={question.open}
-                          onClick={onFieldArrayControl(arrayHelpers.insert, index + 1, {
-                            id: nanoid(),
-                            ...initQuestion,
-                          })}
-                        >
-                          {question.open ? (
-                            <QuestionEdit
-                              question={question}
-                              qIndex={index}
-                              arrayHelpers={arrayHelpers}
-                            />
-                          ) : (
-                            <QuestionPreview question={question} />
-                          )}
-                        </TestCard>
-                      </TestCardWrapper>
-                    ))
-                  }
+                        <PlusCircleIcon className="icon h-8 w-8 fill-gray-500" />
+                      </AddQuestionButton>
+                    );
+                  }}
                 />
               </Form>
             )}
