@@ -1,3 +1,4 @@
+import { useFormikContext } from 'formik';
 import { nanoid } from '@reduxjs/toolkit';
 import { InputText } from '../../../../UI';
 import QuestionFooter from '../QuestionFooter/QuestionFooter';
@@ -7,6 +8,8 @@ import TextAnswerPreview from '../TextAnswerPreview/TextAnswerPreview';
 import styles from './QuestionEdit.module.css';
 
 const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
+  const { setFieldValue } = useFormikContext();
+
   const selectOptions = [
     {
       value: 'text',
@@ -27,21 +30,10 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
 
     switch (type) {
       case 'text': {
-        answers.length = 0;
-
         return <TextAnswerPreview />;
       }
       case 'radio':
       case 'checkbox': {
-        if (answers.length === 0) {
-          const initAnswer = {
-            id: nanoid(),
-            text: 'Ответ 1',
-          };
-
-          answers.push(initAnswer);
-        }
-
         return (
           <ListEditableAnswers
             qIndex={index}
@@ -53,6 +45,26 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
 
       default:
         return null;
+    }
+  };
+
+  const onChangeQuestionType = (q, index) => (e) => {
+    const { value: type } = e.target;
+    const { answers } = q;
+
+    if (type === 'text') {
+      setFieldValue(`questions[${index}].answers`, []);
+    } else if (type === 'radio' || type === 'checkbox') {
+      if (answers.length === 0) {
+        const newAnswer = {
+          id: nanoid(),
+          text: 'Ответ 1',
+        };
+
+        const newAnswers = [newAnswer];
+
+        setFieldValue(`questions[${index}].answers`, newAnswers);
+      }
     }
   };
 
@@ -69,6 +81,7 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
           name={`questions[${qIndex}].type`}
           options={selectOptions}
           ariaLabel="Тип вопроса"
+          onChange={onChangeQuestionType(question, qIndex)}
         />
       </div>
       {renderQuestionContent(question, qIndex)}

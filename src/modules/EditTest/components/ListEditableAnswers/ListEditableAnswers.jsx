@@ -11,7 +11,6 @@ const ListEditableAnswers = ({ type, qIndex }) => {
   const { answers } = testValues.questions[qIndex];
 
   const INITIAL_ANSWER = {
-    id: nanoid(),
     text: `Ответ ${answers.length + 1}`,
   };
 
@@ -21,36 +20,38 @@ const ListEditableAnswers = ({ type, qIndex }) => {
         name={`questions[${qIndex}].answers`}
         render={({ remove, push }) => (
           <>
-            {answers.map((answer, index) => (
-              <div
-                className={styles.answerItem}
-                key={answer.id}
-              >
-                <input
-                  className={styles.answerInput}
-                  type={type}
-                  id={`answer-key-${answer.id}`}
-                  disabled
-                />
-                <InputText
-                  wrapperClassNames={styles.answerInputText}
-                  name={`questions[${qIndex}].answers[${index}].text`}
-                />
-                {answers.length > 1 && (
-                  <button
-                    type="button"
-                    aria-label="Удалить ответ"
-                    onClick={onFieldArrayControl(remove, index)}
-                  >
-                    <XMarkIcon className={`icon ${styles.icon}`} />
-                  </button>
-                )}
-              </div>
-            ))}
+            {answers.length > 0 &&
+              answers.map((answer, index) => (
+                <div
+                  className={styles.answerItem}
+                  key={answer.id}
+                >
+                  <input
+                    className={styles.answerInput}
+                    type={type}
+                    id={`answer-key-${answer.id}`}
+                    disabled
+                  />
+                  <InputText
+                    wrapperClassNames={styles.answerInputText}
+                    name={`questions[${qIndex}].answers[${index}].text`}
+                  />
+                  {answers.length > 1 && (
+                    <button
+                      type="button"
+                      aria-label="Удалить ответ"
+                      onClick={onFieldArrayControl(remove, index)}
+                    >
+                      <XMarkIcon className={`icon ${styles.icon}`} />
+                    </button>
+                  )}
+                </div>
+              ))}
+
             <button
               type="button"
               className={styles.button}
-              onClick={onFieldArrayControl(push, INITIAL_ANSWER)}
+              onClick={onFieldArrayControl(push, { id: nanoid(), ...INITIAL_ANSWER })}
             >
               Добавить ответ
             </button>
