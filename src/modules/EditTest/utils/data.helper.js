@@ -4,7 +4,6 @@
  * @param {Object} test - The test object to be transformed.
  * @return {Object} The transformed test object with updated questions and answers.
  */
-// eslint-disable-next-line import/prefer-default-export
 export const transformTest = (test) => {
   const transformedQuestions = test.questions.map((q) => {
     const { open, id: idQ, ...restQ } = q;
@@ -19,3 +18,5 @@ export const transformTest = (test) => {
 
   return { ...test, questions: transformedQuestions };
 };
+
+export const getQuestionPosition = (questions, qId) => questions.findIndex((q) => q.id === qId);

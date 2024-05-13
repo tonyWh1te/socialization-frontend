@@ -13,7 +13,6 @@ const TestCardWrapper = ({ qIndex, children }) => {
 
   return (
     <div
-      className="w-full"
       role="presentation"
       onClick={onSetActive(qIndex)}
     >

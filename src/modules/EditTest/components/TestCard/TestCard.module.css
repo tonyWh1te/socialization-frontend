@@ -7,7 +7,7 @@
 }
 
 .wrapper {
-  @apply relative flex w-full items-center justify-between gap-x-5;
+  @apply relative w-full;
 }
 
 .addButton {
