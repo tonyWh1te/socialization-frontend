@@ -78,6 +78,7 @@ const TestEditor = ({ id }) => {
                         data={questions}
                         onDragEnd={onDragEnd(questions, setFieldValue)}
                         classNameList={styles.questionList}
+                        withDragHandle
                         renderItemContent={(item, index) => (
                           <QuestionCard
                             question={item}
