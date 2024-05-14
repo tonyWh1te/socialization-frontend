@@ -3,6 +3,7 @@ export const ROUTES = {
   Users: '/users',
   Games: '/games',
   Tests: '/tests',
+  EditTest: '/tests/:id/edit',
   Profile: '/profile',
   Auth: '/auth',
   Unathorized: '/unauthorized',

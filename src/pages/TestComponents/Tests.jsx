@@ -1,9 +1,10 @@
-import React from 'react';
+import { TestList } from '../../modules/TestList';
 
 function Tests() {
   return (
     <div>
-      <h1>Тесты</h1>
+      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Тесты</h1>
+      <TestList />
     </div>
   );
 }
