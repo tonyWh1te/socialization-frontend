@@ -1,11 +1,7 @@
-import React from 'react';
+import { GameList } from '../../modules/GameList';
 
 function Games() {
-  return (
-    <div>
-      <h1>Игры</h1>
-    </div>
-  );
+  return <GameList />;
 }
 
 export default Games;
