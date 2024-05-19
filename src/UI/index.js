@@ -5,5 +5,17 @@ import ToastContainer from './ToastContainer/ToastContainer';
 import InputText from './InputText/InputText';
 import FormModalLayout from './layouts/FormModalLayout/FormModalLayout';
 import Container from './Container/Container';
+import Select from './Select/Select';
+import InputBase from './InputBase/InputBase';
 
-export { Button, Modal, SpinnerMini, ToastContainer, InputText, FormModalLayout, Container };
+export {
+  Button,
+  Modal,
+  SpinnerMini,
+  ToastContainer,
+  InputText,
+  FormModalLayout,
+  Container,
+  Select,
+  InputBase,
+};

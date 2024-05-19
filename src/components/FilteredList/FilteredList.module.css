@@ -1,0 +1,11 @@
+.wrapper {
+  @apply mx-auto flex max-w-[800px] flex-col;
+}
+
+.form {
+  @apply mb-7 flex;
+}
+
+.searchBar {
+  @apply mr-4 w-full;
+}

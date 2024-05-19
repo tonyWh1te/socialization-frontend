@@ -1,12 +1,7 @@
 import { TestList } from '../../modules/TestList';
 
 function Tests() {
-  return (
-    <div>
-      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Тесты</h1>
-      <TestList />
-    </div>
-  );
+  return <TestList />;
 }
 
 export default Tests;
