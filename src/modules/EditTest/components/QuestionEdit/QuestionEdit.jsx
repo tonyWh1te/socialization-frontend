@@ -81,8 +81,10 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
         <FormikSelect
           name={`questions[${qIndex}].type`}
           options={selectOptions}
-          ariaLabel="Тип вопроса"
           onChange={onChangeQuestionType(question, qIndex)}
+          selectProps={{
+            'aria-label': 'Тип вопроса',
+          }}
         />
       </div>
       {renderQuestionContent(question, qIndex)}

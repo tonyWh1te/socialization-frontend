@@ -1,6 +1,11 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGetTestsQuery } from '../../api/testApiSlice';
-import { Portal } from '../../../../components';
+import { setSearch, setSortValue } from '../../slice/testsSlice';
+import { selectSearchValue, selectSortValue } from '../../slice/selectors';
+
+import { Portal, FilteredList } from '../../../../components';
+import { Container } from '../../../../UI';
 import TestListItem from '../TestListItem/TestListItem';
 import ButtonAddTest from '../ButtonAddTest/ButtonAddTest';
 import CreateTestModal from '../CreateTestModal/CreateTestModal';
@@ -8,31 +13,45 @@ import styles from './TestList.module.css';
 
 const TestList = () => {
   const [showModal, setShowModal] = useState(false);
-  const { data: tests, isLoading, isError } = useGetTestsQuery();
+
+  const searchValue = useSelector(selectSearchValue);
+  const sortValue = useSelector(selectSortValue);
+
+  const {
+    data: tests,
+    isLoading,
+    isError,
+    isFetching,
+  } = useGetTestsQuery({ search: searchValue.toLowerCase(), sort: sortValue });
+
+  const dispatch = useDispatch();
 
   const toggleModal = () => {
     setShowModal((prev) => !prev);
   };
 
-  if (isLoading) {
-    return <div style={{ textAlign: 'center' }}>Loading...</div>;
-  }
+  const onSearch = (query) => {
+    dispatch(setSearch(query));
+  };
 
-  if (isError) {
-    return <div style={{ textAlign: 'center' }}>Error</div>;
-  }
+  const onSort = (sortProperty) => {
+    dispatch(setSortValue(sortProperty));
+  };
 
   return (
-    <>
-      <div className={styles.list}>
-        <ButtonAddTest onClick={toggleModal} />
-        {tests.map((test) => (
-          <TestListItem
-            key={test.id}
-            test={test}
-          />
-        ))}
-      </div>
+    <div className={styles.wrapper}>
+      <Container>
+        <FilteredList
+          items={tests}
+          onSearch={onSearch}
+          onSort={onSort}
+          isError={isError}
+          isLoading={isLoading || isFetching}
+          renderItemContent={(test) => <TestListItem test={test} />}
+        >
+          <ButtonAddTest onClick={toggleModal} />
+        </FilteredList>
+      </Container>
       <Portal>
         <CreateTestModal
           toggleModal={toggleModal}
@@ -40,7 +59,7 @@ const TestList = () => {
           setShowModal={setShowModal}
         />
       </Portal>
-    </>
+    </div>
   );
 };
 

@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { authFormReducer, loginListener } from '../modules/Auth';
+import { testsReducer } from '../modules/TestList';
 import { apiSlice } from './api/apiSlice';
 
 const store = configureStore({
   reducer: {
     auth: authFormReducer,
+    tests: testsReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   devTools: !import.meta.env.PROD,
