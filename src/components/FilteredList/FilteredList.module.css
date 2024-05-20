@@ -3,9 +3,13 @@
 }
 
 .form {
-  @apply mb-7 flex;
+  @apply mb-7 flex items-center;
 }
 
 .searchBar {
-  @apply mr-4 w-full;
+  @apply mr-4 basis-full;
+}
+
+.sortWrapper {
+  @apply basis-40;
 }

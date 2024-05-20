@@ -12,7 +12,7 @@ const TestListItem = ({ test }) => {
   const deleteBtnText = isDeleting ? 'Удаление...' : 'Удалить';
 
   return (
-    <li className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <div className={styles.content}>
         <div className={styles.info}>
           <h3 className={styles.title}>{test.title}</h3>
@@ -34,7 +34,7 @@ const TestListItem = ({ test }) => {
           </button>
         </div>
       </div>
-    </li>
+    </div>
   );
 };
 

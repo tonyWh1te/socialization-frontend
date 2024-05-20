@@ -3,12 +3,16 @@ import { apiSlice } from '../../../app/api/apiSlice';
 const testApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTests: builder.query({
-      query: (search) => ({
-        url: '/tests/',
-        params: {
-          search,
-        },
-      }),
+      query: (params) => {
+        const { search, sort } = params;
+        return {
+          url: '/tests/',
+          params: {
+            search,
+            ordering: sort,
+          },
+        };
+      },
       providesTags: ['Tests'],
       transformResponse: (response) => response.results,
     }),

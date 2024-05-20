@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetTestsQuery } from '../../api/testApiSlice';
-import { setSearch } from '../../slice/testsSlice';
-import { selectSearchValue } from '../../slice/selectors';
+import { setSearch, setSortValue } from '../../slice/testsSlice';
+import { selectSearchValue, selectSortValue } from '../../slice/selectors';
 
 import { Portal, FilteredList } from '../../../../components';
 import { Container } from '../../../../UI';
@@ -15,12 +15,14 @@ const TestList = () => {
   const [showModal, setShowModal] = useState(false);
 
   const searchValue = useSelector(selectSearchValue);
+  const sortValue = useSelector(selectSortValue);
+
   const {
     data: tests,
     isLoading,
     isError,
     isFetching,
-  } = useGetTestsQuery(searchValue.toLowerCase());
+  } = useGetTestsQuery({ search: searchValue.toLowerCase(), sort: sortValue });
 
   const dispatch = useDispatch();
 
@@ -28,18 +30,12 @@ const TestList = () => {
     setShowModal((prev) => !prev);
   };
 
-  if (isLoading || isFetching) {
-    return <div style={{ textAlign: 'center' }}>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div style={{ textAlign: 'center' }}>Error</div>;
-  }
-
   const onSearch = (query) => {
     dispatch(setSearch(query));
+  };
 
-    return null;
+  const onSort = (sortProperty) => {
+    dispatch(setSortValue(sortProperty));
   };
 
   return (
@@ -48,18 +44,12 @@ const TestList = () => {
         <FilteredList
           items={tests}
           onSearch={onSearch}
+          onSort={onSort}
+          isError={isError}
+          isLoading={isLoading || isFetching}
+          renderItemContent={(test) => <TestListItem test={test} />}
         >
-          {(data) => (
-            <>
-              <ButtonAddTest onClick={toggleModal} />
-              {data.map((test) => (
-                <TestListItem
-                  key={test.id}
-                  test={test}
-                />
-              ))}
-            </>
-          )}
+          <ButtonAddTest onClick={toggleModal} />
         </FilteredList>
       </Container>
       <Portal>
