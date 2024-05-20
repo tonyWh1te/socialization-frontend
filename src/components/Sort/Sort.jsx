@@ -1,10 +1,15 @@
+import { useState } from 'react';
 import clsx from 'clsx';
 import { Select } from '../../UI';
 import styles from './Sort.module.css';
 
-const Sort = ({ options, className, value, onSort = () => {} }) => {
+const Sort = ({ options, className, onSort = () => {} }) => {
+  const [sortValue, setSortValue] = useState('');
   const onChange = (event) => {
-    onSort(event.target.value);
+    const { value } = event.target;
+
+    setSortValue(value);
+    onSort(value);
   };
 
   return (
@@ -14,7 +19,7 @@ const Sort = ({ options, className, value, onSort = () => {} }) => {
       selectProps={{
         className: styles.select,
         name: 'sort',
-        value,
+        value: sortValue,
         onChange,
       }}
     />

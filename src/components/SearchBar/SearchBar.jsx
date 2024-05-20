@@ -3,7 +3,7 @@ import { useDebounce } from '../../hooks';
 import { InputBase } from '../../UI';
 import styles from './SearchBar.module.css';
 
-const SearchBar = ({ className, placeholder, value, onSearch = () => {} }) => {
+const SearchBar = ({ className, placeholder, onSearch = () => {} }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const debouncedSearchValue = useDebounce(searchValue);
@@ -28,7 +28,7 @@ const SearchBar = ({ className, placeholder, value, onSearch = () => {} }) => {
           placeholder: placeholder || 'Поиск...',
           type: 'search',
           name: 'search',
-          value,
+          value: searchValue,
           onChange: onSearchChange,
         }}
       />

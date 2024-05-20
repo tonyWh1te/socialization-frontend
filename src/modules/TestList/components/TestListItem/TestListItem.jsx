@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useDeleteTestMutation } from '../../api/testApiSlice';
+import { convertDate } from '../../../../utils/helpers';
 import styles from './TestListItem.module.css';
 
 const TestListItem = ({ test }) => {
@@ -15,7 +16,7 @@ const TestListItem = ({ test }) => {
     <div className={styles.wrapper}>
       <div className={styles.content}>
         <div className={styles.info}>
-          <h3 className={styles.title}>{test.title}</h3>
+          <h3 className={styles.title}>{`${test.title} (${convertDate(test.created_at)})`}</h3>
           <p className={styles.description}>{test.description}</p>
         </div>
         <div className={styles.buttons}>

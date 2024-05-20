@@ -22,7 +22,7 @@ const FilteredList = ({
     },
     {
       label: 'По дате',
-      value: 'date',
+      value: 'created_at',
     },
   ];
 
