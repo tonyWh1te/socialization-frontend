@@ -1,10 +1,14 @@
-import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
+import { selectCurrentUser } from '../../modules/Auth';
 import { links } from './NavData';
 import UserIcon from '../../assets/icons/user-icon.svg';
 import styles from './Header.module.scss';
 
 function Header() {
+  const currentUser = useSelector(selectCurrentUser);
+
   const menuItemClasses =
     () =>
     ({ isActive }) =>
@@ -13,15 +17,16 @@ function Header() {
   return (
     <div className={styles.header}>
       <div className={styles.navContainer}>
-        {links.map((link) => (
-          <NavLink
-            key={link.title}
-            to={link.path}
-            className={menuItemClasses()}
-          >
-            {link.title}
-          </NavLink>
-        ))}
+        {currentUser &&
+          links[currentUser.role].map((link) => (
+            <NavLink
+              key={link.title}
+              to={link.path}
+              className={menuItemClasses()}
+            >
+              {link.title}
+            </NavLink>
+          ))}
       </div>
       <div className={styles.userProfile}>
         <NavLink to="/profile">
