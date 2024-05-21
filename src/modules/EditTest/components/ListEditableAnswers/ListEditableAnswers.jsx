@@ -5,14 +5,14 @@ import { InputText } from '../../../../UI';
 import { onFieldArrayControl } from '../../utils/form.helper';
 import styles from './ListEditableAnswers.module.css';
 
-const ListEditableAnswers = ({ type, qIndex }) => {
+const ListEditableAnswers = ({ type, qIndex, showPoints }) => {
   const { values: testValues } = useFormikContext();
 
   const { answers } = testValues.questions[qIndex];
 
   const INITIAL_ANSWER = {
     text: `Ответ ${answers.length + 1}`,
-    point: 1,
+    point: 0,
   };
 
   return (
@@ -37,6 +37,15 @@ const ListEditableAnswers = ({ type, qIndex }) => {
                     wrapperClassNames={styles.answerInputText}
                     name={`questions[${qIndex}].answers[${index}].text`}
                   />
+
+                  {showPoints && (
+                    <InputText
+                      type="number"
+                      wrapperClassNames={styles.inputPoints}
+                      min={0}
+                      name={`questions[${qIndex}].answers[${index}].point`}
+                    />
+                  )}
                   {answers.length > 1 && (
                     <button
                       type="button"
