@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useFormikContext } from 'formik';
 import { nanoid } from '@reduxjs/toolkit';
 import { InputText } from '../../../../UI';
@@ -8,6 +9,8 @@ import TextAnswerPreview from '../TextAnswerPreview/TextAnswerPreview';
 import styles from './QuestionEdit.module.css';
 
 const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
+  const [showPoints, setShowPoints] = useState(false);
+
   const { setFieldValue } = useFormikContext();
 
   const selectOptions = [
@@ -25,6 +28,10 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
     },
   ];
 
+  const onToggleShowPoints = () => {
+    setShowPoints((prev) => !prev);
+  };
+
   const renderQuestionContent = (q, index) => {
     const { type, answers } = q;
 
@@ -36,6 +43,7 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
       case 'checkbox': {
         return (
           <ListEditableAnswers
+            showPoints={showPoints}
             qIndex={index}
             answers={answers}
             type={type}
@@ -59,7 +67,7 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
         const newAnswer = {
           id: nanoid(),
           text: 'Ответ 1',
-          point: 1,
+          point: 0,
         };
 
         const newAnswers = [newAnswer];
@@ -92,6 +100,7 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
         qIndex={qIndex}
         question={question}
         arrayHelpers={arrayHelpers}
+        onShowPoints={onToggleShowPoints}
       />
     </div>
   );
