@@ -3,7 +3,7 @@ import { useDeleteTestMutation } from '../../api/testApiSlice';
 import { convertDate } from '../../../../utils/helpers';
 import styles from './TestListItem.module.css';
 
-const TestListItem = ({ test }) => {
+const TestListItem = ({ test, toggleModal }) => {
   const [deleteTest, { isLoading: isDeleting }] = useDeleteTestMutation();
 
   const onDelete = (id) => () => {
@@ -20,6 +20,13 @@ const TestListItem = ({ test }) => {
           <p className={styles.description}>{test.description}</p>
         </div>
         <div className={styles.buttons}>
+          <button
+            className={styles.button}
+            type="button"
+            onClick={toggleModal}
+          >
+            Назначить
+          </button>
           <Link
             className={styles.button}
             to={`/tests/${test.id}/edit`}
