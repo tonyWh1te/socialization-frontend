@@ -13,7 +13,8 @@ import AssigneTestModal from '../AssigneTestModal/AssigneTestModal';
 import styles from './TestList.module.css';
 
 const TestList = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showCreateTestModal, setShowCreateTestModal] = useState(false);
+  const [showAssignModal, setShowAssignModal] = useState(false);
 
   const searchValue = useSelector(selectSearchValue);
   const sortValue = useSelector(selectSortValue);
@@ -27,8 +28,12 @@ const TestList = () => {
 
   const dispatch = useDispatch();
 
-  const toggleModal = () => {
-    setShowModal((prev) => !prev);
+  const toggleModal = (action) => () => {
+    if (action === 'assign') {
+      setShowAssignModal((prev) => !prev);
+    } else if (action === 'create ') {
+      setShowCreateTestModal((prev) => !prev);
+    }
   };
 
   const onSearch = (query) => {
@@ -48,20 +53,25 @@ const TestList = () => {
           onSort={onSort}
           isError={isError}
           isLoading={isLoading || isFetching}
-          renderItemContent={(test) => <TestListItem test={test} />}
+          renderItemContent={(test) => (
+            <TestListItem
+              test={test}
+              toggleModal={toggleModal('assign')}
+            />
+          )}
         >
-          <ButtonAddTest onClick={toggleModal} />
+          <ButtonAddTest onClick={toggleModal('create')} />
         </FilteredList>
       </Container>
       <Portal>
         <CreateTestModal
-          toggleModal={toggleModal}
-          showModal={showModal}
-          setShowModal={setShowModal}
+          toggleModal={toggleModal('create')}
+          showModal={showCreateTestModal}
+          setShowModal={setShowCreateTestModal}
         />
         <AssigneTestModal
-          showModal={false}
-          setShowModal={() => null}
+          showModal={showAssignModal}
+          setShowModal={setShowAssignModal}
         />
       </Portal>
     </div>
