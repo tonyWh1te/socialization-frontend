@@ -9,6 +9,7 @@ import { Container } from '../../../../UI';
 import TestListItem from '../TestListItem/TestListItem';
 import ButtonAddTest from '../ButtonAddTest/ButtonAddTest';
 import CreateTestModal from '../CreateTestModal/CreateTestModal';
+import AssigneTestModal from '../AssigneTestModal/AssigneTestModal';
 import styles from './TestList.module.css';
 
 const TestList = () => {
@@ -57,6 +58,10 @@ const TestList = () => {
           toggleModal={toggleModal}
           showModal={showModal}
           setShowModal={setShowModal}
+        />
+        <AssigneTestModal
+          showModal={false}
+          setShowModal={() => null}
         />
       </Portal>
     </div>

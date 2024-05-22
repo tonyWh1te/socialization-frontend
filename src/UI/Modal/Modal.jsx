@@ -33,6 +33,7 @@ const Modal = ({ children, active, setActive, handleClose }) => {
         <button
           type="button"
           onClick={onClose}
+          className={styles.closeBtn}
         >
           <XMarkIcon className={styles.closeIcon} />
         </button>
