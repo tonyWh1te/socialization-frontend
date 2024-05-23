@@ -1,11 +1,20 @@
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { setSelectedTest } from '../../slice/testsSlice';
 import { useDeleteTestMutation } from '../../api/testApiSlice';
 import { convertDate } from '../../../../utils/helpers';
 import styles from './TestListItem.module.css';
 
 const TestListItem = ({ test, toggleModal }) => {
   const [deleteTest, { isLoading: isDeleting }] = useDeleteTestMutation();
+
+  const dispatch = useDispatch();
+
+  const onSelectTest = (id) => () => {
+    dispatch(setSelectedTest(id));
+    toggleModal();
+  };
 
   const onDelete = (id) => async () => {
     try {
@@ -28,7 +37,7 @@ const TestListItem = ({ test, toggleModal }) => {
           <button
             className={styles.button}
             type="button"
-            onClick={toggleModal}
+            onClick={onSelectTest(test.id)}
           >
             Назначить
           </button>

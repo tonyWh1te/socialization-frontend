@@ -2,8 +2,8 @@ import { SearchBar } from '../../../../components';
 import { Button } from '../../../../UI';
 import styles from './AssignTestLayout.module.css';
 
-const AssignTestLayout = ({ users, isError, isLoading, onSearch }) => {
-  console.log(isLoading);
+const AssignTestLayout = (props) => {
+  const { users, isError, isLoading, onSearch, selectedUsers, onSelectUser, onAssign } = props;
 
   return (
     <div className="text-center">
@@ -30,6 +30,7 @@ const AssignTestLayout = ({ users, isError, isLoading, onSearch }) => {
                 type="checkbox"
                 id={user.id}
                 value={user?.id}
+                onChange={onSelectUser}
               />
             </li>
           ))}
@@ -37,7 +38,8 @@ const AssignTestLayout = ({ users, isError, isLoading, onSearch }) => {
       )}
       <Button
         className={styles.button}
-        onClick={() => {}}
+        disabled={!selectedUsers.length}
+        onClick={onAssign}
       >
         Назначить
       </Button>
