@@ -4,7 +4,7 @@ import SpinnerMini from './spinners/SpinnerMini/SpinnerMini';
 import SpinnerBig from './spinners/SpinnerBig/SpinnerBig';
 import ToastContainer from './ToastContainer/ToastContainer';
 import InputText from './InputText/InputText';
-import FormModalLayout from './layouts/FormModalLayout/FormModalLayout';
+import ModalLayout from './layouts/FormModalLayout/ModalLayout';
 import Container from './Container/Container';
 import Select from './Select/Select';
 import InputBase from './InputBase/InputBase';
@@ -16,7 +16,7 @@ export {
   SpinnerMini,
   ToastContainer,
   InputText,
-  FormModalLayout,
+  ModalLayout,
   Container,
   Select,
   InputBase,

@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAddTestMutation } from '../../api/testApiSlice';
-import { Modal, FormModalLayout } from '../../../../UI';
+import { Modal, ModalLayout } from '../../../../UI';
 
 import CreateTestForm from '../CreateTestForm/CreateTestForm';
 import { newTestSchema } from '../../utils/validation.helper';
@@ -42,9 +42,9 @@ const CreateTestModal = ({ toggleModal, showModal, setShowModal }) => {
           setActive={setShowModal}
           handleClose={handleReset}
         >
-          <FormModalLayout
+          <ModalLayout
             title="Создание теста"
-            form={
+            content={
               // eslint-disable-next-line
               <CreateTestForm
                 isSubmitting={isSubmitting}

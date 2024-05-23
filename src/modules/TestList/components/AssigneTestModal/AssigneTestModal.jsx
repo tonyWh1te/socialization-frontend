@@ -1,30 +1,37 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLazyGetUsersQuery } from '../../../../app/api/common/usersApiSlice';
 import AssignTestLayout from '../AssignTestLayout/AssignTestLayout';
-import { Modal, FormModalLayout } from '../../../../UI';
+import { Modal, ModalLayout } from '../../../../UI';
 
 const AssigneTestModal = ({ showModal, setShowModal }) => {
-  const [getUsers, { isLoading, isError, data: users }] = useLazyGetUsersQuery();
+  const [searchValue, setSearchValue] = useState('');
+
+  const [getUsers, { isLoading, isFetching, isError, data: users }] = useLazyGetUsersQuery();
 
   useEffect(() => {
     if (showModal) {
-      getUsers();
+      getUsers({ type: 'observer', search: searchValue.toLowerCase() });
     }
-  }, [showModal]);
+  }, [showModal, searchValue]);
+
+  const onSearch = (query) => {
+    setSearchValue(query);
+  };
 
   return (
     <Modal
       active={showModal}
       setActive={setShowModal}
     >
-      <FormModalLayout
+      <ModalLayout
         title="Назначить тест наблюдаемым"
-        form={
+        content={
           // eslint-disable-next-line
           <AssignTestLayout
+            onSearch={onSearch}
             users={users}
             isError={isError}
-            isLoading={isLoading}
+            isLoading={isLoading || isFetching}
           />
         }
       />
