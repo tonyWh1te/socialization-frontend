@@ -1,0 +1,7 @@
+.wrapper {
+  @apply p-2;
+}
+
+.title {
+  @apply mb-4 text-center text-2xl font-bold;
+}

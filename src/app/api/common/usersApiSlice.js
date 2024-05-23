@@ -3,8 +3,9 @@ import { apiSlice } from '../apiSlice';
 const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: '/users/',
+        params,
       }),
       transformResponse: (res) => res.results,
     }),

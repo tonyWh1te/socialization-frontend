@@ -31,7 +31,7 @@ const TestList = () => {
   const toggleModal = (action) => () => {
     if (action === 'assign') {
       setShowAssignModal((prev) => !prev);
-    } else if (action === 'create ') {
+    } else if (action === 'create') {
       setShowCreateTestModal((prev) => !prev);
     }
   };
