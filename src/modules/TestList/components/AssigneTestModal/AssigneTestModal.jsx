@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useLazyGetUsersQuery } from '../../../../app/api/common/usersApiSlice';
+import { useAssignTestMutation } from '../../api/testApiSlice';
 import AssignTestLayout from '../AssignTestLayout/AssignTestLayout';
 import { Modal, ModalLayout } from '../../../../UI';
 
@@ -7,7 +9,11 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  const [getUsers, { isLoading, isFetching, isError, data: users }] = useLazyGetUsersQuery();
+  const [
+    getUsers,
+    { isLoading: isUsersLoading, isFetching: isUsersFetching, isError: isUsersError, data: users },
+  ] = useLazyGetUsersQuery();
+  const [assignTest, { isLoading: isAssignTestLoading }] = useAssignTestMutation();
 
   useEffect(() => {
     if (showModal) {
@@ -19,9 +25,9 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
     const { checked, value } = e.target;
 
     if (checked) {
-      setSelectedUsers((prev) => [...prev, value]);
+      setSelectedUsers((prev) => [...prev, +value]);
     } else {
-      setSelectedUsers((prev) => prev.filter((id) => id !== value));
+      setSelectedUsers((prev) => prev.filter((id) => id !== +value));
     }
   };
 
@@ -29,9 +35,14 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
     setSelectedUsers([]);
   };
 
-  const onAssign = () => {
-    console.log(testId);
-    console.log(selectedUsers);
+  const onAssign = async () => {
+    try {
+      await assignTest({ test_id: testId, users_ids: selectedUsers }).unwrap();
+
+      toast.success('Тест назначен');
+    } catch (error) {
+      toast.error(error?.data?.detail || 'Что-то пошло не так');
+    }
   };
 
   const onSearch = (query) => {
@@ -54,8 +65,9 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
             onSelectUser={onSelectUser}
             onSearch={onSearch}
             users={users}
-            isError={isError}
-            isLoading={isLoading || isFetching}
+            isError={isUsersError}
+            isUsersLoading={isUsersLoading || isUsersFetching}
+            isAssigned={isAssignTestLoading}
           />
         }
       />
