@@ -1,9 +1,20 @@
 import { SearchBar } from '../../../../components';
-import { Button } from '../../../../UI';
+import { Button, SpinnerMini } from '../../../../UI';
 import styles from './AssignTestLayout.module.css';
 
 const AssignTestLayout = (props) => {
-  const { users, isError, isLoading, onSearch, selectedUsers, onSelectUser, onAssign } = props;
+  const {
+    users,
+    isError,
+    isUsersLoading,
+    onSearch,
+    selectedUsers,
+    onSelectUser,
+    onAssign,
+    isAssigned,
+  } = props;
+
+  const assignBtnContent = isAssigned ? <SpinnerMini /> : 'Назначить';
 
   return (
     <div className="text-center">
@@ -11,9 +22,9 @@ const AssignTestLayout = (props) => {
         className={styles.search}
         onSearch={onSearch}
       />
-      {isLoading && <p>Загрузка...</p>}
+      {isUsersLoading && <p>Загрузка...</p>}
       {isError && <p>Произошла ошибка</p>}
-      {!isLoading && !isError && users && (
+      {!isUsersLoading && !isError && users && (
         <ul className={styles.list}>
           {users.map((user) => (
             <li
@@ -38,10 +49,10 @@ const AssignTestLayout = (props) => {
       )}
       <Button
         className={styles.button}
-        disabled={!selectedUsers.length}
+        disabled={!selectedUsers.length || isAssigned}
         onClick={onAssign}
       >
-        Назначить
+        {assignBtnContent}
       </Button>
     </div>
   );
