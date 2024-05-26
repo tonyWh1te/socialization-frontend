@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useDeleteTestMutation } from '../../api/testApiSlice';
 import { convertDate } from '../../../../utils/helpers';
 import styles from './TestListItem.module.css';
@@ -6,8 +7,12 @@ import styles from './TestListItem.module.css';
 const TestListItem = ({ test }) => {
   const [deleteTest, { isLoading: isDeleting }] = useDeleteTestMutation();
 
-  const onDelete = (id) => () => {
-    deleteTest(id);
+  const onDelete = (id) => async () => {
+    try {
+      await deleteTest(id).unwrap();
+    } catch (error) {
+      toast.error('Произошла ошибка при удалении теста');
+    }
   };
 
   const deleteBtnText = isDeleting ? 'Удаление...' : 'Удалить';

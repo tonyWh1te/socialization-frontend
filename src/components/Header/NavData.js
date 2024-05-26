@@ -1,5 +1,5 @@
 export const links = {
-  admin: [
+  administrator: [
     {
       title: 'Главная',
       path: '/',

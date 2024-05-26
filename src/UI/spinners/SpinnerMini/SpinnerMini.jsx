@@ -1,10 +1,10 @@
-import { spinnerMini } from '../../../assets';
+import { spinner } from '../../../assets';
 import styles from './SpinnerMini.module.css';
 
 const SpinnerMini = ({ className }) => (
   <img
     className={`${styles.spinner} ${className}`}
-    src={spinnerMini}
+    src={spinner}
     alt="spinner"
   />
 );

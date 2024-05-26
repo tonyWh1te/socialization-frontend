@@ -12,5 +12,5 @@ export const ROUTES = {
 export const ROLES = {
   Observed: 'observed',
   Tutor: 'tutor',
-  Admin: 'admin',
+  Admin: 'administrator',
 };
