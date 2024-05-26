@@ -9,11 +9,12 @@
   padding-left: 40px;
   padding-right: 40px;
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 400;
-  line-height: 24.51px;
+  line-height: 26px;
+  letter-spacing: 1px;
   color: #231c1c;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Neucha', sans-serif;
   font-style: normal;
 
   .navContainer {
@@ -35,11 +36,10 @@
     }
 
     .navItemCurrent {
+      color: #fff;
       background-color: #b367e2;
       border-radius: 6px;
-      box-shadow:
-        4px 4px 0 rgba(135, 214, 181, 1),
-        8px 8px 0 rgba(255, 224, 104, 1);
+      box-shadow: 4px 4px 0 rgba(135, 214, 181, 1);
     }
   }
 

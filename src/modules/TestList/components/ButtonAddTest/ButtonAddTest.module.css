@@ -1,7 +1,0 @@
-.button {
-  @apply mb-3 flex h-20 w-full flex-col items-center justify-center rounded-xl border border-[#231C1C]  hover:bg-[rgba(179,103,226,1)] hover:text-white;
-}
-
-.icon {
-  @apply h-7 w-7;
-}

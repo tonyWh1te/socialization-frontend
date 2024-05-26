@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useDeleteTestMutation } from '../../api/testApiSlice';
-import styles from './TestListItem.module.css';
+import styles from './TestListItem.module.scss';
 
 const TestListItem = ({ test }) => {
   const [deleteTest, { isLoading: isDeleting }] = useDeleteTestMutation();

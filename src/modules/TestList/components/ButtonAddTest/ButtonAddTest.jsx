@@ -1,5 +1,5 @@
-import { DocumentPlusIcon } from '@heroicons/react/24/solid';
-import styles from './ButtonAddTest.module.css';
+import styles from './ButtonAddTest.module.scss';
+import AddFileIcon from '../../../../assets/icons/add-file-icon.svg';
 
 const ButtonAddTest = ({ onClick }) => (
   <button
@@ -7,7 +7,12 @@ const ButtonAddTest = ({ onClick }) => (
     onClick={onClick}
     type="button"
   >
-    <DocumentPlusIcon className={`group-hover:fill-white ${styles.icon}`} />
+    {/* <DocumentPlusIcon className={`group-hover:fill-white ${styles.icon}`} /> */}
+    <img
+      className={`group-hover:fill-white ${styles.icon}`}
+      src={AddFileIcon}
+      alt="user"
+    />
     Создать тест
   </button>
 );

@@ -5,7 +5,7 @@ import { Modal, FormModalLayout } from '../../../../UI';
 import TestListItem from '../TestListItem/TestListItem';
 import ButtonAddTest from '../ButtonAddTest/ButtonAddTest';
 import CreateTestForm from '../CreateTestForm/CreateTestForm';
-import styles from './TestList.module.css';
+import styles from './TestList.module.scss';
 
 const TestList = () => {
   const [showModal, setShowModal] = useState(false);
