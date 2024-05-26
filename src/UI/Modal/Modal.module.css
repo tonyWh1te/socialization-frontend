@@ -15,5 +15,9 @@
 }
 
 .closeIcon {
-  @apply absolute right-1 top-1 w-6 stroke-2;
+  @apply w-6 stroke-2;
+}
+
+.closeBtn {
+  @apply absolute right-1 top-1;
 }

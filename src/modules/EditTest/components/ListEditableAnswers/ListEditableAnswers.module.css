@@ -3,7 +3,7 @@
 }
 
 .answerItem {
-  @apply flex items-center justify-between;
+  @apply mb-2 flex items-center justify-between;
 }
 
 .answerInput {
@@ -11,7 +11,11 @@
 }
 
 .answerInputText {
-  @apply mb-2 mr-2 h-auto basis-full;
+  @apply mr-2 h-auto basis-full;
+}
+
+.inputPoints {
+  @apply h-auto basis-24;
 }
 
 .icon {

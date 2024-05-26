@@ -1,21 +1,24 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetTestsQuery } from '../../api/testApiSlice';
-import { setSearch, setSortValue } from '../../slice/testsSlice';
-import { selectSearchValue, selectSortValue } from '../../slice/selectors';
+import { setTestSearch, setSortValue } from '../../slice/testsSlice';
+import { selectTestSearchValue, selectSortValue, selectSelectedTest } from '../../slice/selectors';
 
 import { Portal, FilteredList } from '../../../../components';
 import { Container } from '../../../../UI';
 import TestListItem from '../TestListItem/TestListItem';
 import ButtonAddTest from '../ButtonAddTest/ButtonAddTest';
 import CreateTestModal from '../CreateTestModal/CreateTestModal';
+import AssigneTestModal from '../AssigneTestModal/AssigneTestModal';
 import styles from './TestList.module.css';
 
 const TestList = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showCreateTestModal, setShowCreateTestModal] = useState(false);
+  const [showAssignModal, setShowAssignModal] = useState(false);
 
-  const searchValue = useSelector(selectSearchValue);
+  const searchValue = useSelector(selectTestSearchValue);
   const sortValue = useSelector(selectSortValue);
+  const selectedTest = useSelector(selectSelectedTest);
 
   const {
     data: tests,
@@ -26,12 +29,16 @@ const TestList = () => {
 
   const dispatch = useDispatch();
 
-  const toggleModal = () => {
-    setShowModal((prev) => !prev);
+  const toggleModal = (action) => () => {
+    if (action === 'assign') {
+      setShowAssignModal((prev) => !prev);
+    } else if (action === 'create') {
+      setShowCreateTestModal((prev) => !prev);
+    }
   };
 
   const onSearch = (query) => {
-    dispatch(setSearch(query));
+    dispatch(setTestSearch(query));
   };
 
   const onSort = (sortProperty) => {
@@ -47,16 +54,26 @@ const TestList = () => {
           onSort={onSort}
           isError={isError}
           isLoading={isLoading || isFetching}
-          renderItemContent={(test) => <TestListItem test={test} />}
+          renderItemContent={(test) => (
+            <TestListItem
+              test={test}
+              toggleModal={toggleModal('assign')}
+            />
+          )}
         >
-          <ButtonAddTest onClick={toggleModal} />
+          <ButtonAddTest onClick={toggleModal('create')} />
         </FilteredList>
       </Container>
       <Portal>
         <CreateTestModal
-          toggleModal={toggleModal}
-          showModal={showModal}
-          setShowModal={setShowModal}
+          toggleModal={toggleModal('create')}
+          showModal={showCreateTestModal}
+          setShowModal={setShowCreateTestModal}
+        />
+        <AssigneTestModal
+          testId={selectedTest}
+          showModal={showAssignModal}
+          setShowModal={setShowAssignModal}
         />
       </Portal>
     </div>

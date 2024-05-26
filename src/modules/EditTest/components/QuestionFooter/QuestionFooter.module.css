@@ -1,5 +1,13 @@
 .bottom {
-  @apply mt-5 flex items-center justify-end gap-3 border-t-2 pt-4;
+  @apply mt-5 flex items-center justify-between gap-3 border-t-2 pt-4;
+}
+
+.right {
+  @apply flex items-center justify-end gap-2;
+}
+
+.pointButton {
+  @apply flex items-center gap-x-2;
 }
 
 .required {
