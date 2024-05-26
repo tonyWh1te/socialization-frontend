@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useLazyGetUsersQuery } from '../../../../app/api/common/usersApiSlice';
+import { useLazyGetObservedsQuery } from '../../../../app/api/common/usersApiSlice';
 import { useAssignTestMutation } from '../../api/testApiSlice';
 import AssignTestLayout from '../AssignTestLayout/AssignTestLayout';
 import { Modal, ModalLayout } from '../../../../UI';
 
 const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
-  const [searchValue, setSearchValue] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const [
-    getUsers,
+    getObserveds,
     { isLoading: isUsersLoading, isFetching: isUsersFetching, isError: isUsersError, data: users },
-  ] = useLazyGetUsersQuery();
+  ] = useLazyGetObservedsQuery();
+
   const [assignTest, { isLoading: isAssignTestLoading }] = useAssignTestMutation();
 
   useEffect(() => {
     if (showModal) {
-      getUsers({ type: 'observer', search: searchValue.toLowerCase() });
+      getObserveds({ search: '' });
     }
-  }, [showModal, searchValue]);
+  }, [showModal]);
 
   const onSelectUser = (e) => {
     const { checked, value } = e.target;
@@ -45,8 +45,10 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
     }
   };
 
-  const onSearch = (query) => {
-    setSearchValue(query);
+  const onSearch = (isModalShowed) => (query) => {
+    if (isModalShowed) {
+      getObserveds({ search: query });
+    }
   };
 
   return (
@@ -63,11 +65,12 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
             onAssign={onAssign}
             selectedUsers={selectedUsers}
             onSelectUser={onSelectUser}
-            onSearch={onSearch}
+            onSearch={onSearch(showModal)}
+            testId={testId}
             users={users}
             isError={isUsersError}
             isUsersLoading={isUsersLoading || isUsersFetching}
-            isAssigned={isAssignTestLoading}
+            isAssigning={isAssignTestLoading}
           />
         }
       />

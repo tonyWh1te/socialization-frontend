@@ -38,6 +38,7 @@ const testApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['Observeds'],
     }),
   }),
 });

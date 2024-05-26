@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetTestsQuery } from '../../api/testApiSlice';
-import { setSearch, setSortValue } from '../../slice/testsSlice';
-import { selectSearchValue, selectSortValue, selectSelectedTest } from '../../slice/selectors';
+import { setTestSearch, setSortValue } from '../../slice/testsSlice';
+import { selectTestSearchValue, selectSortValue, selectSelectedTest } from '../../slice/selectors';
 
 import { Portal, FilteredList } from '../../../../components';
 import { Container } from '../../../../UI';
@@ -16,7 +16,7 @@ const TestList = () => {
   const [showCreateTestModal, setShowCreateTestModal] = useState(false);
   const [showAssignModal, setShowAssignModal] = useState(false);
 
-  const searchValue = useSelector(selectSearchValue);
+  const searchValue = useSelector(selectTestSearchValue);
   const sortValue = useSelector(selectSortValue);
   const selectedTest = useSelector(selectSelectedTest);
 
@@ -38,7 +38,7 @@ const TestList = () => {
   };
 
   const onSearch = (query) => {
-    dispatch(setSearch(query));
+    dispatch(setTestSearch(query));
   };
 
   const onSort = (sortProperty) => {

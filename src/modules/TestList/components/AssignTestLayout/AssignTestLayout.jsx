@@ -1,5 +1,5 @@
 import { SearchBar } from '../../../../components';
-import { Button, SpinnerMini } from '../../../../UI';
+import { Button, SpinnerMini, ErrorMessage } from '../../../../UI';
 import styles from './AssignTestLayout.module.css';
 
 const AssignTestLayout = (props) => {
@@ -11,10 +11,11 @@ const AssignTestLayout = (props) => {
     selectedUsers,
     onSelectUser,
     onAssign,
-    isAssigned,
+    isAssigning,
+    testId,
   } = props;
 
-  const assignBtnContent = isAssigned ? <SpinnerMini /> : 'Назначить';
+  const assignBtnContent = isAssigning ? <SpinnerMini /> : 'Назначить';
 
   return (
     <div className="text-center">
@@ -22,34 +23,45 @@ const AssignTestLayout = (props) => {
         className={styles.search}
         onSearch={onSearch}
       />
-      {isUsersLoading && <p>Загрузка...</p>}
-      {isError && <p>Произошла ошибка</p>}
+      {isUsersLoading && <SpinnerMini className={styles.spinner} />}
+      {isError && (
+        <ErrorMessage
+          message="Ошибка загрузки пользователей"
+          className={styles.error}
+        />
+      )}
       {!isUsersLoading && !isError && users && (
         <ul className={styles.list}>
-          {users.map((user) => (
-            <li
-              className={styles.item}
-              key={user.id}
-            >
-              <label
-                className={styles.label}
-                htmlFor={user.id}
+          {users.map((user) => {
+            const isAssigned = user.tests.some(({ test }) => test.id === testId);
+
+            return (
+              <li
+                className={styles.item}
+                key={user.id}
               >
-                {`${user.last_name ?? 'фамилия'} ${user.name ?? 'имя'} ${user.second_name ?? ''}`}
-              </label>
-              <input
-                type="checkbox"
-                id={user.id}
-                value={user?.id}
-                onChange={onSelectUser}
-              />
-            </li>
-          ))}
+                <label
+                  className={styles.label}
+                  htmlFor={user.id}
+                >
+                  {`${user.last_name ?? 'фамилия'} ${user.name ?? 'имя'} ${user.second_name ?? ''}`}
+                </label>
+                <input
+                  type="checkbox"
+                  id={user.id}
+                  value={user?.id}
+                  defaultChecked={isAssigned}
+                  disabled={isAssigned}
+                  onChange={onSelectUser}
+                />
+              </li>
+            );
+          })}
         </ul>
       )}
       <Button
         className={styles.button}
-        disabled={!selectedUsers.length || isAssigned}
+        disabled={!selectedUsers.length || isAssigning}
         onClick={onAssign}
       >
         {assignBtnContent}

@@ -14,6 +14,14 @@
   @apply pr-2 text-lg;
 }
 
+.spinner {
+  @apply my-4;
+}
+
+.error {
+  @apply my-4;
+}
+
 .button {
   @apply m-auto;
 }

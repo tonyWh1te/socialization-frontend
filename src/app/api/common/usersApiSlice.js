@@ -9,8 +9,16 @@ const usersApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (res) => res.results,
     }),
+    getObserveds: builder.query({
+      query: (params) => ({
+        url: '/users/get_observeds/',
+        params,
+      }),
+      providesTags: ['Observeds'],
+      transformResponse: (res) => res.results,
+    }),
   }),
 });
 
 // eslint-disable-next-line
-export const { useLazyGetUsersQuery, useGetUsersQuery } = usersApiSlice;
+export const { useLazyGetUsersQuery, useGetUsersQuery, useLazyGetObservedsQuery } = usersApiSlice;
