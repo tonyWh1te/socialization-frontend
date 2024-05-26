@@ -11,6 +11,7 @@ const editTestApiSlice = apiSlice.injectEndpoints({
     }),
     getTest: builder.query({
       query: (id) => `/tests/${id}/get_single_test/`,
+      keepUnusedDataFor: 0.1,
       transformResponse: (response) => {
         const test = response.result;
         const transformedQuestions = test.questions.map((question) => ({
