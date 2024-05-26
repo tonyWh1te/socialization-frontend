@@ -25,7 +25,7 @@ const TestList = () => {
     isLoading,
     isError,
     isFetching,
-  } = useGetTestsQuery({ search: searchValue.toLowerCase(), sort: sortValue });
+  } = useGetTestsQuery({ search: searchValue.toLowerCase(), sort: sortValue }, {});
 
   const dispatch = useDispatch();
 
