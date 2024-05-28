@@ -8,6 +8,7 @@ const editTestApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: test,
       }),
+      invalidatesTags: ['Tests'],
     }),
     getTest: builder.query({
       query: (id) => `/tests/${id}/get_single_test/`,
