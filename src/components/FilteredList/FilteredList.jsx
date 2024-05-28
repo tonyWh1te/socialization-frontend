@@ -18,7 +18,7 @@ const FilteredList = ({
       value: 'id',
     },
     {
-      label: 'По имени',
+      label: 'По имени (А-Я)',
       value: 'title',
     },
     {

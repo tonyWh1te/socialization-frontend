@@ -1,13 +1,14 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 import { setSelectedTest } from '../../slice/testsSlice';
 import { useDeleteTestMutation } from '../../api/testApiSlice';
 import { convertDate } from '../../../../utils/helpers';
 import styles from './TestListItem.module.css';
 
 const TestListItem = ({ test, toggleModal }) => {
-  const [deleteTest, { isLoading: isDeleting }] = useDeleteTestMutation();
+  const [deleteTest] = useDeleteTestMutation();
 
   const dispatch = useDispatch();
 
@@ -17,14 +18,26 @@ const TestListItem = ({ test, toggleModal }) => {
   };
 
   const onDelete = (id) => async () => {
+    const toastId = toast.loading('Удаление теста...');
+
     try {
       await deleteTest(id).unwrap();
+
+      toast.update(toastId, {
+        render: 'Тест удален',
+        type: 'success',
+        isLoading: false,
+        autoClose: 2000,
+      });
     } catch (error) {
-      toast.error('Произошла ошибка при удалении теста');
+      toast.update(toastId, {
+        render: 'Произошла ошибка при удалении теста',
+        type: 'error',
+        isLoading: false,
+        autoClose: 2000,
+      });
     }
   };
-
-  const deleteBtnText = isDeleting ? 'Удаление...' : 'Удалить';
 
   return (
     <div className={styles.wrapper}>
@@ -48,11 +61,12 @@ const TestListItem = ({ test, toggleModal }) => {
             Редактировать
           </Link>
           <button
-            className={styles.button}
+            className={styles.close}
             type="button"
+            aria-label="Удалить тест"
             onClick={onDelete(test.id)}
           >
-            {deleteBtnText}
+            <XCircleIcon className={styles.icon} />
           </button>
         </div>
       </div>
