@@ -11,7 +11,7 @@ const AuthInit = ({ children }) => {
   const dispatch = useDispatch();
   const [auth] = useLocalStorage('auth', null);
 
-  const [getUserInfo, { isLoading }] = useLazyGetUserInfoQuery();
+  const [getUserInfo, { isLoading, isUninitialized }] = useLazyGetUserInfoQuery();
 
   const access = auth?.access;
 
@@ -48,7 +48,7 @@ const AuthInit = ({ children }) => {
     // eslint-disable-next-line
   }, []);
 
-  return isLoading ? <p>Загрузка...</p> : children;
+  return isLoading || isUninitialized ? <p>Загрузка...</p> : children;
 };
 
 export default AuthInit;

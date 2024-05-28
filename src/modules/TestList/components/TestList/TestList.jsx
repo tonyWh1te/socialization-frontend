@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetTestsQuery } from '../../api/testApiSlice';
+import { useGetTestsQuery, useGetObserverTestsQuery } from '../../api/testApiSlice';
 import { setTestSearch, setSortValue } from '../../slice/testsSlice';
 import { selectTestSearchValue, selectSortValue, selectSelectedTest } from '../../slice/selectors';
 
@@ -10,9 +10,13 @@ import TestListItem from '../TestListItem/TestListItem';
 import ButtonAddTest from '../ButtonAddTest/ButtonAddTest';
 import CreateTestModal from '../CreateTestModal/CreateTestModal';
 import AssigneTestModal from '../AssigneTestModal/AssigneTestModal';
+
+import { ROLES } from '../../../../utils/constants';
 import styles from './TestList.module.css';
 
-const TestList = () => {
+const TestList = ({ currentUser }) => {
+  const { id, role } = currentUser;
+
   const [showCreateTestModal, setShowCreateTestModal] = useState(false);
   const [showAssignModal, setShowAssignModal] = useState(false);
 
@@ -25,7 +29,17 @@ const TestList = () => {
     isLoading,
     isError,
     isFetching,
-  } = useGetTestsQuery({ search: searchValue.toLowerCase(), sort: sortValue }, {});
+  } = useGetTestsQuery(
+    { search: searchValue.toLowerCase(), sort: sortValue },
+    { skip: role === ROLES.Observed },
+  );
+
+  const {
+    data: observedTests,
+    isLoading: isObservedTestsLoading,
+    isFetching: isObservedTestsFetching,
+    isError: isObservedTestsError,
+  } = useGetObserverTestsQuery({ id }, { skip: role !== ROLES.Observed });
 
   const dispatch = useDispatch();
 
@@ -49,11 +63,11 @@ const TestList = () => {
     <div className={styles.wrapper}>
       <Container>
         <FilteredList
-          items={tests}
+          items={tests || observedTests}
           onSearch={onSearch}
           onSort={onSort}
-          isError={isError}
-          isLoading={isLoading || isFetching}
+          isError={isError || isObservedTestsError}
+          isLoading={isLoading || isFetching || isObservedTestsLoading || isObservedTestsFetching}
           renderItemContent={(test) => (
             <TestListItem
               test={test}
@@ -61,7 +75,7 @@ const TestList = () => {
             />
           )}
         >
-          <ButtonAddTest onClick={toggleModal('create')} />
+          {role !== ROLES.Observed && <ButtonAddTest onClick={toggleModal('create')} />}
         </FilteredList>
       </Container>
       <Portal>
