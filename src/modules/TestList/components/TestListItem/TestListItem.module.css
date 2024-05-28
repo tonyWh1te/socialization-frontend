@@ -7,7 +7,7 @@
 }
 
 .buttons {
-  @apply flex items-center gap-x-3;
+  @apply flex items-center gap-x-3 self-center;
 }
 
 .title {
@@ -49,6 +49,10 @@
 
   .title {
     @apply mb-0 max-w-[300px];
+  }
+
+  .buttons {
+    @apply self-end;
   }
 }
 
