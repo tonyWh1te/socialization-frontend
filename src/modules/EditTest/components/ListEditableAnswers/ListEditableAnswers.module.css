@@ -3,19 +3,23 @@
 }
 
 .answerItem {
-  @apply mb-2 flex items-center justify-between;
+  @apply flex items-start justify-between;
 }
 
 .answerInput {
-  @apply mr-2;
+  @apply mb-4 mr-2 self-center;
 }
 
 .answerInputText {
-  @apply mr-2 h-auto basis-full;
+  @apply mr-2 basis-full;
 }
 
 .inputPoints {
-  @apply h-auto basis-24;
+  @apply basis-24;
+}
+
+.deleteButton {
+  @apply mb-4 self-center;
 }
 
 .icon {
