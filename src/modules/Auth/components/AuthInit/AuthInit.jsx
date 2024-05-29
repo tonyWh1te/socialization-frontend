@@ -11,24 +11,11 @@ const AuthInit = ({ children }) => {
   const dispatch = useDispatch();
   const [auth] = useLocalStorage('auth', null);
 
-  const [getUserInfo, { isLoading }] = useLazyGetUserInfoQuery();
+  const [getUserInfo, { isLoading, isUninitialized }] = useLazyGetUserInfoQuery();
 
   const access = auth?.access;
 
   useEffect(() => {
-    // const userRequest = async () => {
-    //   console.log('get user info');
-    //   const response = await new Promise((resolve) => {
-    //     setTimeout(() => {
-    //       const user = { name: 'John', second_name: 'Doe', login: 'admin', role: 'tutor' };
-    //       resolve(user);
-    //     }, 3000);
-    //   });
-
-    //   dispatch(setUserCredentials(response));
-    //   setShowSplashScreen(false);
-    // };
-
     const userRequest = async () => {
       try {
         const user = await getUserInfo().unwrap();
@@ -48,7 +35,7 @@ const AuthInit = ({ children }) => {
     // eslint-disable-next-line
   }, []);
 
-  return isLoading ? <p>Загрузка...</p> : children;
+  return (isLoading || isUninitialized) && access ? <p>Загрузка...</p> : children;
 };
 
 export default AuthInit;
