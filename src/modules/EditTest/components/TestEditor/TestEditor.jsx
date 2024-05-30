@@ -3,30 +3,39 @@ import { nanoid } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { arrayMove } from '@dnd-kit/sortable';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
-import { useGetTestQuery, useEditTestMutation } from '../../api/editTestApiSlice';
-import { Container, Button, SpinnerMini } from '../../../../UI';
+import { useEditTestMutation } from '../../api/editTestApiSlice';
+import { useGetTestQuery } from '../../../../app/api/common/testApiSlice';
+
+import { Container, Button, SpinnerMini, SpinnerBig, ErrorMessage } from '../../../../UI';
 import { DraggableList } from '../../../../components';
 import FormTop from '../FormTop/FormTop';
 import AddQuestionButton from '../AddQuestionButton/AddQuestionButton';
 import QuestionCard from '../QuestionCard/QuestionCard';
+
 import { testSchema } from '../../utils/validation.helper';
 import { onFieldArrayControl } from '../../utils/form.helper';
-import { transformTest, getQuestionPosition } from '../../utils/data.helper';
+import { transformTest, getQuestionPosition, transformResponse } from '../../utils/data.helper';
 import { INITIAL_QUESTION } from '../../utils/constants';
 import styles from './TestEditor.module.css';
 
 const TestEditor = ({ id }) => {
   const { data: test, isLoading, isError } = useGetTestQuery(id);
-
   const [editTest, { isLoading: isLoadingEdit }] = useEditTestMutation();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <SpinnerBig className="mt-10" />;
   }
 
   if (isError) {
-    return <div>Error</div>;
+    return (
+      <ErrorMessage
+        message="Ошибка загрузки теста"
+        className="mt-10"
+      />
+    );
   }
+
+  const upgradeTest = test && transformResponse(test);
 
   const onDragEnd = (questions, setFieldValue) => (event) => {
     const { active, over } = event;
@@ -58,7 +67,7 @@ const TestEditor = ({ id }) => {
       <Container>
         <div className={styles.inner}>
           <Formik
-            initialValues={test}
+            initialValues={upgradeTest}
             onSubmit={onSubmit}
             validationSchema={testSchema}
           >
@@ -82,7 +91,7 @@ const TestEditor = ({ id }) => {
                         renderItemContent={(item, index) => (
                           <QuestionCard
                             question={item}
-                            index={index}
+                            qIndex={index}
                             arrayHelpers={arrayHelpers}
                           />
                         )}
@@ -102,7 +111,6 @@ const TestEditor = ({ id }) => {
                 />
 
                 <Button
-                  className={styles.button}
                   type="submit"
                   disabled={isLoadingEdit}
                   onClick={handleSubmit}

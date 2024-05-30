@@ -1,4 +1,4 @@
-import { object, string, array } from 'yup';
+import { object, string, array, number } from 'yup';
 
 // eslint-disable-next-line import/prefer-default-export
 export const testSchema = object({
@@ -9,6 +9,7 @@ export const testSchema = object({
       answers: array().of(
         object({
           text: string().trim().required('Введите ответ'),
+          point: number().min(0, 'Минимум  0'),
         }),
       ),
     }),

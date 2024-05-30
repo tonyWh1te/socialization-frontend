@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import { Home, Users, Games, Tests, Profile, AuthPage, EditTest } from '../pages';
+import { Home, Users, Games, Tests, Profile, AuthPage, EditTest, PassTest } from '../pages';
 import { Layout, RequireAuth } from '../components';
-import { ROUTES, ROLES } from './RouterConfig';
+import { ROUTES } from './RouterConfig';
+import { ROLES } from '../utils/constants';
 
 const Router = () => (
   <Routes>
@@ -18,7 +19,7 @@ const Router = () => (
 
     {/* private routes */}
     <Route element={<Layout />}>
-      <Route element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.Tutor]} />}>
+      <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
         <Route
           path={ROUTES.EditTest}
           element={<EditTest />}
@@ -42,6 +43,10 @@ const Router = () => (
         <Route
           path={ROUTES.Tests}
           element={<Tests />}
+        />
+        <Route
+          path={ROUTES.PassingTest}
+          element={<PassTest />}
         />
       </Route>
 

@@ -1,5 +1,6 @@
 import Sort from '../Sort/Sort';
 import SearchBar from '../SearchBar/SearchBar';
+import { SpinnerBig, ErrorMessage } from '../../UI';
 import styles from './FilteredList.module.css';
 
 const FilteredList = ({
@@ -17,7 +18,7 @@ const FilteredList = ({
       value: 'id',
     },
     {
-      label: 'По имени',
+      label: 'По имени (А-Я)',
       value: 'title',
     },
     {
@@ -39,9 +40,14 @@ const FilteredList = ({
     return <ul className={styles.list}>{renderedItems}</ul>;
   };
 
-  const loading = isLoading ? <div style={{ textAlign: 'center' }}>Loading...</div> : null;
+  const loading = isLoading ? <SpinnerBig className="mt-7" /> : null;
 
-  const error = isError ? <div style={{ textAlign: 'center' }}>Error</div> : null;
+  const error = isError ? (
+    <ErrorMessage
+      message="Ошибка загрузки списка"
+      className="mt-6"
+    />
+  ) : null;
 
   const content = !isLoading && !isError ? renderItems(items, renderItemContent) : null;
 

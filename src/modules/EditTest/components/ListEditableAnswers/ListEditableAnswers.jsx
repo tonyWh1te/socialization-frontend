@@ -48,6 +48,7 @@ const ListEditableAnswers = ({ type, qIndex, showPoints }) => {
                   )}
                   {answers.length > 1 && (
                     <button
+                      className={styles.deleteButton}
                       type="button"
                       aria-label="Удалить ответ"
                       onClick={onFieldArrayControl(remove, index)}
