@@ -1,51 +1,82 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGetTestsQuery } from '../../api/testApiSlice';
-import { Portal } from '../../../../components';
-import { Modal, FormModalLayout } from '../../../../UI';
+import { setSearch, setSortValue } from '../../slice/testsSlice';
+import { selectSearchValue, selectSortValue, selectSelectedTest } from '../../slice/selectors';
+
+import { Portal, FilteredList } from '../../../../components';
+import { Container } from '../../../../UI';
 import TestListItem from '../TestListItem/TestListItem';
 import ButtonAddTest from '../ButtonAddTest/ButtonAddTest';
-import CreateTestForm from '../CreateTestForm/CreateTestForm';
-import styles from './TestList.module.scss';
+import CreateTestModal from '../CreateTestModal/CreateTestModal';
+import AssigneTestModal from '../AssigneTestModal/AssigneTestModal';
+import styles from './TestList.module.css';
 
 const TestList = () => {
-  const [showModal, setShowModal] = useState(false);
-  const { data: tests, isLoading, isError } = useGetTestsQuery();
+  const [showCreateTestModal, setShowCreateTestModal] = useState(false);
+  const [showAssignModal, setShowAssignModal] = useState(false);
 
-  const toggleModal = () => {
-    setShowModal((prev) => !prev);
+  const searchValue = useSelector(selectSearchValue);
+  const sortValue = useSelector(selectSortValue);
+  const selectedTest = useSelector(selectSelectedTest);
+
+  const {
+    data: tests,
+    isLoading,
+    isError,
+    isFetching,
+  } = useGetTestsQuery({ search: searchValue.toLowerCase(), sort: sortValue });
+
+  const dispatch = useDispatch();
+
+  const toggleModal = (action) => () => {
+    if (action === 'assign') {
+      setShowAssignModal((prev) => !prev);
+    } else if (action === 'create') {
+      setShowCreateTestModal((prev) => !prev);
+    }
   };
 
-  if (isLoading) {
-    return <div style={{ textAlign: 'center' }}>Loading...</div>;
-  }
+  const onSearch = (query) => {
+    dispatch(setSearch(query));
+  };
 
-  if (isError) {
-    return <div style={{ textAlign: 'center' }}>Error</div>;
-  }
+  const onSort = (sortProperty) => {
+    dispatch(setSortValue(sortProperty));
+  };
 
   return (
-    <>
-      <div className={styles.list}>
-        <ButtonAddTest onClick={toggleModal} />
-        {tests.map((test) => (
-          <TestListItem
-            key={test.id}
-            test={test}
-          />
-        ))}
-      </div>
-      <Portal>
-        <Modal
-          active={showModal}
-          setActive={setShowModal}
+    <div className={styles.wrapper}>
+      <Container>
+        <FilteredList
+          items={tests}
+          onSearch={onSearch}
+          onSort={onSort}
+          isError={isError}
+          isLoading={isLoading || isFetching}
+          renderItemContent={(test) => (
+            <TestListItem
+              test={test}
+              toggleModal={toggleModal('assign')}
+            />
+          )}
         >
-          <FormModalLayout
-            title="Создание теста"
-            form={<CreateTestForm toggleModal={toggleModal} />}
-          />
-        </Modal>
+          <ButtonAddTest onClick={toggleModal('create')} />
+        </FilteredList>
+      </Container>
+      <Portal>
+        <CreateTestModal
+          toggleModal={toggleModal('create')}
+          showModal={showCreateTestModal}
+          setShowModal={setShowCreateTestModal}
+        />
+        <AssigneTestModal
+          testId={selectedTest}
+          showModal={showAssignModal}
+          setShowModal={setShowAssignModal}
+        />
       </Portal>
-    </>
+    </div>
   );
 };
 

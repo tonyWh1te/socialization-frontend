@@ -2,8 +2,11 @@ import { useField } from 'formik';
 import clsx from 'clsx';
 import styles from './InputText.module.css';
 
+// TODO: сделать универсальный input и обернуть в отдельном компоненте в formik
+
+// input, предназначенный для formik
 const InputText = ({ name, ...props }) => {
-  const { rightIcon, wrapperClassNames, className, label, ...inputProps } = props;
+  const { rightIcon, wrapperClassNames, className, label, as = 'input', ...inputProps } = props;
 
   const [field, meta] = useField(name);
 
@@ -16,6 +19,8 @@ const InputText = ({ name, ...props }) => {
     { 'border-[#ff0000] bg-[#ff0000]/15': hasErrors },
     className,
   );
+
+  const Component = as;
 
   return (
     <div
@@ -32,14 +37,14 @@ const InputText = ({ name, ...props }) => {
       )}
 
       <div className="relative">
-        <input
-          className={inputClasses}
-          aria-label={name}
-          tabIndex={0}
+        <Component
           /* eslint-disable */
           {...field}
           {...inputProps}
           /* eslint-enable */
+          className={inputClasses}
+          aria-label={name}
+          tabIndex={0}
         />
         {rightIcon && <div className={styles.rightIcon}>{rightIcon}</div>}
       </div>

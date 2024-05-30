@@ -3,7 +3,16 @@ import { apiSlice } from '../../../app/api/apiSlice';
 const testApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTests: builder.query({
-      query: () => '/tests/',
+      query: (params) => {
+        const { search, sort } = params;
+        return {
+          url: '/tests/',
+          params: {
+            search,
+            ordering: sort,
+          },
+        };
+      },
       providesTags: ['Tests'],
       transformResponse: (response) => response.results,
     }),
@@ -16,14 +25,26 @@ const testApiSlice = apiSlice.injectEndpoints({
     }),
     addTest: builder.mutation({
       query: (test) => ({
-        url: '/tests/',
+        url: '/tests/create_test/',
         method: 'POST',
         body: test,
       }),
-      transformResponse: (response) => response.id,
+      transformResponse: (response) => response.result.id,
       invalidatesTags: ['Tests'],
+    }),
+    assignTest: builder.mutation({
+      query: (data) => ({
+        url: '/tests/appoint_test/',
+        method: 'POST',
+        body: data,
+      }),
     }),
   }),
 });
 
-export const { useGetTestsQuery, useDeleteTestMutation, useAddTestMutation } = testApiSlice;
+export const {
+  useGetTestsQuery,
+  useDeleteTestMutation,
+  useAddTestMutation,
+  useAssignTestMutation,
+} = testApiSlice;

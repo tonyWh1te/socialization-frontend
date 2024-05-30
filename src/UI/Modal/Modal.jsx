@@ -2,9 +2,13 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import styles from './Modal.module.css';
 
-const Modal = ({ children, active, setActive }) => {
+const Modal = ({ children, active, setActive, handleClose }) => {
   const onClose = () => {
     setActive(false);
+
+    if (handleClose) {
+      handleClose();
+    }
   };
 
   const onClickContent = (event) => {
@@ -29,6 +33,7 @@ const Modal = ({ children, active, setActive }) => {
         <button
           type="button"
           onClick={onClose}
+          className={styles.closeBtn}
         >
           <XMarkIcon className={styles.closeIcon} />
         </button>

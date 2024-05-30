@@ -1,0 +1,19 @@
+.wrapper {
+  @apply py-6;
+}
+
+.inner {
+  @apply flex justify-center;
+}
+
+.form {
+  @apply flex w-full max-w-[700px] flex-col items-center;
+}
+
+.button {
+  @apply mt-5;
+}
+
+.questionList {
+  @apply flex w-full flex-col gap-3;
+}

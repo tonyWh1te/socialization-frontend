@@ -1,11 +1,7 @@
 import { TestList } from '../../modules/TestList';
 
 function Tests() {
-  return (
-    <div>
-      <TestList />
-    </div>
-  );
+  return <TestList />;
 }
 
 export default Tests;

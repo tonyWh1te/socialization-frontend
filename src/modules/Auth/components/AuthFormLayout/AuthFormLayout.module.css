@@ -16,7 +16,7 @@ span {
 }
 
 .loginInput {
-  @apply w-[288px];
+  @apply mb-5 w-[288px];
 }
 
 .background {

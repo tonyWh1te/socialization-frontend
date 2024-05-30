@@ -13,7 +13,4 @@ export const ROLES = {
   Observed: 'observed',
   Tutor: 'tutor',
   Admin: 'admin',
-  // Observed: 'unroled user',
-  // Tutor: 'unroled user',
-  // Admin: 'unroled user',
 };

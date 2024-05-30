@@ -13,3 +13,9 @@
     @apply h-full min-w-[320px] overflow-x-hidden font-neucha text-base font-normal leading-snug text-black;
   }
 }
+
+@layer components {
+  .icon {
+    @apply h-7 w-7 cursor-pointer;
+  }
+}
