@@ -1,0 +1,11 @@
+.wrapper {
+  @apply relative w-full;
+}
+
+.addIcon {
+  @apply h-8 w-8 stroke-gray-500;
+}
+
+.addButton {
+  @apply absolute -right-16 top-0;
+}

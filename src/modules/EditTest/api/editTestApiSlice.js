@@ -10,20 +10,8 @@ const editTestApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Tests'],
     }),
-    getTest: builder.query({
-      query: (id) => `/tests/${id}/get_single_test/`,
-      keepUnusedDataFor: 0.1,
-      transformResponse: (response) => {
-        const test = response.result;
-        const transformedQuestions = test.questions.map((question) => ({
-          ...question,
-          open: false,
-        }));
-
-        return { ...test, questions: transformedQuestions };
-      },
-    }),
   }),
 });
 
-export const { useEditTestMutation, useGetTestQuery } = editTestApiSlice;
+// eslint-disable-next-line
+export const { useEditTestMutation } = editTestApiSlice;

@@ -9,6 +9,7 @@ import Container from './Container/Container';
 import Select from './Select/Select';
 import InputBase from './InputBase/InputBase';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
+import TestCard from './TestCard/TestCard';
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   InputBase,
   SpinnerBig,
   ErrorMessage,
+  TestCard,
 };

@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { Home, Users, Games, Tests, Profile, AuthPage, EditTest } from '../pages';
+import { Home, Users, Games, Tests, Profile, AuthPage, EditTest, PassTest } from '../pages';
 import { Layout, RequireAuth } from '../components';
 import { ROUTES } from './RouterConfig';
 import { ROLES } from '../utils/constants';
@@ -43,6 +43,10 @@ const Router = () => (
         <Route
           path={ROUTES.Tests}
           element={<Tests />}
+        />
+        <Route
+          path={ROUTES.PassingTest}
+          element={<PassTest />}
         />
       </Route>
 

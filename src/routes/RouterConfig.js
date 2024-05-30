@@ -8,4 +8,5 @@ export const ROUTES = {
   Profile: '/profile',
   Auth: '/auth',
   Unathorized: '/unauthorized',
+  PassingTest: '/tests/:id/pass',
 };
