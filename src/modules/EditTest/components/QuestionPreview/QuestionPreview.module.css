@@ -9,7 +9,3 @@
 .answerItem {
   @apply mr-2;
 }
-
-.required {
-  @apply align-top text-base text-red-500;
-}

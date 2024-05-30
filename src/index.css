@@ -19,3 +19,9 @@
     @apply h-7 w-7 cursor-pointer;
   }
 }
+
+@layer utilities {
+  .required {
+    @apply align-top text-base text-red-500;
+  }
+}
