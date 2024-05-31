@@ -10,6 +10,8 @@ import Select from './Select/Select';
 import InputBase from './InputBase/InputBase';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 import TestCard from './TestCard/TestCard';
+import Checkbox from './Checkbox/Checkbox';
+import FormikCheckbox from './FormikCheckbox/FormikCheckbox';
 
 export {
   Button,
@@ -24,4 +26,6 @@ export {
   SpinnerBig,
   ErrorMessage,
   TestCard,
+  Checkbox,
+  FormikCheckbox,
 };

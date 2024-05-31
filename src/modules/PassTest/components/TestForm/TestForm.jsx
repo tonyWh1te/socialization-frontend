@@ -9,7 +9,7 @@ import styles from './TestForm.module.css';
 const TestForm = ({ testId, userId }) => {
   const { data: test, isLoading, isError } = useGetTestQuery(testId);
 
-  const initValues = {
+  let initValues = {
     answers: [],
   };
 
@@ -24,6 +24,13 @@ const TestForm = ({ testId, userId }) => {
         className="mt-10"
       />
     );
+  }
+
+  if (test) {
+    // если checkbox, то нужен еще массив для ответов
+    initValues = {
+      answers: new Array(test.questions.length).fill(''),
+    };
   }
 
   const onSubmit = (values) => {
@@ -47,10 +54,11 @@ const TestForm = ({ testId, userId }) => {
                 method="post"
                 className={styles.form}
               >
-                {test.questions.map((question) => (
+                {test.questions.map((question, i) => (
                   <QuestionItem
                     key={question.id}
                     question={question}
+                    qIndex={i}
                   />
                 ))}
                 <Button
