@@ -1,4 +1,4 @@
-import styles from './ModalLayout.module.css';
+import styles from './ModalLayout.module.scss';
 
 const ModalLayout = ({ title, content }) => (
   <div className={styles.wrapper}>

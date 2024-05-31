@@ -1,0 +1,13 @@
+.creationForm {
+  width: 686px;
+  height: 487px;
+
+  @media (max-width: 640px) {
+    width: 300px;
+  }
+
+  .createButton {
+    position: absolute;
+    bottom: 40px;
+  }
+}

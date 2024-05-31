@@ -1,6 +1,6 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
-import styles from './Modal.module.css';
+import styles from './Modal.module.scss';
 
 const Modal = ({ children, active, setActive, handleClose }) => {
   const onClose = () => {
