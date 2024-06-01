@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import clsx from 'clsx';
-import styles from './Button.module.css';
+import styles from './Button.module.scss';
 
 const Button = forwardRef((props, ref) => {
   const { children, onClick, className, type = 'button', disabled = false } = props;

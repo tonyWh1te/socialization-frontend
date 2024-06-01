@@ -1,0 +1,53 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 844px;
+  min-height: 106px;
+  max-height: 106px;
+  padding-left: 40px;
+  padding-right: 40px;
+  box-sizing: border-box;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 1px;
+  color: #231c1c;
+  font-family: 'Neucha', sans-serif;
+  font-style: normal;
+
+  .navContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 778.2px;
+    min-width: 778.2px;
+    min-height: 106px;
+    max-height: 106px;
+
+    .navItem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 179.55px;
+      height: 47px;
+      cursor: pointer;
+    }
+
+    .navItemCurrent {
+      color: #fff;
+      background-color: #b367e2;
+      border-radius: 6px;
+      box-shadow: 4px 4px 0 rgba(135, 214, 181, 1);
+    }
+  }
+
+  .userProfile {
+    min-width: 65px;
+    max-width: 65px;
+    min-height: 60px;
+    max-height: 60px;
+    cursor: pointer;
+  }
+}

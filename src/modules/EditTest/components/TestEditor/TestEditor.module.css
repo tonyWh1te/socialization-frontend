@@ -7,13 +7,9 @@
 }
 
 .form {
-  @apply flex w-full max-w-[700px] flex-col items-center;
-}
-
-.button {
-  @apply mt-5;
+  @apply flex w-full max-w-[700px] flex-col;
 }
 
 .questionList {
-  @apply flex w-full flex-col gap-3;
+  @apply mb-5 flex w-full flex-col gap-3;
 }

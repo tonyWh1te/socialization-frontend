@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 export const ROUTES = {
   Home: '/',
   Users: '/users',
@@ -7,10 +8,5 @@ export const ROUTES = {
   Profile: '/profile',
   Auth: '/auth',
   Unathorized: '/unauthorized',
-};
-
-export const ROLES = {
-  Observed: 'observed',
-  Tutor: 'tutor',
-  Admin: 'administrator',
+  PassingTest: '/tests/:id/pass',
 };

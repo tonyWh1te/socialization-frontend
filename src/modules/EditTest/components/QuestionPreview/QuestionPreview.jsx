@@ -36,7 +36,7 @@ const QuestionPreview = ({ question }) => {
     <div className={styles.wrapper}>
       <h5 className={styles.title}>
         {question.title}
-        {question.required ? <span className={styles.required}> *</span> : ''}
+        {question.required && <span className="required"> *</span>}
       </h5>
       {renderQuestionContent(question)}
     </div>

@@ -1,5 +1,4 @@
-import TestCard from '../TestCard/TestCard';
-import { InputText } from '../../../../UI';
+import { InputText, TestCard } from '../../../../UI';
 import styles from './FormTop.module.css';
 
 const FormTop = () => (

@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useFormikContext } from 'formik';
 import { nanoid } from '@reduxjs/toolkit';
-import { InputText } from '../../../../UI';
+import { InputText, FormikSelect } from '../../../../UI';
 import QuestionFooter from '../QuestionFooter/QuestionFooter';
 import ListEditableAnswers from '../ListEditableAnswers/ListEditableAnswers';
-import FormikSelect from '../FormikSelect/FormikSelect';
 import TextAnswerPreview from '../TextAnswerPreview/TextAnswerPreview';
 import styles from './QuestionEdit.module.css';
 
@@ -87,6 +86,7 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
           placeholder="Вопрос"
         />
         <FormikSelect
+          className="w-2/3"
           name={`questions[${qIndex}].type`}
           options={selectOptions}
           onChange={onChangeQuestionType(question, qIndex)}

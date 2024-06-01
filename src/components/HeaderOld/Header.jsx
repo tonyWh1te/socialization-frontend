@@ -2,7 +2,7 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { UserCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import { mobileLinks, links } from '../Header/NavData';
+import { mobileLinks, links } from '../../UI/Header/NavData';
 import styles from './Header.module.css';
 
 const Header = () => {
