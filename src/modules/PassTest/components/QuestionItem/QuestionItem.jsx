@@ -1,30 +1,50 @@
-import { TestCard, InputText, FormikCheckbox } from '../../../../UI';
+import { TestCard, InputText, FormikCheckbox, FormikRadio } from '../../../../UI';
 import styles from './QuestionItem.module.css';
 
-const QuestionItem = ({ question, qIndex }) => {
+const QuestionItem = ({ question }) => {
   const renderQuestionContent = (q) => {
     switch (q.type) {
       case 'text':
         return (
           <InputText
             type="text"
-            name={`answers[${qIndex}]`}
-            required={q.required}
+            name={`${q.id}`}
           />
         );
 
       case 'checkbox':
         return (
-          <FormikCheckbox
-            label="Вариант ответа"
-            checkboxProps={{
-              value: '4',
-            }}
-            name={`answers[${qIndex}]`}
-            required={q.required}
-          />
+          <div className={styles.answers}>
+            {q.answers.map((a) => (
+              <FormikCheckbox
+                className={styles.answer}
+                key={a.id}
+                label={a.text}
+                checkboxProps={{
+                  value: a.id,
+                  name: `${q.id}`,
+                }}
+              />
+            ))}
+          </div>
         );
 
+      case 'radio':
+        return (
+          <div className={styles.answers}>
+            {q.answers.map((a) => (
+              <FormikRadio
+                className={styles.answer}
+                key={a.id}
+                label={a.text}
+                radioProps={{
+                  value: a.id,
+                  name: `${q.id}`,
+                }}
+              />
+            ))}
+          </div>
+        );
       default:
         return null;
     }

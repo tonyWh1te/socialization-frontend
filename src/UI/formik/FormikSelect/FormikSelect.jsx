@@ -1,7 +1,7 @@
 import { useField } from 'formik';
-import Checkbox from '../Checkbox/Checkbox';
+import Select from '../../Select/Select';
 
-const FormikCheckbox = ({ className, name, onChange, label, checkboxProps }) => {
+const FormikSelect = ({ name, options, className, onChange, selectProps }) => {
   const [field] = useField(name);
   const { onChange: onChangeField, ...fieldProps } = field;
 
@@ -14,16 +14,17 @@ const FormikCheckbox = ({ className, name, onChange, label, checkboxProps }) => 
   };
 
   return (
-    <Checkbox
-      label={label}
+    <Select
       className={className}
-      checkboxProps={{
-        onChange: fieldOnChange,
-        ...checkboxProps,
+      options={options}
+      selectProps={{
         ...fieldProps,
+        ...selectProps,
+        className,
+        onChange: fieldOnChange,
       }}
     />
   );
 };
 
-export default FormikCheckbox;
+export default FormikSelect;

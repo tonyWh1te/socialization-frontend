@@ -9,9 +9,7 @@ import styles from './TestForm.module.css';
 const TestForm = ({ testId, userId }) => {
   const { data: test, isLoading, isError } = useGetTestQuery(testId);
 
-  let initValues = {
-    answers: [],
-  };
+  const initValues = {};
 
   if (isLoading) {
     return <SpinnerBig className="mt-10" />;
@@ -27,14 +25,13 @@ const TestForm = ({ testId, userId }) => {
   }
 
   if (test) {
-    // если checkbox, то нужен еще массив для ответов
-    initValues = {
-      answers: new Array(test.questions.length).fill(''),
-    };
+    test.questions.forEach((q) => {
+      initValues[q.id] = q.type === 'checkbox' ? [] : '';
+    });
   }
 
   const onSubmit = (values) => {
-    console.log({ test_id: +testId, user_id: userId, values: values.answers });
+    console.log({ test_id: +testId, user_id: userId, values: values });
   };
 
   return (
@@ -54,11 +51,10 @@ const TestForm = ({ testId, userId }) => {
                 method="post"
                 className={styles.form}
               >
-                {test.questions.map((question, i) => (
+                {test.questions.map((question) => (
                   <QuestionItem
                     key={question.id}
                     question={question}
-                    qIndex={i}
                   />
                 ))}
                 <Button
