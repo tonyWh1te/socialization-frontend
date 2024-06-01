@@ -4,6 +4,8 @@ import { useGetTestQuery } from '../../../../app/api/common/testApiSlice';
 import { SpinnerBig, ErrorMessage, Container, Button } from '../../../../UI';
 import TestHeader from '../TestHeader/TestHeader';
 import QuestionItem from '../QuestionItem/QuestionItem';
+
+import { createValidationShema } from '../../utils/validation.helper';
 import styles from './TestForm.module.css';
 
 const TestForm = ({ testId, userId }) => {
@@ -45,6 +47,7 @@ const TestForm = ({ testId, userId }) => {
           <Formik
             initialValues={initValues}
             onSubmit={onSubmit}
+            validationSchema={createValidationShema(test?.questions || [])}
           >
             {({ handleSubmit }) => (
               <Form
@@ -58,7 +61,6 @@ const TestForm = ({ testId, userId }) => {
                   />
                 ))}
                 <Button
-                  className={styles.button}
                   type="submit"
                   disabled={false}
                   onClick={handleSubmit}

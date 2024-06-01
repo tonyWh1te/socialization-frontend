@@ -15,6 +15,8 @@ import Radio from './Radio/Radio';
 import FormikCheckbox from './formik/FormikCheckbox/FormikCheckbox';
 import FormikRadio from './formik/FormikRadio/FormikRadio';
 import FormikSelect from './formik/FormikSelect/FormikSelect';
+import Header from './Header/Header';
+import PageLayout from './layouts/PageLayout/PageLayout';
 
 export {
   Button,
@@ -34,4 +36,6 @@ export {
   Radio,
   FormikRadio,
   FormikSelect,
+  Header,
+  PageLayout,
 };

@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { Home, Users, Games, Tests, Profile, AuthPage, EditTest, PassTest } from '../pages';
-import { Layout, RequireAuth } from '../components';
+import { RequireAuth } from '../components';
+import { PageLayout } from '../UI';
 import { ROUTES } from './RouterConfig';
 import { ROLES } from '../utils/constants';
 
@@ -18,7 +19,7 @@ const Router = () => (
     />
 
     {/* private routes */}
-    <Route element={<Layout />}>
+    <Route element={<PageLayout />}>
       <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
         <Route
           path={ROUTES.EditTest}

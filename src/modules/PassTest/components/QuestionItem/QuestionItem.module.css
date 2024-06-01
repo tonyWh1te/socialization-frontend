@@ -9,3 +9,7 @@
 .answer {
   @apply mb-1 text-lg;
 }
+
+.error {
+  @apply border border-red-500;
+}

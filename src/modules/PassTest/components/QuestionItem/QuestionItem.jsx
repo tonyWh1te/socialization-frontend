@@ -1,7 +1,12 @@
+import { ErrorMessage, useFormikContext } from 'formik';
+import clsx from 'clsx';
+import ValidationErrorMessage from '../ValidationErrorMessage/ValidationErrorMessage';
 import { TestCard, InputText, FormikCheckbox, FormikRadio } from '../../../../UI';
 import styles from './QuestionItem.module.css';
 
 const QuestionItem = ({ question }) => {
+  const { errors } = useFormikContext();
+
   const renderQuestionContent = (q) => {
     switch (q.type) {
       case 'text':
@@ -51,13 +56,20 @@ const QuestionItem = ({ question }) => {
   };
 
   return (
-    <TestCard className={styles.question}>
+    <TestCard className={clsx(styles.question, { [styles.error]: errors[question.id] })}>
       <h5 className={styles.title}>
         {question.title}
         {question.required && <span className="required"> *</span>}
       </h5>
 
       {renderQuestionContent(question)}
+      {question.type !== 'text' && (
+        <ErrorMessage
+          name={`${question.id}`}
+          component={ValidationErrorMessage}
+          className={styles.error}
+        />
+      )}
     </TestCard>
   );
 };
