@@ -60,13 +60,15 @@ const TestForm = ({ testId, userId }) => {
                     question={question}
                   />
                 ))}
-                <Button
-                  type="submit"
-                  disabled={false}
-                  onClick={handleSubmit}
-                >
-                  Отправить
-                </Button>
+                <div className={styles.bottomForm}>
+                  <Button
+                    type="submit"
+                    disabled={false}
+                    onClick={handleSubmit}
+                  >
+                    Отправить
+                  </Button>
+                </div>
               </Form>
             )}
           </Formik>

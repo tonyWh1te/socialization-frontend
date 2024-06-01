@@ -111,6 +111,7 @@ const TestEditor = ({ id }) => {
                 />
 
                 <Button
+                  className={styles.saveButton}
                   type="submit"
                   disabled={isLoadingEdit}
                   onClick={handleSubmit}

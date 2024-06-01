@@ -13,3 +13,7 @@
 .questionList {
   @apply mb-5 flex w-full flex-col gap-3;
 }
+
+.saveButton {
+  @apply m-auto;
+}

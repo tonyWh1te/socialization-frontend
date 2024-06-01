@@ -21,7 +21,3 @@
 .error {
   @apply my-4;
 }
-
-.button {
-  @apply m-auto;
-}

@@ -9,3 +9,7 @@
 .form {
   @apply w-full;
 }
+
+.bottomForm {
+  @apply flex justify-center;
+}

@@ -60,7 +60,6 @@ const AssignComponentLayout = (props) => {
         </ul>
       )}
       <Button
-        className={styles.button}
         disabled={!selectedUsers.length || isAssigning}
         onClick={onAssign}
       >
