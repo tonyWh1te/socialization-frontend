@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// TODO: сделать универсальным для игр и тестов
+
 const initialState = {
   testSearch: '',
   sortValue: 'id',

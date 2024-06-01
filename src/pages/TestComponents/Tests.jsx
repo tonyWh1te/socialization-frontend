@@ -1,11 +1,16 @@
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../modules/Auth';
-import { TestList } from '../../modules/TestList';
+import { ComponentList } from '../../modules/ComponentList';
 
 function Tests() {
   const currentUser = useSelector(selectCurrentUser);
 
-  return <TestList currentUser={currentUser} />;
+  return (
+    <ComponentList
+      currentUser={currentUser}
+      listType="tests"
+    />
+  );
 }
 
 export default Tests;

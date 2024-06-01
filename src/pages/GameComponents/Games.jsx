@@ -1,11 +1,16 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../modules/Auth';
+import { ComponentList } from '../../modules/ComponentList';
 
-function Games() {
+function Tests() {
+  const currentUser = useSelector(selectCurrentUser);
+
   return (
-    <div>
-      <h1>Игры</h1>
-    </div>
+    <ComponentList
+      currentUser={currentUser}
+      listType="games"
+    />
   );
 }
 
-export default Games;
+export default Tests;

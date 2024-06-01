@@ -7,7 +7,7 @@ import { setSelectedTest } from '../../slice/testsSlice';
 import { useDeleteTestMutation } from '../../api/testApiSlice';
 import { convertDate } from '../../../../utils/helpers';
 import { ROLES } from '../../../../utils/constants';
-import styles from './TestListItem.module.css';
+import styles from './TestListItem.module.scss';
 
 const TestListItem = ({ test, toggleModal }) => {
   const [deleteTest] = useDeleteTestMutation();

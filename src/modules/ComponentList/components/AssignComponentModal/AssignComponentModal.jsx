@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useLazyGetObservedsQuery } from '../../../../app/api/common/usersApiSlice';
 import { useAssignTestMutation } from '../../api/testApiSlice';
-import AssignTestLayout from '../AssignTestLayout/AssignTestLayout';
+import { useAssignGameMutation } from '../../api/gameApiSlice';
+import AssignComponentLayout from '../AssignComponentLayout/AssignComponentLayout';
 import { Modal, ModalLayout } from '../../../../UI';
 
-const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
+const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const [
@@ -13,7 +14,10 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
     { isLoading: isUsersLoading, isFetching: isUsersFetching, isError: isUsersError, data: users },
   ] = useLazyGetObservedsQuery();
 
-  const [assignTest, { isLoading: isAssignTestLoading }] = useAssignTestMutation();
+  const useAssignMutationHook =
+    listType === 'tests' ? useAssignTestMutation : useAssignGameMutation;
+
+  const [assignComponent, { isLoading: isAssignComponentLoading }] = useAssignMutationHook();
 
   useEffect(() => {
     if (showModal) {
@@ -37,7 +41,7 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
 
   const onAssign = async () => {
     try {
-      await assignTest({ test_id: testId, users_ids: selectedUsers }).unwrap();
+      await assignComponent({ test_id: componentId, users_ids: selectedUsers }).unwrap();
 
       toast.success('Тест назначен');
     } catch (error) {
@@ -58,19 +62,19 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
       handleClose={onClose}
     >
       <ModalLayout
-        title="Назначить тест наблюдаемым"
+        title={`Назначить ${listType === 'tests' ? 'тест' : 'игру'} наблюдаемым`}
         content={
           // eslint-disable-next-line
-          <AssignTestLayout
+          <AssignComponentLayout
             onAssign={onAssign}
             selectedUsers={selectedUsers}
             onSelectUser={onSelectUser}
             onSearch={onSearch(showModal)}
-            testId={testId}
+            testId={componentId}
             users={users}
             isError={isUsersError}
             isUsersLoading={isUsersLoading || isUsersFetching}
-            isAssigning={isAssignTestLoading}
+            isAssigning={isAssignComponentLoading}
           />
         }
       />
@@ -78,4 +82,4 @@ const AssigneTestModal = ({ showModal, setShowModal, testId }) => {
   );
 };
 
-export default AssigneTestModal;
+export default AssignComponentModal;

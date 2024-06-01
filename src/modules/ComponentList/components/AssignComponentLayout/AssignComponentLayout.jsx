@@ -1,8 +1,8 @@
 import { SearchBar } from '../../../../components';
 import { Button, SpinnerMini, ErrorMessage } from '../../../../UI';
-import styles from './AssignTestLayout.module.css';
+import styles from './AssignComponentLayout.module.css';
 
-const AssignTestLayout = (props) => {
+const AssignComponentLayout = (props) => {
   const {
     users,
     isError,
@@ -70,4 +70,4 @@ const AssignTestLayout = (props) => {
   );
 };
 
-export default AssignTestLayout;
+export default AssignComponentLayout;
