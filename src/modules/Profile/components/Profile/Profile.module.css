@@ -1,0 +1,15 @@
+.wrapper {
+  @apply py-6;
+}
+
+.top {
+  @apply h-[300px] w-[800px];
+}
+
+.bottom {
+  @apply relative;
+}
+
+.button {
+  @apply left-1/3;
+}
