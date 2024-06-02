@@ -10,6 +10,7 @@ export default {
       },
       colors: {
         'dark-gray': '#5c5c5c',
+        'main-yellow': '#FFE068',
       },
       keyframes: {
         wiggle: {

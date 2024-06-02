@@ -5,7 +5,7 @@ import styles from './Button.module.scss';
 const Button = forwardRef((props, ref) => {
   const { children, onClick, className, type = 'button', disabled = false } = props;
 
-  const classes = clsx('bg-[#FFE068]', styles.button, className);
+  const classes = clsx('bg-main-yellow', styles.button, className);
 
   return (
     <button
