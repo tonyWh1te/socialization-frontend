@@ -1,12 +1,14 @@
 import { useState, useRef } from 'react';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { deleteFromStorage } from '@rehooks/local-storage';
+import { useChangeUserInfoMutation } from '../../api/profileApiSlice';
 import { logout } from '../../../Auth';
 
 import { defaultUserPic } from '../../../../assets';
-import { Container, Button, InputText, UploadFile } from '../../../../UI';
+import { Container, Button, InputText, UploadFile, SpinnerMini } from '../../../../UI';
 import { profileSchema } from '../../utils/validation.helper';
 import { getLocalStorageItem } from '../../../../utils/helpers';
 import { ALLOWED_TYPES, MAX_FILE_SIZE } from '../../utils/constants';
@@ -33,9 +35,11 @@ const inputFields = [
 
 const Profile = () => {
   const fileRef = useRef(null);
+  const [changeUserInfo, { isLoading, isError }] = useChangeUserInfoMutation();
+
   const user = JSON.parse(getLocalStorageItem('auth'))?.user;
 
-  const [preview, setPreview] = useState(user?.avatar || defaultUserPic);
+  const [preview, setPreview] = useState(user?.photo || defaultUserPic);
 
   const dispatch = useDispatch();
 
@@ -44,11 +48,11 @@ const Profile = () => {
     last_name: user.last_name,
     second_name: user?.second_name || '',
     email: user?.email || '',
-    avatar: user?.avatar || '',
+    photo: user?.photo || '',
   };
 
   const uploadedFileSchema = Yup.object({
-    avatar: Yup.mixed()
+    photo: Yup.mixed()
       .test('fileType', 'Данный тип файла не поддерживается', () => {
         const value = fileRef.current?.files[0];
 
@@ -69,13 +73,30 @@ const Profile = () => {
       }),
   });
 
+  const submitBtnText = isLoading ? <SpinnerMini /> : 'Сохранить';
+
   const onLogout = () => () => {
     deleteFromStorage('auth');
     dispatch(logout());
   };
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const onSubmit = async (values) => {
+    const formData = new FormData();
+
+    formData.append('login', user.login);
+    formData.append('name', values.name);
+    formData.append('last_name', values.last_name);
+    formData.append('second_name', values.second_name);
+    formData.append('email', values.email);
+    formData.append('photo', values.photo);
+
+    try {
+      await changeUserInfo({ id: user.id, data: values }).unwrap();
+
+      toast.success('Данные профиля обновлены');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onUpload =
@@ -84,8 +105,8 @@ const Profile = () => {
       const selectedFile = e.target.files[0];
 
       if (selectedFile) {
-        setFieldValue('avatar', selectedFile);
-        setTouched({ ...touched, avatar: true });
+        setFieldValue('photo', selectedFile);
+        setTouched({ ...touched, photo: true });
 
         if (!ALLOWED_TYPES.includes(selectedFile.type) || selectedFile.size > MAX_FILE_SIZE) {
           return;
@@ -127,7 +148,7 @@ const Profile = () => {
                     className={styles.upload}
                     onChange={onUpload(formikProps)}
                     inputProps={{
-                      name: 'avatar',
+                      name: 'photo',
                       accept: 'image/png, image/jpeg, image/jpg',
                     }}
                   />
@@ -147,7 +168,7 @@ const Profile = () => {
                       type="submit"
                       onClick={formikProps.handleSubmit}
                     >
-                      Сохранить
+                      {submitBtnText}
                     </Button>
                     <Button onClick={onLogout()}>Выйти</Button>
                   </div>
