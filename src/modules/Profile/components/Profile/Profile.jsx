@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { Formik } from 'formik';
-import { deleteFromStorage } from '@rehooks/local-storage';
 import { useChangeUserInfoMutation } from '../../api/profileApiSlice';
-import { logout } from '../../../Auth';
+import { logout, setUserCredentials, selectCurrentUser } from '../../../Auth';
 
 import { defaultUserPic } from '../../../../assets';
 import { Container, Button } from '../../../../UI';
@@ -13,15 +13,15 @@ import ChangePasswordModal from '../ChangePasswordModal/ChangePasswordModal';
 import ProfileInfoForm from '../ProfileInfoForm/ProfileInfoForm';
 
 import { profileSchema } from '../../utils/validation.helper';
-import { getLocalStorageItem } from '../../../../utils/helpers';
 import { ALLOWED_TYPES, MAX_FILE_SIZE } from '../../utils/constants';
 import styles from './Profile.module.css';
 
 const Profile = () => {
   const fileRef = useRef(null);
-  const [changeUserInfo, { isLoading, isError }] = useChangeUserInfoMutation();
 
-  const user = JSON.parse(getLocalStorageItem('auth'))?.user;
+  const [changeUserInfo] = useChangeUserInfoMutation();
+
+  const user = useSelector(selectCurrentUser);
 
   const [preview, setPreview] = useState(user?.photo || defaultUserPic);
   const [showModal, setShowModal] = useState(false);
@@ -33,7 +33,9 @@ const Profile = () => {
     last_name: user.last_name,
     second_name: user?.second_name || '',
     email: user?.email || '',
-    photo: user?.photo || '',
+    photo:
+      user?.photo ||
+      'https://sun1-14.userapi.com/impg/2HyxhX3LPnCdQSkbRUzIlOmIDYfh5XR34_rGXw/cswqOLvvxTY.jpg?size=959x1280&quality=95&sign=dbea8a83792346ec107993b3f664c4ea&type=album',
   };
 
   const uploadedFileSchema = Yup.object({
@@ -62,27 +64,28 @@ const Profile = () => {
     setShowModal(true);
   };
 
-  const onLogout = () => () => {
-    deleteFromStorage('auth');
+  const onLogout = () => {
     dispatch(logout());
   };
 
   const onSubmit = async (values) => {
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    formData.append('login', user.login);
-    formData.append('name', values.name);
-    formData.append('last_name', values.last_name);
-    formData.append('second_name', values.second_name);
-    formData.append('email', values.email);
-    formData.append('photo', values.photo);
+    // formData.append('login', user.login);
+    // formData.append('name', values.name);
+    // formData.append('last_name', values.last_name);
+    // formData.append('second_name', values.second_name);
+    // formData.append('email', values.email);
+    // formData.append('photo', values.photo);
 
     try {
-      await changeUserInfo({ id: user.id, data: values }).unwrap();
+      const res = await changeUserInfo({ id: user.id, data: values }).unwrap();
+
+      dispatch(setUserCredentials(res));
 
       toast.success('Данные профиля обновлены');
     } catch (error) {
-      console.error(error);
+      toast.error(error?.data?.detail || 'Что-то пошло не так');
     }
   };
 
@@ -128,7 +131,7 @@ const Profile = () => {
               )}
             </Formik>
             <div className={styles.bottom}>
-              <Button onClick={onLogout()}>Выйти</Button>
+              <Button onClick={onLogout}>Выйти</Button>
             </div>
           </div>
         </Container>

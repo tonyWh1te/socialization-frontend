@@ -7,15 +7,12 @@ const profileApiSlice = apiSlice.injectEndpoints({
         url: `/users/${id}/change_user_info/`,
         method: 'POST',
         body: data,
-        // headers: {
-        //   'Content-Type': 'multipart/form-data',
-        // },
       }),
-      //   invalidatesTags: ['User'],
+      transformResponse: (response) => response.result,
     }),
     changePassword: builder.mutation({
-      query: ({ id, ...data }) => ({
-        url: `/users/${id}/change_password/`,
+      query: (data) => ({
+        url: '/users/change_password/',
         method: 'POST',
         body: data,
       }),
