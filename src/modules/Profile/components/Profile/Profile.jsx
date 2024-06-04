@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { deleteFromStorage } from '@rehooks/local-storage';
+import { useChangeUserInfoMutation } from '../../api/profileApiSlice';
 import { logout } from '../../../Auth';
 
 import { defaultUserPic } from '../../../../assets';
@@ -18,9 +19,11 @@ import styles from './Profile.module.css';
 
 const Profile = () => {
   const fileRef = useRef(null);
+  const [changeUserInfo, { isLoading, isError }] = useChangeUserInfoMutation();
+
   const user = JSON.parse(getLocalStorageItem('auth'))?.user;
 
-  const [preview, setPreview] = useState(user?.avatar || defaultUserPic);
+  const [preview, setPreview] = useState(user?.photo || defaultUserPic);
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
@@ -30,11 +33,11 @@ const Profile = () => {
     last_name: user.last_name,
     second_name: user?.second_name || '',
     email: user?.email || '',
-    avatar: user?.avatar || '',
+    photo: user?.photo || '',
   };
 
   const uploadedFileSchema = Yup.object({
-    avatar: Yup.mixed()
+    photo: Yup.mixed()
       .test('fileType', 'Данный тип файла не поддерживается', () => {
         const value = fileRef.current?.files[0];
 
@@ -64,8 +67,23 @@ const Profile = () => {
     dispatch(logout());
   };
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const onSubmit = async (values) => {
+    const formData = new FormData();
+
+    formData.append('login', user.login);
+    formData.append('name', values.name);
+    formData.append('last_name', values.last_name);
+    formData.append('second_name', values.second_name);
+    formData.append('email', values.email);
+    formData.append('photo', values.photo);
+
+    try {
+      await changeUserInfo({ id: user.id, data: values }).unwrap();
+
+      toast.success('Данные профиля обновлены');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onUpload =
@@ -74,8 +92,8 @@ const Profile = () => {
       const selectedFile = e.target.files[0];
 
       if (selectedFile) {
-        setFieldValue('avatar', selectedFile);
-        setTouched({ ...touched, avatar: true });
+        setFieldValue('photo', selectedFile);
+        setTouched({ ...touched, photo: true });
 
         if (!ALLOWED_TYPES.includes(selectedFile.type) || selectedFile.size > MAX_FILE_SIZE) {
           return;

@@ -15,6 +15,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
       transformResponse: (response) => response.result,
+      providesTags: ['User'],
     }),
   }),
 });
