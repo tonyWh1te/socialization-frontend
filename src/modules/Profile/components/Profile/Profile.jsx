@@ -1,41 +1,27 @@
 import { useState, useRef } from 'react';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import { deleteFromStorage } from '@rehooks/local-storage';
 import { logout } from '../../../Auth';
 
 import { defaultUserPic } from '../../../../assets';
-import { Container, Button, InputText, UploadFile } from '../../../../UI';
+import { Container, Button } from '../../../../UI';
+import { Portal } from '../../../../components';
+import ChangePasswordModal from '../ChangePasswordModal/ChangePasswordModal';
+import ProfileInfoForm from '../ProfileInfoForm/ProfileInfoForm';
+
 import { profileSchema } from '../../utils/validation.helper';
 import { getLocalStorageItem } from '../../../../utils/helpers';
 import { ALLOWED_TYPES, MAX_FILE_SIZE } from '../../utils/constants';
 import styles from './Profile.module.css';
-
-const inputFields = [
-  {
-    name: 'name',
-    label: 'Имя',
-  },
-  {
-    name: 'last_name',
-    label: 'Фамилия',
-  },
-  {
-    name: 'second_name',
-    label: 'Отчество (при наличии)',
-  },
-  {
-    name: 'email',
-    label: 'Email',
-  },
-];
 
 const Profile = () => {
   const fileRef = useRef(null);
   const user = JSON.parse(getLocalStorageItem('auth'))?.user;
 
   const [preview, setPreview] = useState(user?.avatar || defaultUserPic);
+  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -69,6 +55,10 @@ const Profile = () => {
       }),
   });
 
+  const onShowModal = () => {
+    setShowModal(true);
+  };
+
   const onLogout = () => () => {
     deleteFromStorage('auth');
     dispatch(logout());
@@ -100,64 +90,38 @@ const Profile = () => {
     };
 
   return (
-    <div className={styles.wrapper}>
-      <Container>
-        <div className={styles.inner}>
-          <Formik
-            onSubmit={onSubmit}
-            initialValues={initialValues}
-            validationSchema={profileSchema.concat(uploadedFileSchema)}
-          >
-            {(formikProps) => (
-              <Form
-                method="post"
-                className={styles.form}
-              >
-                <div className={styles.left}>
-                  <div className={styles.avatarWrapper}>
-                    <img
-                      className={styles.avatar}
-                      src={preview}
-                      alt="avatar"
-                    />
-                  </div>
-                  <UploadFile
-                    fileRef={fileRef}
-                    label="Изменить фото"
-                    className={styles.upload}
-                    onChange={onUpload(formikProps)}
-                    inputProps={{
-                      name: 'avatar',
-                      accept: 'image/png, image/jpeg, image/jpg',
-                    }}
-                  />
-                </div>
-                <div className={styles.right}>
-                  {inputFields.map(({ name, label }) => (
-                    <InputText
-                      key={name}
-                      wrapperClassNames={styles.input}
-                      label={label}
-                      name={name}
-                    />
-                  ))}
-                  <div className={styles.saveButtonWrapper}>
-                    <Button
-                      className={styles.saveButton}
-                      type="submit"
-                      onClick={formikProps.handleSubmit}
-                    >
-                      Сохранить
-                    </Button>
-                    <Button onClick={onLogout()}>Выйти</Button>
-                  </div>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </Container>
-    </div>
+    <>
+      <div className={styles.wrapper}>
+        <Container>
+          <div className={styles.inner}>
+            <Formik
+              onSubmit={onSubmit}
+              initialValues={initialValues}
+              validationSchema={profileSchema.concat(uploadedFileSchema)}
+            >
+              {(formikProps) => (
+                <ProfileInfoForm
+                  formikProps={formikProps}
+                  preview={preview}
+                  onUpload={onUpload}
+                  onShowModal={onShowModal}
+                  fileRef={fileRef}
+                />
+              )}
+            </Formik>
+            <div className={styles.bottom}>
+              <Button onClick={onLogout()}>Выйти</Button>
+            </div>
+          </div>
+        </Container>
+      </div>
+      <Portal>
+        <ChangePasswordModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      </Portal>
+    </>
   );
 };
 
