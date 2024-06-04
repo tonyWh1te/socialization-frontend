@@ -17,6 +17,7 @@ import FormikRadio from './formik/FormikRadio/FormikRadio';
 import FormikSelect from './formik/FormikSelect/FormikSelect';
 import Header from './Header/Header';
 import PageLayout from './layouts/PageLayout/PageLayout';
+import AnimatedPage from './AnimatedPage/AnimatedPage';
 
 export {
   Button,
@@ -38,4 +39,5 @@ export {
   FormikSelect,
   Header,
   PageLayout,
+  AnimatedPage,
 };
