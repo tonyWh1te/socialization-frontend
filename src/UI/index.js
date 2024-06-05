@@ -17,6 +17,7 @@ import FormikRadio from './formik/FormikRadio/FormikRadio';
 import FormikSelect from './formik/FormikSelect/FormikSelect';
 import Header from './Header/Header';
 import PageLayout from './layouts/PageLayout/PageLayout';
+import UploadFile from './formik/UploadFile/UploadFile';
 import AnimatedPage from './AnimatedPage/AnimatedPage';
 
 export {
@@ -39,5 +40,6 @@ export {
   FormikSelect,
   Header,
   PageLayout,
+  UploadFile,
   AnimatedPage,
 };

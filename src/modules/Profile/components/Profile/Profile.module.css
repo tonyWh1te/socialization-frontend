@@ -1,0 +1,17 @@
+.wrapper {
+  @apply py-6;
+}
+
+.inner {
+  @apply mx-auto max-w-[800px];
+}
+
+.bottom {
+  @apply border-t border-t-[#d0d8dd] pt-3 text-center;
+}
+
+@media screen(md) {
+  .bottom {
+    @apply text-start;
+  }
+}
