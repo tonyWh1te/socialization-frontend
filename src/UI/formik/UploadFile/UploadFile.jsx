@@ -1,11 +1,8 @@
 import { useField } from 'formik';
-import { useRef } from 'react';
 import clsx from 'clsx';
 import styles from './UploadFile.module.css';
 
 const UploadFile = ({ className, label, fileRef, onChange, inputProps }) => {
-  // const fileRef = useRef(null);
-
   const { className: inputClassName, ...otherProps } = inputProps;
 
   const [field, meta] = useField(otherProps);

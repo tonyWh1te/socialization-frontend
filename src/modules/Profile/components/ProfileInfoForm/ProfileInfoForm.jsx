@@ -1,5 +1,6 @@
 import { Form } from 'formik';
 import { Button, UploadFile, InputText, SpinnerMini } from '../../../../UI';
+import { ROLES } from '../../../../utils/constants';
 import styles from './ProfileInfoForm.module.css';
 
 const inputFields = [
@@ -21,7 +22,7 @@ const inputFields = [
   },
 ];
 
-const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef }) => {
+const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef, userRole }) => {
   const submitBtnContent = formikProps.isSubmitting ? <SpinnerMini /> : 'Сохранить';
 
   return (
@@ -37,16 +38,18 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef 
             alt="avatar"
           />
         </div>
-        <UploadFile
-          fileRef={fileRef}
-          label="Изменить фото"
-          className={styles.upload}
-          onChange={onUpload(formikProps)}
-          inputProps={{
-            name: 'photo',
-            accept: 'image/png, image/jpeg, image/jpg',
-          }}
-        />
+        {userRole !== ROLES.Observed && (
+          <UploadFile
+            fileRef={fileRef}
+            label="Изменить фото"
+            className={styles.upload}
+            onChange={onUpload(formikProps)}
+            inputProps={{
+              name: 'photo',
+              accept: 'image/png, image/jpeg, image/jpg',
+            }}
+          />
+        )}
       </div>
       <div className={styles.right}>
         {inputFields.map(({ name, label }) => (
@@ -55,20 +58,24 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef 
             wrapperClassNames={styles.input}
             label={label}
             name={name}
+            disabled={userRole === ROLES.Observed}
           />
         ))}
         <div className={styles.saveButtonWrapper}>
-          <Button
-            className={styles.saveButton}
-            onClick={onShowModal}
-          >
-            Смена пароля
-          </Button>
+          {userRole !== ROLES.Observed && (
+            <Button
+              className={styles.saveButton}
+              onClick={onShowModal}
+            >
+              Смена пароля
+            </Button>
+          )}
+
           <Button
             className={styles.saveButton}
             type="submit"
             onClick={formikProps.handleSubmit}
-            disabled={formikProps.isSubmitting}
+            disabled={formikProps.isSubmitting || userRole === ROLES.Observed}
           >
             {submitBtnContent}
           </Button>

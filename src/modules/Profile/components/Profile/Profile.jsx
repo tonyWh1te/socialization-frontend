@@ -122,6 +122,7 @@ const Profile = () => {
             >
               {(formikProps) => (
                 <ProfileInfoForm
+                  userRole={user.role}
                   formikProps={formikProps}
                   preview={preview}
                   onUpload={onUpload}
