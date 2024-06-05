@@ -118,7 +118,7 @@ const ComponentList = ({ currentUser, listType }) => {
                   setShowModal={setShowCreateTestModal}
                 />
                 <AssignComponentModal
-                  testId={selectedTest}
+                  componentId={selectedTest}
                   showModal={showAssignModal}
                   setShowModal={setShowAssignModal}
                   listType={listType}
@@ -135,7 +135,7 @@ const ComponentList = ({ currentUser, listType }) => {
                   setShowModal={setShowAddGameModal}
                 />
                 <AssignComponentModal
-                  testId={selectedTest}
+                  componentId={selectedTest}
                   showModal={showAssignModal}
                   setShowModal={setShowAssignModal}
                   listType={listType}

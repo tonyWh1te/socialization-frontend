@@ -11,7 +11,13 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
 
   const [
     getObserveds,
-    { isLoading: isUsersLoading, isFetching: isUsersFetching, isError: isUsersError, data: users },
+    {
+      isLoading: isUsersLoading,
+      isFetching: isUsersFetching,
+      isError: isUsersError,
+      data: users,
+      isSuccess,
+    },
   ] = useLazyGetObservedsQuery();
 
   const useAssignMutationHook =
@@ -24,6 +30,14 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
       getObserveds({ search: '' });
     }
   }, [showModal]);
+
+  if (isSuccess) {
+    const selectedObserved = users.filter(({ tests }) =>
+      tests.some((test) => test.id === componentId),
+    );
+
+    setSelectedUsers(selectedObserved);
+  }
 
   const onSelectUser = (e) => {
     const { checked, value } = e.target;
@@ -41,7 +55,13 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
 
   const onAssign = async () => {
     try {
-      await assignComponent({ test_id: componentId, users_ids: selectedUsers }).unwrap();
+      const unlinkUsers = users.filter((u) => !selectedUsers.includes(u.id)).map((u) => u.id);
+
+      await assignComponent({
+        test_id: componentId,
+        link: selectedUsers,
+        unlink: unlinkUsers,
+      }).unwrap();
 
       toast.success('Тест назначен');
     } catch (error) {
