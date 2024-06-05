@@ -24,6 +24,7 @@ const testApiSlice = apiSlice.injectEndpoints({
         };
       },
       transformResponse: (response) => response.result.tests,
+      providesTags: ['ObservedTests'],
     }),
     deleteTest: builder.mutation({
       query: (id) => ({

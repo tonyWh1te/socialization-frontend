@@ -1,23 +1,31 @@
 import { Formik, Form } from 'formik';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { useGetTestQuery } from '../../../../app/api/common/testApiSlice';
+import { usePassTestMutation } from '../../api/passTestApiSlice';
 
-import { SpinnerBig, ErrorMessage, Container, Button } from '../../../../UI';
+import { SpinnerBig, ErrorMessage, Container, Button, SpinnerMini } from '../../../../UI';
 import TestHeader from '../TestHeader/TestHeader';
 import QuestionItem from '../QuestionItem/QuestionItem';
 
 import { createValidationShema } from '../../utils/validation.helper';
+import { transformAnswers } from '../../utils/data.helper';
 import styles from './TestForm.module.css';
 
 const TestForm = ({ testId, userId }) => {
-  const { data: test, isLoading, isError } = useGetTestQuery(testId);
+  const { data: test, isLoading: isTestLoading, isError: isErrorGetTest } = useGetTestQuery(testId);
+
+  const [passTest, { isLoading: isLoadingPassTest }] = usePassTestMutation();
+
+  const navigate = useNavigate();
 
   const initValues = {};
 
-  if (isLoading) {
+  if (isTestLoading) {
     return <SpinnerBig className="mt-10" />;
   }
 
-  if (isError) {
+  if (isErrorGetTest) {
     return (
       <ErrorMessage
         message="Ошибка загрузки теста"
@@ -32,8 +40,19 @@ const TestForm = ({ testId, userId }) => {
     });
   }
 
-  const onSubmit = (values) => {
-    console.log({ test_id: +testId, user_id: userId, values: values });
+  const sendBtnText = isLoadingPassTest ? <SpinnerMini /> : 'Отправить';
+
+  const onSubmit = async (values) => {
+    const testRes = { test_id: +testId, user_id: userId, answers: transformAnswers(values) };
+
+    try {
+      await passTest(testRes).unwrap();
+
+      toast.success('Тест пройден');
+      navigate('/tests', { replace: true });
+    } catch (error) {
+      toast.error(error?.data?.detail || 'Что-то пошло не так');
+    }
   };
 
   return (
@@ -63,10 +82,10 @@ const TestForm = ({ testId, userId }) => {
                 <div className={styles.bottomForm}>
                   <Button
                     type="submit"
-                    disabled={false}
+                    disabled={isLoadingPassTest}
                     onClick={handleSubmit}
                   >
-                    Отправить
+                    {sendBtnText}
                   </Button>
                 </div>
               </Form>
