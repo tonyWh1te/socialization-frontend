@@ -6,7 +6,7 @@ import { ROLES } from '../../../../utils/constants';
 import { defaultGameIcon } from '../../../../assets';
 import styles from './GameListItem.module.scss';
 
-// TODO: доделать верстку и функционал
+// TODO: доделать функционал
 
 const GametListItem = ({ game, toggleModal }) => {
   const { role } = useSelector(selectCurrentUser);
