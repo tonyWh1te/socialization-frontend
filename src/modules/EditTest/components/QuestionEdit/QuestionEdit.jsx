@@ -14,10 +14,6 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
 
   const selectOptions = [
     {
-      value: 'text',
-      label: 'Текст',
-    },
-    {
       value: 'radio',
       label: 'Один из списка',
     },

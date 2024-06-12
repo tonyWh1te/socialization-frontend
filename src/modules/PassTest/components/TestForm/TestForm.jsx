@@ -47,7 +47,6 @@ const TestForm = ({ testId, userId }) => {
 
     try {
       await passTest(testRes).unwrap();
-
       toast.success('Тест пройден');
       navigate('/tests', { replace: true });
     } catch (error) {
