@@ -1,7 +1,20 @@
+import { m } from 'framer-motion';
 import Sort from '../Sort/Sort';
 import SearchBar from '../SearchBar/SearchBar';
 import { SpinnerBig, ErrorMessage } from '../../UI';
 import styles from './FilteredList.module.css';
+
+const liVariants = {
+  visible: (i) => ({
+    y: 0,
+    opacity: 1,
+    transition: { delay: i * 0.2, duration: 0.2, type: 'ease' },
+  }),
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+};
 
 const FilteredList = ({
   items,
@@ -28,13 +41,17 @@ const FilteredList = ({
   ];
 
   const renderItems = (data, renderItem) => {
-    const renderedItems = data?.map((item) => (
-      <li
+    const renderedItems = data?.map((item, i) => (
+      <m.li
+        variants={liVariants}
+        initial="hidden"
+        animate="visible"
+        custom={i}
         className={styles.listItem}
         key={item?.id}
       >
         {renderItem(item)}
-      </li>
+      </m.li>
     ));
 
     return <ul className={styles.list}>{renderedItems}</ul>;
