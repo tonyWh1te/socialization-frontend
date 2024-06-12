@@ -12,7 +12,6 @@ const AssignComponentLayout = (props) => {
     onSelectUser,
     onAssign,
     isAssigning,
-    testId,
   } = props;
 
   const assignBtnContent = isAssigning ? <SpinnerMini /> : 'Назначить';
@@ -42,6 +41,7 @@ const AssignComponentLayout = (props) => {
               >
                 <Checkbox
                   label={`${user.last_name ?? 'фамилия'} ${user.name ?? 'имя'} ${user.second_name ?? ''}`}
+                  labelAlign="left"
                   labelClassName={styles.label}
                   checkboxProps={{
                     value: user?.id,
@@ -55,7 +55,7 @@ const AssignComponentLayout = (props) => {
         </ul>
       )}
       <Button
-        disabled={!selectedUsers.length || isAssigning}
+        disabled={isAssigning}
         onClick={onAssign}
       >
         {assignBtnContent}

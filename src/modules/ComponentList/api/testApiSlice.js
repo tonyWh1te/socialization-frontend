@@ -20,7 +20,10 @@ const testApiSlice = apiSlice.injectEndpoints({
       query: (params) => {
         const { id } = params;
         return {
-          url: `/tests/${id}/get_user_tests/`,
+          url: '/tests/get_user_tests/',
+          params: {
+            user_id: id,
+          },
         };
       },
       transformResponse: (response) => response.result.tests,

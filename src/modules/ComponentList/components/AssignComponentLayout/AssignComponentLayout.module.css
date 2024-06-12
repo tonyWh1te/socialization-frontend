@@ -11,7 +11,7 @@
 }
 
 .label {
-  @apply pr-2 text-lg;
+  @apply flex justify-between pr-2 text-lg;
 }
 
 .spinner {
