@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectCurrentUser } from '../../../Auth';
 import { setSelectedTest } from '../../slice/testsSlice';
+import { ItemListWrapper } from '../../../../UI';
 import { ROLES } from '../../../../utils/constants';
 import styles from './GameListItem.module.scss';
 
@@ -67,15 +68,13 @@ const GametListItem = ({ game, toggleModal }) => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.content}>
-        <div className={styles.info}>
-          <h3 className={styles.title}>{game.title}</h3>
-          <p className={styles.description}>{game.description}</p>
-        </div>
-        <div className={styles.buttons}>{renderGameButtons(role)}</div>
+    <ItemListWrapper>
+      <div className={styles.info}>
+        <h3 className={styles.title}>{game.title}</h3>
+        <p className={styles.description}>{game.description}</p>
       </div>
-    </div>
+      <div className={styles.buttons}>{renderGameButtons(role)}</div>
+    </ItemListWrapper>
   );
 };
 
