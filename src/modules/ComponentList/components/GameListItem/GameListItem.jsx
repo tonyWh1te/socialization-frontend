@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectCurrentUser } from '../../../Auth';
 import { setSelectedTest } from '../../slice/testsSlice';
+import { ItemListWrapper } from '../../../../UI';
 import { ROLES } from '../../../../utils/constants';
 import { defaultGameIcon } from '../../../../assets';
 import styles from './GameListItem.module.scss';

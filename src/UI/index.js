@@ -19,6 +19,7 @@ import Header from './Header/Header';
 import PageLayout from './layouts/PageLayout/PageLayout';
 import UploadFile from './formik/UploadFile/UploadFile';
 import AnimatedPage from './AnimatedPage/AnimatedPage';
+import ItemListWrapper from './layouts/ItemListWrapper/ItemListWrapper';
 
 export {
   Button,
@@ -42,4 +43,5 @@ export {
   PageLayout,
   UploadFile,
   AnimatedPage,
+  ItemListWrapper,
 };

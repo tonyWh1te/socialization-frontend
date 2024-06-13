@@ -6,6 +6,7 @@ import { selectCurrentUser } from '../../../Auth';
 import { setSelectedTest } from '../../slice/testsSlice';
 import { useDeleteTestMutation } from '../../api/testApiSlice';
 import { convertDate } from '../../../../utils/helpers';
+import { ItemListWrapper } from '../../../../UI';
 import { ROLES } from '../../../../utils/constants';
 import styles from './TestListItem.module.scss';
 
@@ -96,15 +97,13 @@ const TestListItem = ({ test, toggleModal }) => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.content}>
-        <div className={styles.info}>
-          <h3 className={styles.title}>{`${test.title} (${convertDate(test.created_at)})`}</h3>
-          <p className={styles.description}>{test.description}</p>
-        </div>
-        <div className={styles.buttons}>{renderTestButtons(role)}</div>
+    <ItemListWrapper>
+      <div className={styles.info}>
+        <h3 className={styles.title}>{`${test.title} (${convertDate(test.created_at)})`}</h3>
+        <p className={styles.description}>{test.description}</p>
       </div>
-    </div>
+      <div className={styles.buttons}>{renderTestButtons(role)}</div>
+    </ItemListWrapper>
   );
 };
 
