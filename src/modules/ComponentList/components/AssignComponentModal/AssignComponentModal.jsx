@@ -11,13 +11,7 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
 
   const [
     getObserveds,
-    {
-      isLoading: isUsersLoading,
-      isFetching: isUsersFetching,
-      isError: isUsersError,
-      data: users,
-      isSuccess,
-    },
+    { isLoading: isUsersLoading, isFetching: isUsersFetching, isError: isUsersError, data: users },
   ] = useLazyGetObservedsQuery();
 
   const useAssignMutationHook =
@@ -47,14 +41,6 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
       onObservedsRequest({ search: '' });
     }
   }, [showModal]);
-
-  if (isSuccess) {
-    const selectedObserved = users.filter(({ tests }) =>
-      tests.some((test) => test.id === componentId),
-    );
-
-    setSelectedUsers(selectedObserved);
-  }
 
   const onSelectUser = (e) => {
     const { checked, value } = e.target;
