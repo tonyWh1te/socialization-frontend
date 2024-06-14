@@ -73,13 +73,21 @@ const TestListItem = ({ test, toggleModal }) => {
         );
       case ROLES.Tutor:
         return (
-          <button
-            className={styles.button}
-            type="button"
-            onClick={onSelectTest(test.id)}
-          >
-            Назначить
-          </button>
+          <>
+            <button
+              className={styles.button}
+              type="button"
+              onClick={onSelectTest(test.id)}
+            >
+              Назначить
+            </button>
+            <Link
+              className={styles.button}
+              to={`/tests/${test.id}/edit`}
+            >
+              Редактировать
+            </Link>
+          </>
         );
       case ROLES.Observed:
         return (
