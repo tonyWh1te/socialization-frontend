@@ -10,12 +10,16 @@
   @apply mb-4 mr-2 self-center;
 }
 
+.inputs {
+  @apply mb-2 mr-2 flex basis-full flex-col gap-y-3;
+}
+
 .answerInputText {
-  @apply mr-2 basis-full;
+  @apply basis-full;
 }
 
 .inputPoints {
-  @apply basis-24;
+  @apply basis-2/12;
 }
 
 .deleteButton {
@@ -28,4 +32,14 @@
 
 .button {
   @apply self-end font-medium text-gray-500;
+}
+
+@media screen(sm) {
+  .inputs {
+    @apply m-0 flex-row;
+  }
+
+  .answerInputText {
+    @apply mr-2;
+  }
 }
