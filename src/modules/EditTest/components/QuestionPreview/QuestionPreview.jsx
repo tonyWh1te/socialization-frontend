@@ -14,6 +14,7 @@ const QuestionPreview = ({ question }) => {
           <label
             key={answer.id}
             htmlFor={`answer-key-${answer.id}`}
+            className="cursor-pointer"
           >
             <input
               className={styles.answerItem}
