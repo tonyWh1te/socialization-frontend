@@ -1,5 +1,7 @@
 import { Form } from 'formik';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import { Button, UploadFile, InputText, SpinnerMini } from '../../../../UI';
+import { userIconV2Big } from '../../../../assets';
 import { ROLES } from '../../../../utils/constants';
 import styles from './ProfileInfoForm.module.css';
 
@@ -22,7 +24,15 @@ const inputFields = [
   },
 ];
 
-const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef, userRole }) => {
+const ProfileInfoForm = ({
+  formikProps,
+  preview,
+  onUpload,
+  onShowModal,
+  fileRef,
+  userRole,
+  onFotoDelete,
+}) => {
   const submitBtnContent = formikProps.isSubmitting ? <SpinnerMini /> : 'Сохранить';
 
   return (
@@ -31,13 +41,34 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
       className={styles.form}
     >
       <div className={styles.left}>
-        <div className={styles.avatarWrapper}>
+        {preview ? (
+          <div className={styles.avatarWrapper}>
+            <div className={styles.avatarContainer}>
+              <img
+                className={styles.avatar}
+                src={preview}
+                alt="avatar"
+              />
+            </div>
+            {userRole !== ROLES.Observed && (
+              <button
+                type="button"
+                aria-label="Удалить фото"
+                className={styles.close}
+                onClick={onFotoDelete}
+              >
+                <XMarkIcon className={styles.icon} />
+              </button>
+            )}
+          </div>
+        ) : (
           <img
-            className={styles.avatar}
-            src={preview}
+            className={styles.defaultAvatar}
+            src={userIconV2Big}
             alt="avatar"
           />
-        </div>
+        )}
+
         {userRole !== ROLES.Observed && (
           <UploadFile
             fileRef={fileRef}
