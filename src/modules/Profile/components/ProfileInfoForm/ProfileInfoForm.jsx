@@ -85,12 +85,12 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
               label={label}
               name={name}
               type={type}
-              disabled={user.role === ROLES.Observed}
+              disabled={user.role === ROLES.observed.code}
             />
           );
         })}
         <div className={styles.saveButtonWrapper}>
-          {user.role !== ROLES.Observed && (
+          {user.role !== ROLES.observed.code && (
             <Button
               className={styles.saveButton}
               onClick={onShowModal}
@@ -102,7 +102,7 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
           <Button
             className={styles.saveButton}
             type="submit"
-            disabled={formikProps.isSubmitting || user.role === ROLES.Observed}
+            disabled={formikProps.isSubmitting || user.role === ROLES.observed.code}
           >
             {submitBtnContent}
           </Button>

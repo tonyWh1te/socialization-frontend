@@ -8,6 +8,7 @@ const usersApiSlice = apiSlice.injectEndpoints({
         params,
       }),
       transformResponse: (res) => res.results,
+      providesTags: ['Users'],
     }),
     getObserveds: builder.query({
       query: (params) => ({
