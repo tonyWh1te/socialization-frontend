@@ -46,7 +46,7 @@ const TestListItem = ({ test, toggleModal }) => {
 
   const renderTestButtons = (userRole) => {
     switch (userRole) {
-      case ROLES.Admin:
+      case ROLES.administrator.code:
         return (
           <>
             <button
@@ -72,7 +72,7 @@ const TestListItem = ({ test, toggleModal }) => {
             </button>
           </>
         );
-      case ROLES.Tutor:
+      case ROLES.tutor.code:
         return (
           <button
             className={styles.button}
@@ -82,7 +82,7 @@ const TestListItem = ({ test, toggleModal }) => {
             Назначить
           </button>
         );
-      case ROLES.Observed:
+      case ROLES.observed.code:
         return (
           <Link
             className={styles.button}

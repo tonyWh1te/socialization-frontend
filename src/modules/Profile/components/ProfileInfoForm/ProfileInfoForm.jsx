@@ -38,7 +38,7 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
             alt="avatar"
           />
         </div>
-        {userRole !== ROLES.Observed && (
+        {userRole !== ROLES.observed.code && (
           <UploadFile
             fileRef={fileRef}
             label="Изменить фото"
@@ -58,11 +58,11 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
             wrapperClassNames={styles.input}
             label={label}
             name={name}
-            disabled={userRole === ROLES.Observed}
+            disabled={userRole === ROLES.observed.code}
           />
         ))}
         <div className={styles.saveButtonWrapper}>
-          {userRole !== ROLES.Observed && (
+          {userRole !== ROLES.observed.code && (
             <Button
               className={styles.saveButton}
               onClick={onShowModal}
@@ -75,7 +75,7 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
             className={styles.saveButton}
             type="submit"
             onClick={formikProps.handleSubmit}
-            disabled={formikProps.isSubmitting || userRole === ROLES.Observed}
+            disabled={formikProps.isSubmitting || userRole === ROLES.observed.code}
           >
             {submitBtnContent}
           </Button>

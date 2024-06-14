@@ -7,6 +7,7 @@ import bg3Desktop from './images/background/bg3Desktop.svg';
 import spinner from './icons/spinner.svg';
 import defaultUserPic from './images/content/user-pic-default.png';
 import defaultGameIcon from './icons/default-game-icon.svg';
+import userIconV2 from './icons/user-icon-v2.svg';
 
 export {
   bg1Mobile,
@@ -17,5 +18,6 @@ export {
   bg3Desktop,
   spinner,
   defaultUserPic,
+  userIconV2,
   defaultGameIcon,
 };

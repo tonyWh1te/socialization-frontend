@@ -25,7 +25,7 @@ const GametListItem = ({ game, toggleModal }) => {
 
   const renderGameButtons = (userRole) => {
     switch (userRole) {
-      case ROLES.Admin:
+      case ROLES.administrator.code:
         return (
           <>
             <Link
@@ -50,7 +50,7 @@ const GametListItem = ({ game, toggleModal }) => {
             </button>
           </>
         );
-      case ROLES.Tutor:
+      case ROLES.tutor.code:
         return (
           <>
             <Link
@@ -68,7 +68,7 @@ const GametListItem = ({ game, toggleModal }) => {
             </button>
           </>
         );
-      case ROLES.Observed:
+      case ROLES.observed.code:
         return (
           <Link
             className={styles.button}

@@ -9,6 +9,7 @@ const profileApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
       transformResponse: (response) => response.result,
+      invalidatesTags: ['Users'],
     }),
     changePassword: builder.mutation({
       query: (data) => ({
