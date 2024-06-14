@@ -25,3 +25,7 @@
 .buttons {
   @apply flex gap-4 self-end;
 }
+
+.button {
+  @apply hover:underline;
+}
