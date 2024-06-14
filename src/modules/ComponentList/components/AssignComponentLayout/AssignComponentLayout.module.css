@@ -7,11 +7,11 @@
 }
 
 .item {
-  @apply mb-2 flex justify-between last:mb-0;
+  @apply mb-3 text-start last:mb-0;
 }
 
 .label {
-  @apply pr-2 text-lg;
+  @apply flex justify-between pr-2 text-lg;
 }
 
 .spinner {

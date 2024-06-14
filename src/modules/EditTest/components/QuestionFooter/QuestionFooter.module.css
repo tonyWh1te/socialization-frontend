@@ -18,6 +18,10 @@
   @apply ml-2;
 }
 
+.switchLabel {
+  @apply flex items-center;
+}
+
 .icon {
   @apply fill-gray-500;
 }

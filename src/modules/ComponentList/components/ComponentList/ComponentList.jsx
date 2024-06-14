@@ -9,7 +9,7 @@ import { Portal, FilteredList } from '../../../../components';
 import { Container } from '../../../../UI';
 import TestListItem from '../TestListItem/TestListItem';
 import GameListItem from '../GameListItem/GameListItem';
-import ButtonAddTest from '../ButtonAddTest/ButtonAddTest';
+import ButtonAddComponent from '../ButtonAddTest/ButtonAddComponent';
 import CreateTestModal from '../CreateTestModal/CreateTestModal';
 import AddGameModal from '../AddGameModal/AddGameModal';
 import AssignComponentModal from '../AssignComponentModal/AssignComponentModal';
@@ -101,8 +101,9 @@ const ComponentList = ({ currentUser, listType }) => {
           }}
         >
           {role !== ROLES.Observed && (
-            <ButtonAddTest
+            <ButtonAddComponent
               onClick={listType === 'tests' ? toggleModal('create') : toggleModal('add')}
+              type={listType === 'tests' ? 'tests' : 'games'}
             />
           )}
         </FilteredList>
@@ -118,7 +119,7 @@ const ComponentList = ({ currentUser, listType }) => {
                   setShowModal={setShowCreateTestModal}
                 />
                 <AssignComponentModal
-                  testId={selectedTest}
+                  componentId={selectedTest}
                   showModal={showAssignModal}
                   setShowModal={setShowAssignModal}
                   listType={listType}
@@ -135,7 +136,7 @@ const ComponentList = ({ currentUser, listType }) => {
                   setShowModal={setShowAddGameModal}
                 />
                 <AssignComponentModal
-                  testId={selectedTest}
+                  componentId={selectedTest}
                   showModal={showAssignModal}
                   setShowModal={setShowAssignModal}
                   listType={listType}

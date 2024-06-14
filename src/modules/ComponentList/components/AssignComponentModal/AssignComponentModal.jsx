@@ -20,8 +20,25 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
   const [assignComponent, { isLoading: isAssignComponentLoading }] = useAssignMutationHook();
 
   useEffect(() => {
+    const onObservedsRequest = async (params) => {
+      try {
+        const observeds = await getObserveds(params).unwrap();
+
+        const selectedObserved = observeds
+          .filter(
+            ({ tests }) => tests.some(({ test }) => test.id === componentId),
+            // eslint-disable-next-line
+          )
+          .map((u) => u.id);
+
+        setSelectedUsers(selectedObserved);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     if (showModal) {
-      getObserveds({ search: '' });
+      onObservedsRequest({ search: '' });
     }
   }, [showModal]);
 
@@ -41,9 +58,15 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
 
   const onAssign = async () => {
     try {
-      await assignComponent({ test_id: componentId, users_ids: selectedUsers }).unwrap();
+      const unlinkUsers = users.filter((u) => !selectedUsers.includes(u.id)).map((u) => u.id);
 
-      toast.success('Тест назначен');
+      await assignComponent({
+        test_id: componentId,
+        link: selectedUsers,
+        unlink: unlinkUsers,
+      }).unwrap();
+
+      toast.success('Успешно!');
     } catch (error) {
       toast.error(error?.data?.detail || 'Что-то пошло не так');
     }
@@ -51,7 +74,7 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
 
   const onSearch = (isModalShowed) => (query) => {
     if (isModalShowed) {
-      getObserveds({ search: query });
+      getObserveds({ search: query.trim() });
     }
   };
 
@@ -62,7 +85,7 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
       handleClose={onClose}
     >
       <ModalLayout
-        title={`Назначить ${listType === 'tests' ? 'тест' : 'игру'} наблюдаемым`}
+        title={`Назначить/отвязать ${listType === 'tests' ? 'тест' : 'игру'} наблюдаемым`}
         content={
           // eslint-disable-next-line
           <AssignComponentLayout
@@ -70,7 +93,6 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
             selectedUsers={selectedUsers}
             onSelectUser={onSelectUser}
             onSearch={onSearch(showModal)}
-            testId={componentId}
             users={users}
             isError={isUsersError}
             isUsersLoading={isUsersLoading || isUsersFetching}

@@ -3,7 +3,8 @@
   border-radius: 8px;
   border: 1px solid #231c1c;
   background-color: #fff;
-  padding: 20px;
+  padding: 10px;
+  height: 94px;
   transition: all 0.3s ease-out;
 
   &:hover {
@@ -18,6 +19,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
+  height: 74px;
 }
 
 .buttons {
@@ -27,26 +29,44 @@
   align-self: center;
 }
 
-.title {
-  margin-bottom: 4px;
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 16px;
-  font-weight: bold;
-}
-
 .info {
   margin-bottom: 12px;
   text-align: center;
+  min-width: 70%;
+  max-width: 70%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+  height: fit-content;
 }
 
-.description {
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.gameTextInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: fit-content;
+  width: fit-content;
+  margin-left: 20px;
+
+  .title {
+    margin-bottom: 4px;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .description {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .button {

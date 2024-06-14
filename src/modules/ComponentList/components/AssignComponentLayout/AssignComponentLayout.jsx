@@ -1,5 +1,5 @@
 import { SearchBar } from '../../../../components';
-import { Button, SpinnerMini, ErrorMessage } from '../../../../UI';
+import { Button, SpinnerMini, ErrorMessage, Checkbox } from '../../../../UI';
 import styles from './AssignComponentLayout.module.css';
 
 const AssignComponentLayout = (props) => {
@@ -12,7 +12,6 @@ const AssignComponentLayout = (props) => {
     onSelectUser,
     onAssign,
     isAssigning,
-    testId,
   } = props;
 
   const assignBtnContent = isAssigning ? <SpinnerMini /> : 'Назначить';
@@ -33,26 +32,22 @@ const AssignComponentLayout = (props) => {
       {!isUsersLoading && !isError && users && (
         <ul className={styles.list}>
           {users.map((user) => {
-            const isAssigned = user.tests.some(({ test }) => test.id === testId);
+            const isAssigned = selectedUsers.includes(user.id);
 
             return (
               <li
                 className={styles.item}
                 key={user.id}
               >
-                <label
-                  className={styles.label}
-                  htmlFor={user.id}
-                >
-                  {`${user.last_name ?? 'фамилия'} ${user.name ?? 'имя'} ${user.second_name ?? ''}`}
-                </label>
-                <input
-                  type="checkbox"
-                  id={user.id}
-                  value={user?.id}
-                  defaultChecked={isAssigned}
-                  disabled={isAssigned}
-                  onChange={onSelectUser}
+                <Checkbox
+                  label={`${user.last_name ?? 'фамилия'} ${user.name ?? 'имя'} ${user.second_name ?? ''}`}
+                  labelAlign="left"
+                  labelClassName={styles.label}
+                  checkboxProps={{
+                    value: user?.id,
+                    defaultChecked: isAssigned,
+                    onChange: onSelectUser,
+                  }}
                 />
               </li>
             );
@@ -60,7 +55,7 @@ const AssignComponentLayout = (props) => {
         </ul>
       )}
       <Button
-        disabled={!selectedUsers.length || isAssigning}
+        disabled={isAssigning}
         onClick={onAssign}
       >
         {assignBtnContent}

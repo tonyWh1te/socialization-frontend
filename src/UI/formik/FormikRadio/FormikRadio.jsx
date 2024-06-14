@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import Radio from '../../Radio/Radio';
 
-const FormikRadio = ({ className, label, radioProps }) => {
+const FormikRadio = ({ className, label, labelClassName, alignLabel = 'left', radioProps }) => {
   const { className: radioClassName, ...otherProps } = radioProps;
 
   const [field] = useField(otherProps);
@@ -9,6 +9,8 @@ const FormikRadio = ({ className, label, radioProps }) => {
   return (
     <Radio
       label={label}
+      alignLabel={alignLabel}
+      labelClassName={labelClassName}
       className={className}
       radioProps={{
         ...field,

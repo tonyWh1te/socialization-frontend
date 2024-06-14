@@ -1,6 +1,6 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { Field } from 'formik';
 import { Square2StackIcon, TrashIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
+import { FormikCheckbox } from '../../../../UI';
 import { onFieldArrayControl } from '../../utils/form.helper';
 import styles from './QuestionFooter.module.css';
 
@@ -41,19 +41,15 @@ const QuestionFooter = ({ qIndex, question, arrayHelpers, onShowPoints }) => {
           <TrashIcon className={`icon ${styles.icon}`} />
         </button>
 
-        <div className={styles.required}>
-          <label
-            className={styles.switchLabel}
-            htmlFor={`questions[${qIndex}].required`}
-          >
-            Обязательный вопрос
-            <Field
-              className={styles.switch}
-              type="checkbox"
-              name={`questions[${qIndex}].required`}
-            />
-          </label>
-        </div>
+        <FormikCheckbox
+          className={styles.required}
+          label="Обязательный вопрос"
+          labelClassName={styles.switchLabel}
+          checkboxProps={{
+            name: `questions[${qIndex}].required`,
+            className: styles.switch,
+          }}
+        />
       </div>
     </div>
   );

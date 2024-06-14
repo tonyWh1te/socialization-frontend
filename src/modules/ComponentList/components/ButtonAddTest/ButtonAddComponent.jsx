@@ -1,20 +1,19 @@
-import styles from './ButtonAddTest.module.scss';
+import styles from './ButtonAddComponent.module.scss';
 import AddFileIcon from '../../../../assets/icons/add-file-icon.svg';
 
-const ButtonAddTest = ({ onClick }) => (
+const ButtonAddComponent = ({ onClick, type }) => (
   <button
     className={`group ${styles.button}`}
     onClick={onClick}
     type="button"
   >
-    {/* <DocumentPlusIcon className={`group-hover:fill-white ${styles.icon}`} /> */}
     <img
       className={`group-hover:fill-white ${styles.icon}`}
       src={AddFileIcon}
       alt="user"
     />
-    Создать тест
+    {type === 'tests' ? 'Создать тест' : 'Добавить игру'}
   </button>
 );
 
-export default ButtonAddTest;
+export default ButtonAddComponent;

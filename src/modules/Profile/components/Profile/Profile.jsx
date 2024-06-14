@@ -69,15 +69,6 @@ const Profile = () => {
   };
 
   const onSubmit = async (values) => {
-    // const formData = new FormData();
-
-    // formData.append('login', user.login);
-    // formData.append('name', values.name);
-    // formData.append('last_name', values.last_name);
-    // formData.append('second_name', values.second_name);
-    // formData.append('email', values.email);
-    // formData.append('photo', values.photo);
-
     try {
       const res = await changeUserInfo({ id: user.id, data: values }).unwrap();
 

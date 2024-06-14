@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { selectCurrentUser } from '../../../Auth';
 import { setSelectedTest } from '../../slice/testsSlice';
 import { ROLES } from '../../../../utils/constants';
+import { defaultGameIcon } from '../../../../assets';
 import styles from './GameListItem.module.scss';
 
-// TODO: доделать верстку и функционал
+// TODO: доделать функционал
 
 const GametListItem = ({ game, toggleModal }) => {
   const { role } = useSelector(selectCurrentUser);
@@ -26,6 +27,12 @@ const GametListItem = ({ game, toggleModal }) => {
       case ROLES.Admin:
         return (
           <>
+            <Link
+              className={styles.button}
+              to={`/games/${game.id}/play`}
+            >
+              Запустить
+            </Link>
             <button
               className={styles.button}
               type="button"
@@ -44,13 +51,21 @@ const GametListItem = ({ game, toggleModal }) => {
         );
       case ROLES.Tutor:
         return (
-          <button
-            className={styles.button}
-            type="button"
-            onClick={onSelectGame(game.id)}
-          >
-            Назначить
-          </button>
+          <>
+            <Link
+              className={styles.button}
+              to={`/games/${game.id}/play`}
+            >
+              Запустить
+            </Link>
+            <button
+              className={styles.button}
+              type="button"
+              onClick={onSelectGame(game.id)}
+            >
+              Назначить
+            </button>
+          </>
         );
       case ROLES.Observed:
         return (
@@ -70,8 +85,14 @@ const GametListItem = ({ game, toggleModal }) => {
     <div className={styles.wrapper}>
       <div className={styles.content}>
         <div className={styles.info}>
-          <h3 className={styles.title}>{game.title}</h3>
-          <p className={styles.description}>{game.description}</p>
+          <img
+            src={game.icon === undefined ? defaultGameIcon : game.icon}
+            alt="default game icon"
+          />
+          <div className={styles.gameTextInfo}>
+            <h3 className={styles.title}>{game.title}</h3>
+            <p className={styles.description}>{game.description}</p>
+          </div>
         </div>
         <div className={styles.buttons}>{renderGameButtons(role)}</div>
       </div>
