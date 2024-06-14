@@ -39,7 +39,7 @@ const ComponentList = ({ currentUser, listType }) => {
     isFetching,
   } = useGetAdminQueryHook(
     { search: searchValue.toLowerCase(), sort: sortValue },
-    { skip: role === ROLES.Observed },
+    { skip: role === ROLES.observed.code },
   );
 
   const {
@@ -47,7 +47,7 @@ const ComponentList = ({ currentUser, listType }) => {
     isLoading: isObservedComponentsLoading,
     isFetching: isObservedComponentsFetching,
     isError: isObservedComponentsError,
-  } = useGetObserverQueryHook({ id }, { skip: role !== ROLES.Observed });
+  } = useGetObserverQueryHook({ id }, { skip: role !== ROLES.observed.code });
 
   const dispatch = useDispatch();
 
@@ -100,7 +100,7 @@ const ComponentList = ({ currentUser, listType }) => {
             return null;
           }}
         >
-          {role !== ROLES.Observed && (
+          {role !== ROLES.observed.code && (
             <ButtonAddTest
               onClick={listType === 'tests' ? toggleModal('create') : toggleModal('add')}
             />

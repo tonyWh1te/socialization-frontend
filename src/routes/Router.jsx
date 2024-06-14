@@ -26,14 +26,20 @@ const Router = () => {
 
       {/* private routes */}
       <Route element={<PageLayout />}>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+        <Route element={<RequireAuth allowedRoles={[ROLES.administrator.code]} />}>
           <Route
             path={ROUTES.EditTest}
             element={<EditTest />}
           />
         </Route>
 
-        <Route element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.Tutor, ROLES.Observed]} />}>
+        <Route
+          element={
+            <RequireAuth
+              allowedRoles={[ROLES.administrator.code, ROLES.tutor.code, ROLES.observed.code]}
+            />
+          }
+        >
           <Route
             index
             path={ROUTES.Home}
@@ -57,7 +63,9 @@ const Router = () => {
           />
         </Route>
 
-        <Route element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.Tutor]} />}>
+        <Route
+          element={<RequireAuth allowedRoles={[ROLES.administrator.code, ROLES.tutor.code]} />}
+        >
           <Route
             path={ROUTES.Users}
             element={<Users />}

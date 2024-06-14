@@ -1,3 +1,27 @@
 .info {
-  @apply flex;
+  @apply flex items-center gap-3;
+}
+
+.imageWrapper {
+  @apply h-16 w-16 overflow-hidden rounded-full;
+}
+
+.name {
+  @apply mb-3 text-xl;
+}
+
+.role {
+  @apply text-sm;
+}
+
+.delete {
+  @apply absolute right-1 top-1;
+}
+
+.icon {
+  @apply h-6 w-6;
+}
+
+.buttons {
+  @apply flex gap-4 self-end;
 }
