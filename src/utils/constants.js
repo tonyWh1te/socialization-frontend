@@ -1,6 +1,15 @@
 // eslint-disable-next-line
 export const ROLES = {
-  Observed: 'observed',
-  Tutor: 'tutor',
-  Admin: 'administrator',
+  observed: {
+    code: 'observed',
+    label: 'Наблюдаемый',
+  },
+  tutor: {
+    code: 'tutor',
+    label: 'Наставник',
+  },
+  administrator: {
+    code: 'administrator',
+    label: 'Старший наставник',
+  },
 };

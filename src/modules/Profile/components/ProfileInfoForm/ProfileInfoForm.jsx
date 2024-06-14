@@ -89,11 +89,11 @@ const ProfileInfoForm = ({
             wrapperClassNames={styles.input}
             label={label}
             name={name}
-            disabled={userRole === ROLES.Observed}
+            disabled={userRole === ROLES.observed.code}
           />
         ))}
         <div className={styles.saveButtonWrapper}>
-          {userRole !== ROLES.Observed && (
+          {userRole !== ROLES.observed.code && (
             <Button
               className={styles.saveButton}
               onClick={onShowModal}
@@ -106,7 +106,7 @@ const ProfileInfoForm = ({
             className={styles.saveButton}
             type="submit"
             onClick={formikProps.handleSubmit}
-            disabled={formikProps.isSubmitting || userRole === ROLES.Observed}
+            disabled={formikProps.isSubmitting || userRole === ROLES.observed.code}
           >
             {submitBtnContent}
           </Button>
