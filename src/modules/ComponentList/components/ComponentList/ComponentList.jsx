@@ -6,10 +6,9 @@ import { setTestSearch, setSortValue } from '../../slice/testsSlice';
 import { selectTestSearchValue, selectSortValue, selectSelectedTest } from '../../slice/selectors';
 
 import { Portal, FilteredList } from '../../../../components';
-import { Container } from '../../../../UI';
+import { Container, ButtonAddItemList } from '../../../../UI';
 import TestListItem from '../TestListItem/TestListItem';
 import GameListItem from '../GameListItem/GameListItem';
-import ButtonAddComponent from '../ButtonAddTest/ButtonAddComponent';
 import CreateTestModal from '../CreateTestModal/CreateTestModal';
 import AddGameModal from '../AddGameModal/AddGameModal';
 import AssignComponentModal from '../AssignComponentModal/AssignComponentModal';
@@ -69,6 +68,8 @@ const ComponentList = ({ currentUser, listType }) => {
     dispatch(setSortValue(sortProperty));
   };
 
+  const addBtnText = listType === 'tests' ? 'Добавить тест' : 'Добавить игру';
+
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -101,10 +102,11 @@ const ComponentList = ({ currentUser, listType }) => {
           }}
         >
           {role !== ROLES.observed.code && (
-            <ButtonAddComponent
+            <ButtonAddItemList
               onClick={listType === 'tests' ? toggleModal('create') : toggleModal('add')}
-              type={listType === 'tests' ? 'tests' : 'games'}
-            />
+            >
+              {addBtnText}
+            </ButtonAddItemList>
           )}
         </FilteredList>
       </Container>

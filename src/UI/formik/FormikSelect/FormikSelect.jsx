@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import Select from '../../Select/Select';
 
-const FormikSelect = ({ name, options, className, onChange, selectProps }) => {
+const FormikSelect = ({ name, options, className, label, onChange, selectProps }) => {
   const [field] = useField(name);
   const { onChange: onChangeField, ...fieldProps } = field;
 
@@ -17,10 +17,10 @@ const FormikSelect = ({ name, options, className, onChange, selectProps }) => {
     <Select
       className={className}
       options={options}
+      label={label}
       selectProps={{
         ...fieldProps,
         ...selectProps,
-        className,
         onChange: fieldOnChange,
       }}
     />

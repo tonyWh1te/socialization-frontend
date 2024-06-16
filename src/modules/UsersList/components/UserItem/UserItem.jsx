@@ -41,14 +41,6 @@ const UserItem = ({ user }) => {
         >
           Профиль
         </button>
-        {role === ROLES.observed.code && (
-          <button
-            type="button"
-            className={styles.button}
-          >
-            Назначить
-          </button>
-        )}
         {id !== currentUserId && (
           <button
             className={styles.delete}

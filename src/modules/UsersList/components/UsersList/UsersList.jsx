@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useGetUsersQuery } from '../../../../app/api/common/usersApiSlice';
 
-import { Container } from '../../../../UI';
-import { FilteredList } from '../../../../components';
+import { Container, ButtonAddItemList, Modal, ModalLayout } from '../../../../UI';
+import { FilteredList, Portal } from '../../../../components';
+import NewUserForm from '../NewUserForm/NewUserForm';
 import UserItem from '../UserItem/UserItem';
 import styles from './UsersList.module.css';
 
 const UsersList = () => {
   const [searchValue, setSearchValue] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const { data, isLoading, isFetching, isError } = useGetUsersQuery({
     search: searchValue.toLowerCase(),
@@ -15,6 +17,10 @@ const UsersList = () => {
 
   const onSearch = (query) => {
     setSearchValue(query);
+  };
+
+  const onShowModal = () => {
+    setShowModal(true);
   };
 
   return (
@@ -26,8 +32,21 @@ const UsersList = () => {
           isError={isError}
           isLoading={isLoading || isFetching}
           renderItemContent={(user) => <UserItem user={user} />}
-        />
+        >
+          <ButtonAddItemList onClick={onShowModal}> Добавить пользователя </ButtonAddItemList>
+        </FilteredList>
       </Container>
+      <Portal>
+        <Modal
+          active={showModal}
+          setActive={setShowModal}
+        >
+          <ModalLayout
+            title="Добавить пользователя"
+            content={<NewUserForm />}
+          />
+        </Modal>
+      </Portal>
     </div>
   );
 };
