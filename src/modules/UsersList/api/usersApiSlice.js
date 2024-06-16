@@ -8,9 +8,17 @@ const usersApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['Users'],
+    }),
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/users/${id}/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Users'],
     }),
   }),
 });
 
 // eslint-disable-next-line
-export const { useAddUserMutation } = usersApiSlice;
+export const { useAddUserMutation, useDeleteUserMutation } = usersApiSlice;

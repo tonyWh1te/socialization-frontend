@@ -1,22 +1,12 @@
-import { Form } from 'formik';
-import { Button, InputText, SpinnerMini, FormikSelect } from '../../../../UI';
+import { Button, InputText, FormikSelect, SpinnerMini } from '../../../../UI';
 import { ROLES } from '../../../../utils/constants';
-import styles from './NewUserFormLayout.module.css';
+import styles from './NewUserFormStage1.module.css';
 
-const NewUserFormLayout = ({
-  isSubmitting,
-  handleSubmit,
-  selectRoles,
-  formValues,
-  selectTutor,
-}) => {
-  const submitButtonText = isSubmitting ? 'Добавление...' : 'Добавить';
+const NewUserFormStage1 = ({ isSubmitting, selectRoles, formValues, selectTutor }) => {
+  const submitBtnContent = isSubmitting ? <SpinnerMini /> : 'Далее';
 
   return (
-    <Form
-      method="post"
-      className={styles.form}
-    >
+    <>
       <div className={styles.row}>
         <InputText
           wrapperClassNames={styles.inputText}
@@ -82,17 +72,10 @@ const NewUserFormLayout = ({
         )}
       </div>
       <div className={styles.btnRow}>
-        <Button
-          className={styles.addButton}
-          disabled={isSubmitting}
-          onClick={handleSubmit}
-          type="submit"
-        >
-          {submitButtonText}
-        </Button>
+        <Button type="submit">{submitBtnContent}</Button>
       </div>
-    </Form>
+    </>
   );
 };
 
-export default NewUserFormLayout;
+export default NewUserFormStage1;

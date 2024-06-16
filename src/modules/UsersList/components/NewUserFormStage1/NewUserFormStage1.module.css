@@ -1,7 +1,3 @@
-.form {
-  @apply max-h-[536px] overflow-y-scroll pe-3;
-}
-
 .row {
   @apply mb-1 flex flex-col items-start gap-4;
 }
@@ -19,14 +15,10 @@
 }
 
 .selectInput {
-  @apply focus:border-focus-blue border-black;
+  @apply border-black focus:border-focus-blue;
 }
 
 @media screen(md) {
-  .form {
-    @apply overflow-auto p-0;
-  }
-
   .row {
     @apply flex-row;
   }

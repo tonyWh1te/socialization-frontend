@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 import { XCircleIcon } from '@heroicons/react/24/solid';
+import { toast } from 'react-toastify';
+import { useDeleteUserMutation } from '../../api/usersApiSlice';
 import { selectCurrentUser } from '../../../Auth';
 import { ItemListWrapper } from '../../../../UI';
 import { userIconV2 } from '../../../../assets';
@@ -10,7 +12,31 @@ import styles from './UserItem.module.css';
 const UserItem = ({ user }) => {
   const { id, name, role, photo, last_name: lastName, second_name: secondName } = user;
 
+  const [deleteUser] = useDeleteUserMutation();
+
   const { id: currentUserId } = useSelector(selectCurrentUser);
+
+  const onDelete = (userId) => async () => {
+    const toastId = toast.loading('Удаление пользователя...');
+
+    try {
+      await deleteUser(userId).unwrap();
+
+      toast.update(toastId, {
+        render: 'Пользователь удален',
+        type: 'success',
+        isLoading: false,
+        autoClose: 2000,
+      });
+    } catch (error) {
+      toast.update(toastId, {
+        render: 'Произошла ошибка при удалении пользователя',
+        type: 'error',
+        isLoading: false,
+        autoClose: 2000,
+      });
+    }
+  };
 
   return (
     <ItemListWrapper>
@@ -46,7 +72,7 @@ const UserItem = ({ user }) => {
             className={styles.delete}
             type="button"
             aria-label="Удалить пользователя"
-            onClick={() => {}}
+            onClick={onDelete(id)}
           >
             <XCircleIcon className={styles.icon} />
           </button>

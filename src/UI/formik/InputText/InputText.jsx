@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { useField } from 'formik';
 import clsx from 'clsx';
 import styles from './InputText.module.scss';
@@ -28,6 +29,8 @@ const InputText = ({ name, ...props }) => {
     className,
   );
 
+  const id = useId();
+
   const Component = as;
 
   return (
@@ -37,7 +40,7 @@ const InputText = ({ name, ...props }) => {
     >
       {label && (
         <label
-          htmlFor={name}
+          htmlFor={id}
           className={styles.label}
         >
           {label}
@@ -50,6 +53,7 @@ const InputText = ({ name, ...props }) => {
           {...field}
           {...inputProps}
           /* eslint-enable */
+          id={id}
           className={inputClasses}
           aria-label={name}
           tabIndex={0}

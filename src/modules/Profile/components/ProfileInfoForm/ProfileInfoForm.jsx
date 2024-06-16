@@ -50,7 +50,7 @@ const ProfileInfoForm = ({
                 alt="avatar"
               />
             </div>
-            {userRole !== ROLES.Observed && (
+            {userRole !== ROLES.observed.code && (
               <button
                 type="button"
                 aria-label="Удалить фото"
@@ -69,7 +69,7 @@ const ProfileInfoForm = ({
           />
         )}
 
-        {userRole !== ROLES.Observed && (
+        {userRole !== ROLES.observed.code && (
           <UploadFile
             fileRef={fileRef}
             label="Изменить фото"
