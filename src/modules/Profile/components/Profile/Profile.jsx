@@ -6,7 +6,6 @@ import { Formik } from 'formik';
 import { useChangeUserInfoMutation } from '../../api/profileApiSlice';
 import { logout, setUserCredentials, selectCurrentUser } from '../../../Auth';
 
-import { defaultUserPic } from '../../../../assets';
 import { Container, Button } from '../../../../UI';
 import { Portal } from '../../../../components';
 import ChangePasswordModal from '../ChangePasswordModal/ChangePasswordModal';
@@ -16,6 +15,8 @@ import { profileSchema } from '../../utils/validation.helper';
 import { ALLOWED_TYPES, MAX_FILE_SIZE } from '../../utils/constants';
 import styles from './Profile.module.css';
 
+const SERVER_URL = 'http://5.35.89.117:8084';
+
 const Profile = () => {
   const fileRef = useRef(null);
 
@@ -23,19 +24,17 @@ const Profile = () => {
 
   const user = useSelector(selectCurrentUser);
 
-  const [preview, setPreview] = useState(user?.photo || defaultUserPic);
+  const [preview, setPreview] = useState(user?.photo ? SERVER_URL + user.photo : null);
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
 
   const initialValues = {
-    name: user.name,
-    last_name: user.last_name,
+    name: user?.name || '',
+    last_name: user?.last_name || '',
     second_name: user?.second_name || '',
     email: user?.email || '',
-    photo:
-      user?.photo ||
-      'https://sun1-14.userapi.com/impg/2HyxhX3LPnCdQSkbRUzIlOmIDYfh5XR34_rGXw/cswqOLvvxTY.jpg?size=959x1280&quality=95&sign=dbea8a83792346ec107993b3f664c4ea&type=album',
+    photo: user?.photo ? SERVER_URL + user.photo : '',
   };
 
   const uploadedFileSchema = Yup.object({
@@ -80,13 +79,20 @@ const Profile = () => {
     }
   };
 
+  const onFotoDelete =
+    ({ setFieldValue }) =>
+    () => {
+      setPreview(null);
+      fileRef.current.value = null;
+      setFieldValue('photo', '');
+    };
+
   const onUpload =
     ({ setFieldValue, touched, setTouched }) =>
     (e) => {
       const selectedFile = e.target.files[0];
 
       if (selectedFile) {
-        setFieldValue('photo', selectedFile);
         setTouched({ ...touched, photo: true });
 
         if (!ALLOWED_TYPES.includes(selectedFile.type) || selectedFile.size > MAX_FILE_SIZE) {
@@ -96,6 +102,7 @@ const Profile = () => {
         const reader = new FileReader();
         reader.onloadend = () => {
           setPreview(reader.result);
+          setFieldValue('photo', reader.result);
         };
         reader.readAsDataURL(selectedFile);
       }
@@ -113,7 +120,8 @@ const Profile = () => {
             >
               {(formikProps) => (
                 <ProfileInfoForm
-                  userRole={user.role}
+                  onFotoDelete={onFotoDelete(formikProps)}
+                  userRole={user?.role}
                   formikProps={formikProps}
                   preview={preview}
                   onUpload={onUpload}

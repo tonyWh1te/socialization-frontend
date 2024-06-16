@@ -15,11 +15,19 @@
 }
 
 .avatarWrapper {
-  @apply relative mb-3 h-[200px] w-[200px] overflow-hidden rounded-full;
+  @apply relative mb-3 flex h-[200px] w-[200px];
+}
+
+.avatarContainer {
+  @apply w-full overflow-hidden rounded-full;
 }
 
 .avatar {
   @apply h-full w-full object-cover;
+}
+
+.defaultAvatar {
+  @apply mb-3;
 }
 
 .upload {
@@ -30,9 +38,17 @@
   @apply mt-2 text-red-500;
 }
 
+.close {
+  @apply absolute right-0 top-0;
+}
+
+.icon {
+  @apply h-6 w-6;
+}
+
 @media screen(sm) {
   .avatarWrapper {
-    @apply h-[300px] w-[300px];
+    @apply h-[250px] w-[250px];
   }
 }
 
