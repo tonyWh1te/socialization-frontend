@@ -33,19 +33,22 @@ const ListEditableAnswers = ({ type, qIndex, showPoints }) => {
                     id={`answer-key-${answer.id}`}
                     disabled
                   />
-                  <InputText
-                    wrapperClassNames={styles.answerInputText}
-                    name={`questions[${qIndex}].answers[${index}].text`}
-                  />
-
-                  {showPoints && (
+                  <div className={styles.inputs}>
                     <InputText
-                      type="number"
-                      wrapperClassNames={styles.inputPoints}
-                      min={0}
-                      name={`questions[${qIndex}].answers[${index}].point`}
+                      wrapperClassNames={styles.answerInputText}
+                      name={`questions[${qIndex}].answers[${index}].text`}
                     />
-                  )}
+
+                    {showPoints && (
+                      <InputText
+                        type="number"
+                        wrapperClassNames={styles.inputPoints}
+                        min={0}
+                        name={`questions[${qIndex}].answers[${index}].point`}
+                        className="text-center"
+                      />
+                    )}
+                  </div>
                   {answers.length > 1 && (
                     <button
                       className={styles.deleteButton}

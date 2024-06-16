@@ -26,7 +26,7 @@ const Router = () => {
 
       {/* private routes */}
       <Route element={<PageLayout />}>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+        <Route element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.Tutor]} />}>
           <Route
             path={ROUTES.EditTest}
             element={<EditTest />}

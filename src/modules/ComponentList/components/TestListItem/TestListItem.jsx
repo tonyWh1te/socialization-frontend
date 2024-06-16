@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { XCircleIcon } from '@heroicons/react/24/solid';
+import { XCircleIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
 import { selectCurrentUser } from '../../../Auth';
 import { setSelectedTest } from '../../slice/testsSlice';
 import { useDeleteTestMutation } from '../../api/testApiSlice';
@@ -73,13 +73,21 @@ const TestListItem = ({ test, toggleModal }) => {
         );
       case ROLES.Tutor:
         return (
-          <button
-            className={styles.button}
-            type="button"
-            onClick={onSelectTest(test.id)}
-          >
-            Назначить
-          </button>
+          <>
+            <button
+              className={styles.button}
+              type="button"
+              onClick={onSelectTest(test.id)}
+            >
+              Назначить
+            </button>
+            <Link
+              className={styles.button}
+              to={`/tests/${test.id}/edit`}
+            >
+              Редактировать
+            </Link>
+          </>
         );
       case ROLES.Observed:
         return (
@@ -102,7 +110,13 @@ const TestListItem = ({ test, toggleModal }) => {
           <h3 className={styles.title}>{`${test.title} (${convertDate(test.created_at)})`}</h3>
           <p className={styles.description}>{test.description}</p>
         </div>
-        <div className={styles.buttons}>{renderTestButtons(role)}</div>
+        {test.is_passed ? (
+          <div className="z-10">
+            <CheckCircleIcon className={styles.icon} />
+          </div>
+        ) : (
+          <div className={styles.buttons}>{renderTestButtons(role)}</div>
+        )}
       </div>
     </div>
   );
