@@ -59,7 +59,7 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
           />
         )}
 
-        {user.role !== ROLES.Observed && (
+        {user.role !== ROLES.observed.code && (
           <UploadFile
             fileRef={fileRef}
             label="Изменить фото"
