@@ -1,5 +1,15 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { Home, Users, Games, Tests, Profile, AuthPage, EditTest, PassTest } from '../pages';
+import {
+  Home,
+  Users,
+  Games,
+  Tests,
+  Profile,
+  AuthPage,
+  EditTest,
+  PassTest,
+  PlayGame,
+} from '../pages';
 import { RequireAuth } from '../components';
 import { PageLayout } from '../UI';
 import { ROUTES } from './RouterConfig';
@@ -54,6 +64,10 @@ const Router = () => {
           <Route
             path={ROUTES.PassingTest}
             element={<PassTest />}
+          />
+          <Route
+            path={ROUTES.PlayingGame}
+            element={<PlayGame />}
           />
         </Route>
 

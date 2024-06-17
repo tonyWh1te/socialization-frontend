@@ -9,7 +9,7 @@ const gameApiSlice = apiSlice.injectEndpoints({
       query: (params) => {
         const { search, sort } = params;
         return {
-          url: '/games/',
+          url: '/games_list/',
           params: {
             search,
             ordering: sort,

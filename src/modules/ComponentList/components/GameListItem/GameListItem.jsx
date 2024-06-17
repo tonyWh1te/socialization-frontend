@@ -90,7 +90,7 @@ const GametListItem = ({ game, toggleModal }) => {
             alt="default game icon"
           />
           <div className={styles.gameTextInfo}>
-            <h3 className={styles.title}>{game.title}</h3>
+            <h3 className={styles.title}>{game.name}</h3>
             <p className={styles.description}>{game.description}</p>
           </div>
         </div>
