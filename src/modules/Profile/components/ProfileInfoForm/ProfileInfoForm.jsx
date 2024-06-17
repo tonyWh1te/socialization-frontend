@@ -1,5 +1,4 @@
 import { Form } from 'formik';
-import { XMarkIcon } from '@heroicons/react/24/solid';
 import { Button, UploadFile, InputText, SpinnerMini } from '../../../../UI';
 import { userIconV2Big } from '../../../../assets';
 import { ROLES } from '../../../../utils/constants';
@@ -33,15 +32,7 @@ const inputFields = [
   },
 ];
 
-const ProfileInfoForm = ({
-  formikProps,
-  preview,
-  onUpload,
-  onShowModal,
-  fileRef,
-  userRole,
-  onFotoDelete,
-}) => {
+const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef, user }) => {
   const submitBtnContent = formikProps.isSubmitting ? <SpinnerMini /> : 'Сохранить';
 
   return (
@@ -50,25 +41,15 @@ const ProfileInfoForm = ({
       className={styles.form}
     >
       <div className={styles.left}>
-        {preview ? (
+        {preview || user?.photo ? (
           <div className={styles.avatarWrapper}>
             <div className={styles.avatarContainer}>
               <img
                 className={styles.avatar}
-                src={preview}
+                src={preview || user?.photo}
                 alt="avatar"
               />
             </div>
-            {userRole !== ROLES.Observed && (
-              <button
-                type="button"
-                aria-label="Удалить фото"
-                className={styles.close}
-                onClick={onFotoDelete}
-              >
-                <XMarkIcon className={styles.icon} />
-              </button>
-            )}
           </div>
         ) : (
           <img
@@ -78,7 +59,7 @@ const ProfileInfoForm = ({
           />
         )}
 
-        {userRole !== ROLES.Observed && (
+        {user.role !== ROLES.Observed && (
           <UploadFile
             fileRef={fileRef}
             label="Изменить фото"
@@ -92,18 +73,24 @@ const ProfileInfoForm = ({
         )}
       </div>
       <div className={styles.right}>
-        {inputFields.map(({ name, label, type }) => (
-          <InputText
-            key={name}
-            wrapperClassNames={styles.input}
-            label={label}
-            name={name}
-            type={type}
-            disabled={userRole === ROLES.Observed}
-          />
-        ))}
+        {inputFields.map(({ name, label, type }) => {
+          if (type === 'date' && user.role !== ROLES.Observed) {
+            return null;
+          }
+
+          return (
+            <InputText
+              key={name}
+              wrapperClassNames={styles.input}
+              label={label}
+              name={name}
+              type={type}
+              disabled={user.role === ROLES.Observed}
+            />
+          );
+        })}
         <div className={styles.saveButtonWrapper}>
-          {userRole !== ROLES.Observed && (
+          {user.role !== ROLES.Observed && (
             <Button
               className={styles.saveButton}
               onClick={onShowModal}
@@ -115,7 +102,7 @@ const ProfileInfoForm = ({
           <Button
             className={styles.saveButton}
             type="submit"
-            disabled={formikProps.isSubmitting || userRole === ROLES.Observed}
+            disabled={formikProps.isSubmitting || user.role === ROLES.Observed}
           >
             {submitBtnContent}
           </Button>

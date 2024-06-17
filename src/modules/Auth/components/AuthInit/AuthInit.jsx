@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocalStorage } from '@rehooks/local-storage';
 import { setUserCredentials, logout } from '../../slice/authSlice';
-import { useLazyGetUserInfoQuery } from '../../api/authApiSlice';
+import { useLazyGetUserInfoQuery } from '../../../../app/api/common/usersApiSlice';
 
 /**
  * Получаем инфу о пользователе при первом открытии приложения

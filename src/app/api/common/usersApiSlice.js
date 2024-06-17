@@ -17,8 +17,22 @@ const usersApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Observeds'],
       transformResponse: (res) => res.results,
     }),
+    getUserInfo: builder.query({
+      query: () => ({
+        url: '/users/me/',
+        method: 'GET',
+      }),
+      transformResponse: (response) => response.result,
+      providesTags: ['User'],
+    }),
   }),
 });
 
 // eslint-disable-next-line
-export const { useLazyGetUsersQuery, useGetUsersQuery, useLazyGetObservedsQuery } = usersApiSlice;
+export const {
+  useLazyGetUsersQuery,
+  useGetUsersQuery,
+  useLazyGetObservedsQuery,
+  useGetUserInfoQuery,
+  useLazyGetUserInfoQuery,
+} = usersApiSlice;
