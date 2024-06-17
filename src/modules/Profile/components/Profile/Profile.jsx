@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
@@ -21,6 +22,8 @@ const Profile = () => {
 
   const [changeUserInfo] = useChangeUserInfoMutation();
   const { data: user, isFetching, isLoading, isError } = useGetUserInfoQuery();
+
+  const navigate = useNavigate();
 
   const [preview, setPreview] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -76,6 +79,7 @@ const Profile = () => {
 
   const onLogout = () => {
     dispatch(logout());
+    navigate('/auth');
   };
 
   const onSubmit = async (values) => {

@@ -30,10 +30,19 @@ function Header() {
       </div>
       <div className={styles.userProfile}>
         <NavLink to="/profile">
-          <img
-            src={UserIcon}
-            alt="user"
-          />
+          {currentUser?.photo ? (
+            <div className={styles.photoWrapper}>
+              <img
+                src={currentUser?.photo}
+                alt="user"
+              />
+            </div>
+          ) : (
+            <img
+              src={UserIcon}
+              alt="user"
+            />
+          )}
         </NavLink>
       </div>
     </div>
