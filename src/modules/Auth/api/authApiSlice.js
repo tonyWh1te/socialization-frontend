@@ -9,15 +9,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: credentials,
       }),
     }),
-    getUserInfo: builder.query({
-      query: () => ({
-        url: '/users/me/',
-        method: 'GET',
-      }),
-      transformResponse: (response) => response.result,
-      providesTags: ['User'],
-    }),
   }),
 });
 
-export const { useLoginMutation, useLazyGetUserInfoQuery } = authApiSlice;
+export const { useLoginMutation } = authApiSlice;
