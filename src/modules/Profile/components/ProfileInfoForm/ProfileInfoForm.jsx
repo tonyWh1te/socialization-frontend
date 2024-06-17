@@ -9,18 +9,27 @@ const inputFields = [
   {
     name: 'name',
     label: 'Имя',
-  },
-  {
-    name: 'last_name',
-    label: 'Фамилия',
+    type: 'text',
   },
   {
     name: 'second_name',
+    label: 'Фамилия',
+    type: 'text',
+  },
+  {
+    name: 'last_name',
     label: 'Отчество (при наличии)',
+    type: 'text',
+  },
+  {
+    name: 'birthday',
+    label: 'Дата рождения',
+    type: 'date',
   },
   {
     name: 'email',
     label: 'Email',
+    type: 'email',
   },
 ];
 
@@ -83,12 +92,13 @@ const ProfileInfoForm = ({
         )}
       </div>
       <div className={styles.right}>
-        {inputFields.map(({ name, label }) => (
+        {inputFields.map(({ name, label, type }) => (
           <InputText
             key={name}
             wrapperClassNames={styles.input}
             label={label}
             name={name}
+            type={type}
             disabled={userRole === ROLES.Observed}
           />
         ))}
@@ -105,7 +115,6 @@ const ProfileInfoForm = ({
           <Button
             className={styles.saveButton}
             type="submit"
-            onClick={formikProps.handleSubmit}
             disabled={formikProps.isSubmitting || userRole === ROLES.Observed}
           >
             {submitBtnContent}

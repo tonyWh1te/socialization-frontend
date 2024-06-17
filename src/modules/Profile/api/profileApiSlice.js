@@ -8,7 +8,6 @@ const profileApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      transformResponse: (response) => response.result,
     }),
     changePassword: builder.mutation({
       query: (data) => ({

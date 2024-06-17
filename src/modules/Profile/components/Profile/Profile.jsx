@@ -15,8 +15,6 @@ import { profileSchema } from '../../utils/validation.helper';
 import { ALLOWED_TYPES, MAX_FILE_SIZE } from '../../utils/constants';
 import styles from './Profile.module.css';
 
-const SERVER_URL = 'http://5.35.89.117:8084';
-
 const Profile = () => {
   const fileRef = useRef(null);
 
@@ -24,17 +22,18 @@ const Profile = () => {
 
   const user = useSelector(selectCurrentUser);
 
-  const [preview, setPreview] = useState(user?.photo ? SERVER_URL + user.photo : null);
+  const [preview, setPreview] = useState(user?.photo ? user.photo : null);
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
 
   const initialValues = {
     name: user?.name || '',
-    last_name: user?.last_name || '',
+    last_name: user?.patronymic || '',
     second_name: user?.second_name || '',
+    birthday: user?.birthday || '',
     email: user?.email || '',
-    photo: user?.photo ? SERVER_URL + user.photo : '',
+    photo: user?.photo ? user.photo : '',
   };
 
   const uploadedFileSchema = Yup.object({
@@ -71,11 +70,15 @@ const Profile = () => {
     try {
       const res = await changeUserInfo({ id: user.id, data: values }).unwrap();
 
-      dispatch(setUserCredentials(res));
+      if (!res.success) {
+        throw new Error(res.errors[0]);
+      }
+
+      dispatch(setUserCredentials(res.result));
 
       toast.success('Данные профиля обновлены');
     } catch (error) {
-      toast.error(error?.data?.detail || 'Что-то пошло не так');
+      toast.error(error?.data?.detail || error.message || 'Что-то пошло не так');
     }
   };
 
