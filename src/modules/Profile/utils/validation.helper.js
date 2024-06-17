@@ -9,8 +9,10 @@ export const profileSchema = Yup.object({
     .required('Обязательное поле')
     .matches(/^[a-zA-Zа-яА-Я-]+(\s+[a-zA-Zа-яА-Я-]+)*$/, 'Содержит недопустимые символы')
     .matches(/^\S+$/, 'Содержит недопустимые символы'),
-  email: Yup.string().matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Некорректный email'),
-  last_name: Yup.string()
+  email: Yup.string()
+    .required('Обязательное поле')
+    .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Некорректный email'),
+  patronymic: Yup.string()
     .trim()
     .matches(/^[a-zA-Zа-яА-Я-]+(\s+[a-zA-Zа-яА-Я-]+)*$/, 'Содержит недопустимые символы')
     .matches(/^\S+$/, 'Содержит недопустимые символы'),

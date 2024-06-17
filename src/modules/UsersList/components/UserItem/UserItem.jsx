@@ -10,7 +10,7 @@ import { toInitial } from '../../utils/string.helper';
 import styles from './UserItem.module.css';
 
 const UserItem = ({ user }) => {
-  const { id, name, role, photo, last_name: lastName, second_name: secondName } = user;
+  const { id, name, role, photo, patronymic, second_name: secondName } = user;
 
   const [deleteUser] = useDeleteUserMutation();
 
@@ -56,26 +56,30 @@ const UserItem = ({ user }) => {
           />
         )}
         <div className={styles.text}>
-          <p className={styles.name}>{`${lastName} ${toInitial(name)} ${toInitial(secondName)}`}</p>
+          <p className={styles.name}>
+            {`${secondName} ${toInitial(name)} ${toInitial(patronymic)}`}
+          </p>
           <p className={styles.role}>{ROLES[role]?.label ?? 'Неизвестная роль'}</p>
         </div>
       </div>
       <div className={styles.buttons}>
-        <button
-          type="button"
-          className={styles.button}
-        >
-          Профиль
-        </button>
         {id !== currentUserId && (
-          <button
-            className={styles.delete}
-            type="button"
-            aria-label="Удалить пользователя"
-            onClick={onDelete(id)}
-          >
-            <XCircleIcon className={styles.icon} />
-          </button>
+          <>
+            <button
+              type="button"
+              className={styles.button}
+            >
+              Профиль
+            </button>
+            <button
+              className={styles.delete}
+              type="button"
+              aria-label="Удалить пользователя"
+              onClick={onDelete(id)}
+            >
+              <XCircleIcon className={styles.icon} />
+            </button>
+          </>
         )}
       </div>
     </ItemListWrapper>

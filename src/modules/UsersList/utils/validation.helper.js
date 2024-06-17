@@ -21,7 +21,7 @@ export const userSchema = Yup.object({
     .required('Обязательное поле')
     .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Некорректный email'),
 
-  dob: Yup.date().required('Обязательное поле').max(new Date(), 'Некорректная дата'),
+  birthday: Yup.date().required('Обязательное поле').max(new Date(), 'Некорректная дата'),
 
   password: Yup.string()
     .required('Обязательное поле')

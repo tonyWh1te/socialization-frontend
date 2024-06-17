@@ -1,12 +1,17 @@
+import { useRef, useState } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
-import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { Formik, Form } from 'formik';
 import { useAddUserMutation } from '../../api/usersApiSlice';
+import { useLazyGetTutorsQuery } from '../../../../app/api/common/usersApiSlice';
+import { useUploadPhoto } from '../../../../hooks';
 
 import NewUserFormStage1 from '../NewUserFormStage1/NewUserFormStage1';
 import NewUserFormStage2 from '../NewUserFormStage2/NewUserFormStage2';
 import { ROLES } from '../../../../utils/constants';
 import { userSchema } from '../../utils/validation.helper';
+import { transformRolesToSelectOptions } from '../../utils/data.helper';
+import { uploadedFileSchema } from '../../../../utils/helpers';
 import styles from './NewUserForm.module.css';
 
 const variants = {
@@ -23,54 +28,46 @@ const variants = {
 };
 
 const NewUserForm = () => {
+  const fileRef = useRef(null);
   const [stage, setStage] = useState(1);
   const [addUser] = useAddUserMutation();
+
+  const { preview, onUpload } = useUploadPhoto('photo');
+
+  const [getTutors, { isLoading: isLoadingTutors, isFetching: isFetchingTutors, data: tutors }] =
+    useLazyGetTutorsQuery();
 
   const initialValues = {
     name: '',
     second_name: '',
     patronymic: '',
-    photo: null,
-    dob: '',
+    photo: '',
+    birthday: '',
     email: '',
-    role: ROLES.tutor.code,
-    tutor: 'tutor1',
+    role: {
+      code: ROLES.tutor.code,
+      organization_id: 1,
+      tutor_id: '',
+    },
     login: '',
     password: '',
   };
 
-  const selectRoles = Object.keys(ROLES).reduce((acc, role) => {
-    if (ROLES[role].code !== ROLES.administrator.code) {
-      return [
-        ...acc,
-        {
-          value: ROLES[role].code,
-          label: ROLES[role].label,
-        },
-      ];
-    }
+  const validationSchema = stage === 1 ? userSchema : uploadedFileSchema(fileRef);
 
-    return acc;
-  }, []);
+  const selectRoles = transformRolesToSelectOptions(ROLES);
 
-  const selectTutor = [
-    {
-      value: 'tutor1',
-      label: 'Сидорчук Сергей',
-    },
-    {
-      value: 'tutor2',
-      label: 'Антонов Антон',
-    },
-  ];
-
-  const onSubmit = (values, { setSubmitting }) => {
+  const onSubmit = async (values, { setSubmitting }) => {
     if (stage === 1) {
       setStage(2);
 
       setSubmitting(false);
     } else {
-      console.log('values', values);
+      try {
+        const res = await addUser(values);
+      } catch (error) {
+        toast.error(error?.data?.detail || error.message || 'Что-то пошло не так');
+      }
     }
   };
 
@@ -78,13 +75,21 @@ const NewUserForm = () => {
     setStage(1);
   };
 
+  const onRoleSelect = async (e) => {
+    const { value } = e.target;
+
+    if (value === ROLES.observed.code) {
+      await getTutors();
+    }
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
-      validationSchema={userSchema}
+      validationSchema={validationSchema}
     >
-      {({ isSubmitting, values }) => (
+      {(formikProps) => (
         <Form className={styles.form}>
           <AnimatePresence
             initial={false}
@@ -101,9 +106,11 @@ const NewUserForm = () => {
               >
                 <NewUserFormStage1
                   selectRoles={selectRoles}
-                  formValues={values}
-                  selectTutor={selectTutor}
-                  isSubmitting={isSubmitting}
+                  onRoleSelect={onRoleSelect}
+                  isLoadingTutors={isLoadingTutors || isFetchingTutors}
+                  tutors={tutors}
+                  formValues={formikProps.values}
+                  isSubmitting={formikProps.isSubmitting}
                 />
               </m.div>
             )}
@@ -118,8 +125,11 @@ const NewUserForm = () => {
                 exit="exit"
               >
                 <NewUserFormStage2
-                  isSubmitting={isSubmitting}
+                  formikProps={formikProps}
                   onGoBack={onGoBack}
+                  fileRef={fileRef}
+                  preview={preview}
+                  onUpload={onUpload}
                 />
               </m.div>
             )}
