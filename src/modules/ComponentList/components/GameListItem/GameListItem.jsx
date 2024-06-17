@@ -85,7 +85,7 @@ const GametListItem = ({ game, toggleModal }) => {
   return (
     <ItemListWrapper>
       <div className={styles.info}>
-        <h3 className={styles.title}>{game.title}</h3>
+        <h3 className={styles.title}>{game.name}</h3>
         <p className={styles.description}>{game.description}</p>
       </div>
       <div className={styles.buttons}>{renderGameButtons(role)}</div>
