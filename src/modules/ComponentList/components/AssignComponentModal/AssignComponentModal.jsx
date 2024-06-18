@@ -6,7 +6,7 @@ import { useAssignGameMutation } from '../../api/gameApiSlice';
 import AssignComponentLayout from '../AssignComponentLayout/AssignComponentLayout';
 import { Modal, ModalLayout } from '../../../../UI';
 
-const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }) => {
+const AssignComponentModal = ({ showModal, setShowModal, componentId, listType, component }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const [
@@ -60,11 +60,19 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
     try {
       const unlinkUsers = users.filter((u) => !selectedUsers.includes(u.id)).map((u) => u.id);
 
-      await assignComponent({
-        test_id: componentId,
-        link: selectedUsers,
-        unlink: unlinkUsers,
-      }).unwrap();
+      if (listType === 'tests') {
+        await assignComponent({
+          test_id: componentId,
+          link: selectedUsers,
+          unlink: unlinkUsers,
+        }).unwrap();
+      } else if (listType === 'games') {
+        await assignComponent({
+          game_id: componentId,
+          link: selectedUsers,
+          unlink: unlinkUsers,
+        }).unwrap();
+      }
 
       toast.success('Успешно!');
     } catch (error) {
