@@ -10,7 +10,7 @@ const ResultTest = () => {
   return (
     <TestResult
       testId={id}
-      userId={user.id}
+      userId={user?.id}
     />
   );
 };

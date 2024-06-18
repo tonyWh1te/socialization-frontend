@@ -10,7 +10,7 @@ const PassTest = () => {
   return (
     <TestForm
       testId={id}
-      userId={user.id}
+      userId={user?.id}
     />
   );
 };

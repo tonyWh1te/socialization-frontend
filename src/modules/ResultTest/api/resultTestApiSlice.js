@@ -8,6 +8,7 @@ const resultTestApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body,
       }),
+      transformResponse: (response) => response.result,
     }),
   }),
 });
