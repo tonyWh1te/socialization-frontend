@@ -8,7 +8,7 @@ const profileApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: ['User', 'Users'],
     }),
     changePassword: builder.mutation({
       query: (data) => ({

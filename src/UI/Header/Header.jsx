@@ -33,6 +33,7 @@ function Header() {
           {currentUser?.photo ? (
             <div className={styles.photoWrapper}>
               <img
+                className={styles.photo}
                 src={currentUser?.photo}
                 alt="user"
               />
