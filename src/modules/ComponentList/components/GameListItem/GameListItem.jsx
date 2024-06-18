@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { XCircleIcon } from '@heroicons/react/24/solid';
+import { useDeleteGamesMutation } from '../../api/gameApiSlice';
 import { selectCurrentUser } from '../../../Auth';
 import { setSelectedTest } from '../../slice/testsSlice';
 import { ItemListWrapper } from '../../../../UI';
@@ -12,6 +15,8 @@ import styles from './GameListItem.module.scss';
 const GametListItem = ({ game, toggleModal }) => {
   const { role } = useSelector(selectCurrentUser);
 
+  const [deleteGames] = useDeleteGamesMutation();
+
   const dispatch = useDispatch();
 
   const onSelectGame = (id) => () => {
@@ -21,6 +26,28 @@ const GametListItem = ({ game, toggleModal }) => {
 
   const onArchive = (id) => async () => {
     // TODO: реализовать перемещение игры в архив, полное удаление возможно только оттуда
+  };
+
+  const onDelete = (id) => async () => {
+    const toastId = toast.loading('Удаление игры...');
+
+    try {
+      await deleteGames(id).unwrap();
+
+      toast.update(toastId, {
+        render: 'Игра удалена',
+        type: 'success',
+        isLoading: false,
+        autoClose: 2000,
+      });
+    } catch (error) {
+      toast.update(toastId, {
+        render: 'Произошла ошибка при удалении игры',
+        type: 'error',
+        isLoading: false,
+        autoClose: 2000,
+      });
+    }
   };
 
   const renderGameButtons = (userRole) => {
@@ -41,13 +68,22 @@ const GametListItem = ({ game, toggleModal }) => {
             >
               Назначить
             </button>
+
             <button
+              className={styles.close}
+              type="button"
+              aria-label="Удалить игру"
+              onClick={onDelete(game.id)}
+            >
+              <XCircleIcon className={styles.icon} />
+            </button>
+            {/* <button
               className={styles.button}
               type="button"
               onClick={onArchive(game.id)}
             >
               В архив
-            </button>
+            </button> */}
           </>
         );
       case ROLES.tutor.code:

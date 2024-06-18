@@ -45,6 +45,17 @@
   }
 }
 
+.close {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+}
+
 .button {
   &:hover {
     text-decoration: underline;
