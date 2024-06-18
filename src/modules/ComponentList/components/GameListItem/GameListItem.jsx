@@ -85,8 +85,14 @@ const GametListItem = ({ game, toggleModal }) => {
   return (
     <ItemListWrapper>
       <div className={styles.info}>
-        <h3 className={styles.title}>{game.name}</h3>
-        <p className={styles.description}>{game.description}</p>
+        <img
+          src={game.icon === undefined ? defaultGameIcon : game.icon}
+          alt="default game icon"
+        />
+        <div className={styles.gameTextInfo}>
+          <h3 className={styles.title}>{game.name}</h3>
+          <p className={styles.description}>{game.description}</p>
+        </div>
       </div>
       <div className={styles.buttons}>{renderGameButtons(role)}</div>
     </ItemListWrapper>
