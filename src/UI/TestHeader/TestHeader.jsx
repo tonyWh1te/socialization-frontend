@@ -1,4 +1,4 @@
-import { TestCard } from '../../../../UI';
+import TestCard from '../TestCard/TestCard';
 import styles from './TestHeader.module.css';
 
 const TestHeader = ({ title, description }) => (
