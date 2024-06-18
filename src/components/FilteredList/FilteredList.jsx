@@ -21,25 +21,11 @@ const FilteredList = ({
   children,
   isLoading,
   isError,
+  sortList = [],
   renderItemContent = () => {},
   onSearch = () => {},
   onSort = () => {},
 }) => {
-  const sortList = [
-    {
-      label: 'По умолчанию',
-      value: 'id',
-    },
-    {
-      label: 'По имени (А-Я)',
-      value: 'title',
-    },
-    {
-      label: 'По дате',
-      value: 'created_at',
-    },
-  ];
-
   const renderItems = (data, renderItem) => {
     const renderedItems = data?.map((item, i) => (
       <m.li

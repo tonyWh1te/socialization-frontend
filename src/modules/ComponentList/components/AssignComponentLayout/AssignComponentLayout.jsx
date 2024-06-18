@@ -40,7 +40,7 @@ const AssignComponentLayout = (props) => {
                 key={user.id}
               >
                 <Checkbox
-                  label={`${user.last_name ?? 'фамилия'} ${user.name ?? 'имя'} ${user.second_name ?? ''}`}
+                  label={`${user.second_name ?? 'фамилия'} ${user.name ?? 'имя'} ${user.patronymic ?? ''}`}
                   labelAlign="left"
                   labelClassName={styles.label}
                   checkboxProps={{

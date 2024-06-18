@@ -29,6 +29,9 @@ export const userSchema = Yup.object({
     .matches(/^(?=.*\d)(?=.*[a-zA-Z]).+$/, 'Должен содержать хотя бы одну букву и цифру')
     .min(8, 'Минимум 8 символов'),
   login: Yup.string().required('Обязательное поле').matches(/^\S+$/, 'Неккорректный логин'),
+  role: Yup.object({
+    tutor_id: Yup.string().required('Обязательное поле'),
+  }),
 });
 
 export const userPhotoSchema = Yup.object({

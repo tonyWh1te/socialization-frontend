@@ -47,7 +47,7 @@ const NewUserForm = () => {
     role: {
       code: ROLES.tutor.code,
       organization_id: 1,
-      tutor_id: '',
+      tutor_id: '1',
     },
     login: '',
     password: '',
@@ -87,13 +87,20 @@ const NewUserForm = () => {
     }
   };
 
-  const onRoleSelect = async (e) => {
-    const { value } = e.target;
+  const onRoleSelect =
+    ({ setFieldValue }) =>
+    async (e) => {
+      const { value } = e.target;
 
-    if (value === ROLES.observed.code) {
-      await getTutors();
-    }
-  };
+      if (value === ROLES.observed.code) {
+        setFieldValue('role.tutor_id', '');
+        await getTutors();
+      } else {
+        // это для того, чтобы проходила валидация при добавлении наставника
+        // на бэке поле проигнорируется
+        setFieldValue('role.tutor_id', '1');
+      }
+    };
 
   return (
     <Formik
@@ -121,8 +128,7 @@ const NewUserForm = () => {
                   onRoleSelect={onRoleSelect}
                   isLoadingTutors={isLoadingTutors || isFetchingTutors}
                   tutors={tutors}
-                  formValues={formikProps.values}
-                  isSubmitting={formikProps.isSubmitting}
+                  formikProps={formikProps}
                 />
               </m.div>
             )}

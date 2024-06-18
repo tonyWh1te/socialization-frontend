@@ -111,9 +111,12 @@ const TestListItem = ({ test, toggleModal }) => {
         <p className={styles.description}>{test.description}</p>
       </div>
       {test.is_passed ? (
-        <div className="z-10">
-          <CheckCircleIcon className={styles.icon} />
-        </div>
+        <Link
+          className={styles.button}
+          to={`/tests/${test.id}/result`}
+        >
+          Посмотреть результат
+        </Link>
       ) : (
         <div className={styles.buttons}>{renderTestButtons(role)}</div>
       )}

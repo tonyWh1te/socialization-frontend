@@ -1,18 +1,18 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { selectCurrentUser } from '../../modules/Auth';
-import { TestForm } from '../../modules/PassTest';
+import { TestResult } from '../../modules/ResultTest';
 
-const PassTest = () => {
+const ResultTest = () => {
   const { id } = useParams();
   const user = useSelector(selectCurrentUser);
 
   return (
-    <TestForm
+    <TestResult
       testId={id}
       userId={user?.id}
     />
   );
 };
 
-export default PassTest;
+export default ResultTest;

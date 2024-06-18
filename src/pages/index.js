@@ -7,5 +7,6 @@ import Profile from './Profile/Profile';
 import EditTest from './EditTest/EditTest';
 import PassTest from './PassTest/PassTest';
 import PlayGame from './PlayGame/PlayGame';
+import ResultTest from './ResultTest/ResultTest';
 
-export { Home, AuthPage, Users, Games, Tests, Profile, EditTest, PassTest, PlayGame };
+export { Home, AuthPage, Users, Games, Tests, Profile, EditTest, PassTest, PlayGame, ResultTest };

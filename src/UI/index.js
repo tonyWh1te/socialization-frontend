@@ -21,6 +21,7 @@ import UploadFile from './formik/UploadFile/UploadFile';
 import AnimatedPage from './AnimatedPage/AnimatedPage';
 import ItemListWrapper from './layouts/ItemListWrapper/ItemListWrapper';
 import ButtonAddItemList from './ButtonAddItemList/ButtonAddItemList';
+import TestHeader from './TestHeader/TestHeader';
 
 export {
   Button,
@@ -46,4 +47,5 @@ export {
   AnimatedPage,
   ItemListWrapper,
   ButtonAddItemList,
+  TestHeader,
 };

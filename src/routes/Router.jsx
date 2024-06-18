@@ -9,6 +9,7 @@ import {
   EditTest,
   PassTest,
   PlayGame,
+  ResultTest,
 } from '../pages';
 import { RequireAuth } from '../components';
 import { PageLayout } from '../UI';
@@ -47,6 +48,7 @@ const Router = () => {
 
         <Route
           element={
+            // eslint-disable-next-line
             <RequireAuth
               allowedRoles={[ROLES.administrator.code, ROLES.tutor.code, ROLES.observed.code]}
             />
@@ -76,6 +78,10 @@ const Router = () => {
           <Route
             path={ROUTES.PlayingGame}
             element={<PlayGame />}
+          />
+          <Route
+            path={ROUTES.ResultTest}
+            element={<ResultTest />}
           />
         </Route>
 
