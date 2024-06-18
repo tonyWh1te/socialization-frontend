@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { Formik } from 'formik';
+import { useUploadPhoto } from '../../../../hooks';
 import { useChangeUserInfoMutation } from '../../api/profileApiSlice';
 import { useGetUserInfoQuery } from '../../../../app/api/common/usersApiSlice';
 import { logout, setUserCredentials } from '../../../Auth';
@@ -14,7 +14,7 @@ import ChangePasswordModal from '../ChangePasswordModal/ChangePasswordModal';
 import ProfileInfoForm from '../ProfileInfoForm/ProfileInfoForm';
 
 import { profileSchema } from '../../utils/validation.helper';
-import { ALLOWED_TYPES, MAX_FILE_SIZE } from '../../utils/constants';
+import { uploadedFileSchema } from '../../../../utils/helpers';
 import styles from './Profile.module.css';
 
 const Profile = () => {
@@ -25,7 +25,8 @@ const Profile = () => {
 
   const navigate = useNavigate();
 
-  const [preview, setPreview] = useState(null);
+  const { preview, onUpload } = useUploadPhoto('photo');
+
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
@@ -44,34 +45,12 @@ const Profile = () => {
   }
   const initialValues = {
     name: user?.name || '',
-    last_name: user?.patronymic || '',
+    patronymic: user?.patronymic || '',
     second_name: user?.second_name || '',
-    birthday: user?.birthday || '',
+    birthday: user?.birthday || '2022-01-01',
     email: user?.email || '',
     photo: user?.photo || '',
   };
-
-  const uploadedFileSchema = Yup.object({
-    photo: Yup.mixed()
-      .test('fileType', 'Данный тип файла не поддерживается', () => {
-        const value = fileRef.current?.files[0];
-
-        if (value) {
-          return ALLOWED_TYPES.includes(value.type);
-        }
-
-        return true;
-      })
-      .test('fileSize', 'Размер файла не должен превышать 5MB', () => {
-        const value = fileRef.current?.files[0];
-
-        if (value) {
-          return value.size <= MAX_FILE_SIZE;
-        }
-
-        return true;
-      }),
-  });
 
   const onShowModal = () => {
     setShowModal(true);
@@ -91,6 +70,8 @@ const Profile = () => {
     try {
       const res = await changeUserInfo({ id: user.id, data: newInfo }).unwrap();
 
+      console.log('res', res);
+
       if (!res.success) {
         throw new Error(res.errors[0]);
       }
@@ -103,27 +84,6 @@ const Profile = () => {
     }
   };
 
-  const onUpload =
-    ({ setFieldValue, touched, setTouched }) =>
-    (e) => {
-      const selectedFile = e.target.files[0];
-
-      if (selectedFile) {
-        setTouched({ ...touched, photo: true });
-
-        if (!ALLOWED_TYPES.includes(selectedFile.type) || selectedFile.size > MAX_FILE_SIZE) {
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreview(reader.result);
-          setFieldValue('photo', reader.result);
-        };
-        reader.readAsDataURL(selectedFile);
-      }
-    };
-
   return (
     <>
       <div className={styles.wrapper}>
@@ -132,7 +92,7 @@ const Profile = () => {
             <Formik
               onSubmit={onSubmit}
               initialValues={initialValues}
-              validationSchema={profileSchema.concat(uploadedFileSchema)}
+              validationSchema={profileSchema.concat(uploadedFileSchema(fileRef))}
             >
               {(formikProps) => (
                 <ProfileInfoForm

@@ -1,4 +1,4 @@
 import useDebounce from './useDebounce';
+import useUploadPhoto from './useUploadPhoto';
 
-// eslint-disable-next-line import/prefer-default-export
-export { useDebounce };
+export { useDebounce, useUploadPhoto };

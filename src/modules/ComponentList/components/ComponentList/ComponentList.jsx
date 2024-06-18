@@ -6,10 +6,9 @@ import { setTestSearch, setSortValue } from '../../slice/testsSlice';
 import { selectTestSearchValue, selectSortValue, selectSelectedTest } from '../../slice/selectors';
 
 import { Portal, FilteredList } from '../../../../components';
-import { Container } from '../../../../UI';
+import { Container, ButtonAddItemList } from '../../../../UI';
 import TestListItem from '../TestListItem/TestListItem';
 import GameListItem from '../GameListItem/GameListItem';
-import ButtonAddComponent from '../ButtonAddTest/ButtonAddComponent';
 import CreateTestModal from '../CreateTestModal/CreateTestModal';
 import AddGameModal from '../AddGameModal/AddGameModal';
 import AssignComponentModal from '../AssignComponentModal/AssignComponentModal';
@@ -39,7 +38,7 @@ const ComponentList = ({ currentUser, listType }) => {
     isFetching,
   } = useGetAdminQueryHook(
     { search: searchValue.toLowerCase(), sort: sortValue },
-    { skip: role === ROLES.Observed },
+    { skip: role === ROLES.observed.code },
   );
 
   const {
@@ -47,7 +46,7 @@ const ComponentList = ({ currentUser, listType }) => {
     isLoading: isObservedComponentsLoading,
     isFetching: isObservedComponentsFetching,
     isError: isObservedComponentsError,
-  } = useGetObserverQueryHook({ id }, { skip: role !== ROLES.Observed });
+  } = useGetObserverQueryHook({ id }, { skip: role !== ROLES.observed.code });
 
   const dispatch = useDispatch();
 
@@ -68,6 +67,8 @@ const ComponentList = ({ currentUser, listType }) => {
   const onSort = (sortProperty) => {
     dispatch(setSortValue(sortProperty));
   };
+
+  const addBtnText = listType === 'tests' ? 'Добавить тест' : 'Добавить игру';
 
   return (
     <div className={styles.wrapper}>
@@ -100,11 +101,12 @@ const ComponentList = ({ currentUser, listType }) => {
             return null;
           }}
         >
-          {role !== ROLES.Observed && (
-            <ButtonAddComponent
+          {role !== ROLES.observed.code && (
+            <ButtonAddItemList
               onClick={listType === 'tests' ? toggleModal('create') : toggleModal('add')}
-              type={listType === 'tests' ? 'tests' : 'games'}
-            />
+            >
+              {addBtnText}
+            </ButtonAddItemList>
           )}
         </FilteredList>
       </Container>

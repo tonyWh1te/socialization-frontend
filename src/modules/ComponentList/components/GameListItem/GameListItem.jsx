@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectCurrentUser } from '../../../Auth';
 import { setSelectedTest } from '../../slice/testsSlice';
+import { ItemListWrapper } from '../../../../UI';
 import { ROLES } from '../../../../utils/constants';
 import { defaultGameIcon } from '../../../../assets';
 import styles from './GameListItem.module.scss';
@@ -24,7 +25,7 @@ const GametListItem = ({ game, toggleModal }) => {
 
   const renderGameButtons = (userRole) => {
     switch (userRole) {
-      case ROLES.Admin:
+      case ROLES.administrator.code:
         return (
           <>
             <Link
@@ -49,7 +50,7 @@ const GametListItem = ({ game, toggleModal }) => {
             </button>
           </>
         );
-      case ROLES.Tutor:
+      case ROLES.tutor.code:
         return (
           <>
             <Link
@@ -67,7 +68,7 @@ const GametListItem = ({ game, toggleModal }) => {
             </button>
           </>
         );
-      case ROLES.Observed:
+      case ROLES.observed.code:
         return (
           <Link
             className={styles.button}
@@ -82,21 +83,13 @@ const GametListItem = ({ game, toggleModal }) => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.content}>
-        <div className={styles.info}>
-          <img
-            src={game.icon === undefined ? defaultGameIcon : game.icon}
-            alt="default game icon"
-          />
-          <div className={styles.gameTextInfo}>
-            <h3 className={styles.title}>{game.title}</h3>
-            <p className={styles.description}>{game.description}</p>
-          </div>
-        </div>
-        <div className={styles.buttons}>{renderGameButtons(role)}</div>
+    <ItemListWrapper>
+      <div className={styles.info}>
+        <h3 className={styles.title}>{game.title}</h3>
+        <p className={styles.description}>{game.description}</p>
       </div>
-    </div>
+      <div className={styles.buttons}>{renderGameButtons(role)}</div>
+    </ItemListWrapper>
   );
 };
 
