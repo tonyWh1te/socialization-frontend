@@ -68,6 +68,14 @@ const ComponentList = ({ currentUser, listType }) => {
     dispatch(setSortValue(sortProperty));
   };
 
+  const onBtnAddClick = (type) => () => {
+    if (type === 'tests') {
+      toggleModal('create')();
+    } else if (type === 'games') {
+      window.location.href = 'http://5.35.89.117:8084/upload/';
+    }
+  };
+
   const addBtnText = listType === 'tests' ? 'Добавить тест' : 'Добавить игру';
 
   return (
@@ -102,11 +110,7 @@ const ComponentList = ({ currentUser, listType }) => {
           }}
         >
           {role !== ROLES.observed.code && (
-            <ButtonAddItemList
-              onClick={listType === 'tests' ? toggleModal('create') : toggleModal('add')}
-            >
-              {addBtnText}
-            </ButtonAddItemList>
+            <ButtonAddItemList onClick={onBtnAddClick(listType)}>{addBtnText}</ButtonAddItemList>
           )}
         </FilteredList>
       </Container>

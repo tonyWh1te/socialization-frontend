@@ -39,8 +39,8 @@ const gameApiSlice = apiSlice.injectEndpoints({
     // Удалить игру
     deleteGames: builder.mutation({
       query: (id) => ({
-        url: `/games/${id}/`,
-        method: 'DELETE',
+        url: `/games_list/${id}/delete_game/`,
+        method: 'POST',
       }),
       invalidatesTags: ['Games'],
     }),
@@ -68,8 +68,8 @@ const gameApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetGamesQuery,
-  moveToArchiveGame,
-  useDeleteGameMutation,
+  useMoveToArchiveGameMutation,
+  useDeleteGamesMutation,
   useAddGameMutation,
   useAssignGameMutation,
   useGetObserverGamesQuery,
