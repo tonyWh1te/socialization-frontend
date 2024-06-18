@@ -21,7 +21,7 @@ const NewUserFormStage2 = ({ formikProps, onGoBack, fileRef, preview, onUpload }
         ) : (
           <img
             className={styles.defaultAvatar}
-            src={preview}
+            src={userIconV2Big}
             alt="avatar"
           />
         )}

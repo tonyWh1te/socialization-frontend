@@ -6,6 +6,10 @@
   @apply h-16 w-16 overflow-hidden rounded-full;
 }
 
+.image {
+  @apply h-full w-full object-cover;
+}
+
 .name {
   @apply mb-3 text-xl;
 }

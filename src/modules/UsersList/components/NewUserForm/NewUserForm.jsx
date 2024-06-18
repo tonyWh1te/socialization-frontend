@@ -9,7 +9,7 @@ import { useUploadPhoto } from '../../../../hooks';
 import NewUserFormStage1 from '../NewUserFormStage1/NewUserFormStage1';
 import NewUserFormStage2 from '../NewUserFormStage2/NewUserFormStage2';
 import { ROLES } from '../../../../utils/constants';
-import { userSchema } from '../../utils/validation.helper';
+import { userSchema, userPhotoSchema } from '../../utils/validation.helper';
 import { transformRolesToSelectOptions } from '../../utils/data.helper';
 import { uploadedFileSchema } from '../../../../utils/helpers';
 import styles from './NewUserForm.module.css';
@@ -32,7 +32,7 @@ const NewUserForm = () => {
   const [stage, setStage] = useState(1);
   const [addUser] = useAddUserMutation();
 
-  const { preview, onUpload } = useUploadPhoto('photo');
+  const { preview, onUpload, resetPreview } = useUploadPhoto('photo');
 
   const [getTutors, { isLoading: isLoadingTutors, isFetching: isFetchingTutors, data: tutors }] =
     useLazyGetTutorsQuery();
@@ -53,26 +53,38 @@ const NewUserForm = () => {
     password: '',
   };
 
-  const validationSchema = stage === 1 ? userSchema : uploadedFileSchema(fileRef);
+  const validationSchema =
+    stage === 1 ? userSchema : uploadedFileSchema(fileRef).concat(userPhotoSchema);
 
   const selectRoles = transformRolesToSelectOptions(ROLES);
 
-  const onSubmit = async (values, { setSubmitting }) => {
+  const onGoBack = () => {
+    setStage(1);
+  };
+
+  const onSubmit = async (values, { setSubmitting, resetForm }) => {
     if (stage === 1) {
       setStage(2);
 
       setSubmitting(false);
     } else {
       try {
-        const res = await addUser(values);
+        const res = await addUser(values).unwrap();
+
+        if (!res.success) {
+          if (res.errors.login) {
+            throw new Error('Такой логин уже существует');
+          } else throw new Error();
+        }
+
+        toast.success('Пользователь создан');
+        resetForm({ values: initialValues });
+        resetPreview();
+        onGoBack();
       } catch (error) {
         toast.error(error?.data?.detail || error.message || 'Что-то пошло не так');
       }
     }
-  };
-
-  const onGoBack = () => {
-    setStage(1);
   };
 
   const onRoleSelect = async (e) => {

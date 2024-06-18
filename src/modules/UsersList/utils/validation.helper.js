@@ -30,3 +30,7 @@ export const userSchema = Yup.object({
     .min(8, 'Минимум 8 символов'),
   login: Yup.string().required('Обязательное поле').matches(/^\S+$/, 'Неккорректный логин'),
 });
+
+export const userPhotoSchema = Yup.object({
+  photo: Yup.mixed().required('Обязательное поле'),
+});

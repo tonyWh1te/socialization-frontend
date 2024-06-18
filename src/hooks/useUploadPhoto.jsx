@@ -27,7 +27,11 @@ const useUploadPhoto = (name) => {
       }
     };
 
-  return { preview, onUpload };
+  const resetPreview = () => {
+    setPreview(null);
+  };
+
+  return { preview, onUpload, resetPreview };
 };
 
 export default useUploadPhoto;
