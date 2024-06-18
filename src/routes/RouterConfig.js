@@ -9,5 +9,6 @@ export const ROUTES = {
   Auth: '/auth',
   Unathorized: '/unauthorized',
   PassingTest: '/tests/:id/pass',
+  ResultTest: '/tests/:id/result',
   PlayingGame: '/games/:id/play',
 };

@@ -4,8 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useGetTestQuery } from '../../../../app/api/common/testApiSlice';
 import { usePassTestMutation } from '../../api/passTestApiSlice';
 
-import { SpinnerBig, ErrorMessage, Container, Button, SpinnerMini } from '../../../../UI';
-import TestHeader from '../TestHeader/TestHeader';
+import {
+  SpinnerBig,
+  ErrorMessage,
+  Container,
+  Button,
+  SpinnerMini,
+  TestHeader,
+} from '../../../../UI';
 import QuestionItem from '../QuestionItem/QuestionItem';
 
 import { createValidationShema } from '../../utils/validation.helper';
