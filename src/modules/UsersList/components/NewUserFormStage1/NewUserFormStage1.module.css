@@ -14,6 +14,14 @@
   @apply w-full;
 }
 
+.selectContainer {
+  @apply flex w-full flex-col;
+}
+
+.selectError {
+  @apply m-0 inline-block text-end text-base text-red-500;
+}
+
 .selectInput {
   @apply border-black focus:border-focus-blue;
 }
