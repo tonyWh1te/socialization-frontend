@@ -1,3 +1,4 @@
+import { ErrorMessage } from 'formik';
 import { Button, InputText, FormikSelect, SpinnerMini } from '../../../../UI';
 import { transformUsersToSelectOptions } from '../../utils/data.helper';
 import { ROLES } from '../../../../utils/constants';
@@ -76,15 +77,24 @@ const NewUserFormStage1 = ({
         )}
 
         {formValues.role.code === ROLES.observed.code && !isLoadingTutors && (
-          <FormikSelect
-            className={styles.select}
-            name="role.tutor_id"
-            options={transformUsersToSelectOptions(tutors)}
-            label="Выберите наставника"
-            selectProps={{
-              className: styles.selectInput,
-            }}
-          />
+          <div className={styles.selectContainer}>
+            <FormikSelect
+              name="role.tutor_id"
+              options={[
+                { value: '', label: 'Выберите наставника' },
+                ...transformUsersToSelectOptions(tutors),
+              ]}
+              label="Выберите наставника"
+              selectProps={{
+                className: styles.selectInput,
+              }}
+            />
+            <ErrorMessage
+              className={styles.selectError}
+              name="role.tutor_id"
+              component="span"
+            />
+          </div>
         )}
       </div>
       <div className={styles.btnRow}>

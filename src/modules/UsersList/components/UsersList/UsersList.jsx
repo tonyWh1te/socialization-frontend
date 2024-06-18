@@ -7,12 +7,25 @@ import NewUserForm from '../NewUserForm/NewUserForm';
 import UserItem from '../UserItem/UserItem';
 import styles from './UsersList.module.css';
 
+const sortList = [
+  {
+    label: 'По умолчанию',
+    value: 'id',
+  },
+  {
+    label: 'По имени (А-Я)',
+    value: 'name',
+  },
+];
+
 const UsersList = () => {
   const [searchValue, setSearchValue] = useState('');
+  const [sortValue, setSortValue] = useState('id');
   const [showModal, setShowModal] = useState(false);
 
   const { data, isLoading, isFetching, isError } = useGetUsersQuery({
     search: searchValue.toLowerCase(),
+    ordering: sortValue,
   });
 
   const onSearch = (query) => {
@@ -23,6 +36,10 @@ const UsersList = () => {
     setShowModal(true);
   };
 
+  const onSort = (value) => {
+    setSortValue(value);
+  };
+
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -30,6 +47,8 @@ const UsersList = () => {
           items={data}
           onSearch={onSearch}
           isError={isError}
+          onSort={onSort}
+          sortList={sortList}
           isLoading={isLoading || isFetching}
           renderItemContent={(user) => <UserItem user={user} />}
         >
