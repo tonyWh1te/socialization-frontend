@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetTestsQuery, useGetObserverTestsQuery } from '../../api/testApiSlice';
-import { useGetGamesQuery, useGetObserverGamesQuery } from '../../api/gameApiSlice';
+import { useGetTestsQuery } from '../../api/testApiSlice';
+import { useGetGamesQuery } from '../../api/gameApiSlice';
+import { useGetObserverGamesQuery } from '../../../../app/api/common/gameApiSlice';
+import { useGetObserverTestsQuery } from '../../../../app/api/common/testApiSlice';
 import {
   setTestSearch,
   setGameSearch,
@@ -163,6 +165,7 @@ const ComponentList = ({ currentUser, listType }) => {
               return (
                 <TestListItem
                   test={item}
+                  userId={id}
                   toggleModal={toggleModal('assign')}
                 />
               );
@@ -178,7 +181,7 @@ const ComponentList = ({ currentUser, listType }) => {
             return null;
           }}
         >
-          {role !== ROLES.observed.code && (
+          {role !== ROLES.observed.code && role !== ROLES.tutor.code && (
             <ButtonAddItemList onClick={onBtnAddClick(listType)}>{addBtnText}</ButtonAddItemList>
           )}
         </FilteredList>

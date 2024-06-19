@@ -19,17 +19,6 @@ const gameApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Games'],
       transformResponse: (response) => response.results,
     }),
-    // Получить игры для наблюдаемого
-    getObserverGames: builder.query({
-      query: (params) => {
-        const { id } = params;
-        return {
-          url: `/games_list/${id}/get_obs_games/`,
-        };
-      },
-      transformResponse: (response) => response.results,
-      providesTags: ['ObservedGames'],
-    }),
     // Переместить игру в архив
     moveToArchiveGame: builder.mutation({
       query: (id) => ({
@@ -73,5 +62,4 @@ export const {
   useDeleteGamesMutation,
   useAddGameMutation,
   useAssignGameMutation,
-  useGetObserverGamesQuery,
 } = gameApiSlice;

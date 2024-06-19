@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import {
   Home,
   Users,
@@ -11,6 +11,7 @@ import {
   PlayGame,
   ResultTest,
   Observers,
+  EntityProfile,
 } from '../pages';
 import { RequireAuth } from '../components';
 import { PageLayout } from '../UI';
@@ -44,6 +45,10 @@ const Router = () => {
           <Route
             path={ROUTES.EditTest}
             element={<EditTest />}
+          />
+          <Route
+            path={ROUTES.EntityProfile}
+            element={<EntityProfile />}
           />
         </Route>
 

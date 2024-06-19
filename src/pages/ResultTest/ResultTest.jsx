@@ -1,16 +1,15 @@
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { selectCurrentUser } from '../../modules/Auth';
+import { useParams, useLocation } from 'react-router-dom';
 import { TestResult } from '../../modules/ResultTest';
 
 const ResultTest = () => {
   const { id } = useParams();
-  const user = useSelector(selectCurrentUser);
+  const location = useLocation();
+  const userId = location.state?.userId;
 
   return (
     <TestResult
       testId={id}
-      userId={user?.id}
+      userId={userId}
     />
   );
 };

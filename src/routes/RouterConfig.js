@@ -12,4 +12,5 @@ export const ROUTES = {
   ResultTest: '/tests/:id/result',
   PlayingGame: '/games/:id/play',
   MyObservers: '/my-observers',
+  EntityProfile: '/users/:id',
 };

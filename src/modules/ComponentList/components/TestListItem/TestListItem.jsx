@@ -10,7 +10,7 @@ import { ItemListWrapper } from '../../../../UI';
 import { ROLES } from '../../../../utils/constants';
 import styles from './TestListItem.module.scss';
 
-const TestListItem = ({ test, toggleModal }) => {
+const TestListItem = ({ test, toggleModal, userId }) => {
   const [deleteTest] = useDeleteTestMutation();
 
   const { role } = useSelector(selectCurrentUser);
@@ -114,6 +114,7 @@ const TestListItem = ({ test, toggleModal }) => {
         <Link
           className={styles.button}
           to={`/tests/${test.id}/result`}
+          state={{ userId }}
         >
           Посмотреть результат
         </Link>
