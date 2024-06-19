@@ -85,7 +85,7 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType, 
 
   const onSearch = (isModalShowed) => async (query) => {
     if (isModalShowed) {
-      await getObserveds({ text: query.trim().toLowerCase() });
+      await getObserveds({ text: query.trim() });
     }
   };
 

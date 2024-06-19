@@ -25,7 +25,7 @@ const ObservedList = ({ userId }) => {
     isLoading,
     isError,
     isFetching,
-  } = useGetObservedsByTutorQuery(userId);
+  } = useGetObservedsByTutorQuery({ id: userId, text: searchValue });
 
   const onSort = (value) => {
     setSortValue(value);
