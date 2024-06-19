@@ -9,6 +9,7 @@ import PassTest from './PassTest/PassTest';
 import PlayGame from './PlayGame/PlayGame';
 import ResultTest from './ResultTest/ResultTest';
 import Observers from './Observers/Observers';
+import EntityProfile from './EntityProfile/EntityProfile';
 
 export {
   Home,
@@ -22,4 +23,5 @@ export {
   PlayGame,
   ResultTest,
   Observers,
+  EntityProfile,
 };

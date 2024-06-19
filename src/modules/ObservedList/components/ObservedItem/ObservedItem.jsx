@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ItemListWrapper } from '../../../../UI';
 import { toInitial } from '../../../../utils/helpers';
 import { userIconV2 } from '../../../../assets';
@@ -30,12 +31,12 @@ const ObservedItem = ({ user }) => {
         </div>
       </div>
       <div className={styles.buttons}>
-        <button
-          type="button"
+        <Link
+          to={`/users/${id}`}
           className={styles.button}
         >
           Профиль
-        </button>
+        </Link>
       </div>
     </ItemListWrapper>
   );

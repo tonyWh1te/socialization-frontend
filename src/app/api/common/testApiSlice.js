@@ -7,8 +7,21 @@ const testApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 0.1,
       transformResponse: (response) => response.result,
     }),
+    getObserverTests: builder.query({
+      query: (params) => {
+        const { id } = params;
+        return {
+          url: '/tests/get_user_tests/',
+          params: {
+            user_id: id,
+          },
+        };
+      },
+      transformResponse: (response) => response.result.tests,
+      providesTags: ['ObservedTests'],
+    }),
   }),
 });
 
 // eslint-disable-next-line
-export const { useGetTestQuery } = testApiSlice;
+export const { useGetTestQuery, useGetObserverTestsQuery } = testApiSlice;

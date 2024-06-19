@@ -16,19 +16,6 @@ const testApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Tests'],
       transformResponse: (response) => response.results,
     }),
-    getObserverTests: builder.query({
-      query: (params) => {
-        const { id } = params;
-        return {
-          url: '/tests/get_user_tests/',
-          params: {
-            user_id: id,
-          },
-        };
-      },
-      transformResponse: (response) => response.result.tests,
-      providesTags: ['ObservedTests'],
-    }),
     deleteTest: builder.mutation({
       query: (id) => ({
         url: `/tests/${id}/`,
@@ -51,7 +38,7 @@ const testApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['Observeds'],
+      invalidatesTags: ['Observeds', 'ObservedTests'],
     }),
   }),
 });
@@ -61,5 +48,4 @@ export const {
   useDeleteTestMutation,
   useAddTestMutation,
   useAssignTestMutation,
-  useGetObserverTestsQuery,
 } = testApiSlice;

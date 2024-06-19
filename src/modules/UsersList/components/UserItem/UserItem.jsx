@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import { toast } from 'react-toastify';
 import { useDeleteUserMutation } from '../../api/usersApiSlice';
@@ -65,12 +66,12 @@ const UserItem = ({ user }) => {
       <div className={styles.buttons}>
         {id !== currentUserId && (
           <>
-            <button
-              type="button"
+            <Link
+              to={`/users/${id}`}
               className={styles.button}
             >
               Профиль
-            </button>
+            </Link>
             <button
               className={styles.delete}
               type="button"
