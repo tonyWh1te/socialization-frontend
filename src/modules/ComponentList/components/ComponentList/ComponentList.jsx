@@ -81,10 +81,7 @@ const ComponentList = ({ currentUser, listType }) => {
     isFetching,
   } = useGetAdminQueryHook(
     {
-      search:
-        listType === 'tests'
-          ? testSearchValue.trim().toLowerCase()
-          : gameSearchValue.trim().toLowerCase(),
+      search: listType === 'tests' ? testSearchValue.trim() : gameSearchValue.trim(),
       sort: listType === 'tests' ? testSortValue : gamesSortValue,
     },
     { skip: role === ROLES.observed.code },

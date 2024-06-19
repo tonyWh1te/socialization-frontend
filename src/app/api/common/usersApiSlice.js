@@ -19,10 +19,14 @@ const usersApiSlice = apiSlice.injectEndpoints({
       transformResponse: (res) => res.results,
     }),
     getObservedsByTutor: builder.query({
-      query: (id) => ({
-        url: `/users/${id}/get_observeds_by_tutor/`,
-        method: 'GET',
-      }),
+      query: (params) => {
+        const { id, text } = params;
+        return {
+          url: `/users/${id}/get_observeds_by_tutor/`,
+          method: 'GET',
+          params: { text },
+        };
+      },
       providesTags: ['ObservedsTutor'],
       transformResponse: (res) => res.results,
     }),
