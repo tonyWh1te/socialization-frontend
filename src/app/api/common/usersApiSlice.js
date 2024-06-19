@@ -18,6 +18,18 @@ const usersApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Observeds'],
       transformResponse: (res) => res.results,
     }),
+    getObservedsByTutor: builder.query({
+      query: (params) => {
+        const { id, text } = params;
+        return {
+          url: `/users/${id}/get_observeds_by_tutor/`,
+          method: 'GET',
+          params: { text },
+        };
+      },
+      providesTags: ['ObservedsTutor'],
+      transformResponse: (res) => res.results,
+    }),
     getTutors: builder.query({
       query: (params) => ({
         url: '/users/get_tutors/',
@@ -33,6 +45,12 @@ const usersApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response) => response.result,
       providesTags: ['User'],
     }),
+    getSingleUser: builder.query({
+      query: (id) => ({
+        url: `/users/${id}/`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -41,7 +59,10 @@ export const {
   useLazyGetUsersQuery,
   useGetUsersQuery,
   useLazyGetObservedsQuery,
+  useGetObservedsQuery,
   useGetUserInfoQuery,
   useLazyGetUserInfoQuery,
   useLazyGetTutorsQuery,
+  useGetObservedsByTutorQuery,
+  useGetSingleUserQuery,
 } = usersApiSlice;

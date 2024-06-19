@@ -20,8 +20,8 @@
   .navContainer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     width: 778.2px;
+    gap: 10px;
     min-width: 778.2px;
     min-height: 106px;
     max-height: 106px;
@@ -29,9 +29,7 @@
     .navItem {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 179.55px;
-      height: 47px;
+      padding: 10px 40px;
       cursor: pointer;
     }
 

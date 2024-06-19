@@ -1,4 +1,4 @@
-import { toInitial } from './string.helper';
+import { toInitial } from '../../../utils/helpers';
 
 export const transformRolesToSelectOptions = (roles) =>
   Object.keys(roles).reduce((acc, role) => {

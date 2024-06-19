@@ -26,7 +26,10 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType, 
 
         const selectedObserved = observeds
           .filter(
-            ({ tests }) => tests.some(({ test }) => test.id === componentId),
+            ({ tests, games }) =>
+              (listType === 'tests' ? tests : games).some(
+                (entity) => entity[listType === 'tests' ? 'test' : 'game'].id === componentId,
+              ),
             // eslint-disable-next-line
           )
           .map((u) => u.id);
@@ -38,7 +41,7 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType, 
     };
 
     if (showModal) {
-      onObservedsRequest({ search: '' });
+      onObservedsRequest({ text: '' });
     }
   }, [showModal]);
 
@@ -80,9 +83,9 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType, 
     }
   };
 
-  const onSearch = (isModalShowed) => (query) => {
+  const onSearch = (isModalShowed) => async (query) => {
     if (isModalShowed) {
-      getObserveds({ search: query.trim() });
+      await getObserveds({ text: query.trim() });
     }
   };
 

@@ -1,9 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetTestsQuery, useGetObserverTestsQuery } from '../../api/testApiSlice';
-import { useGetGamesQuery, useGetObserverGamesQuery } from '../../api/gameApiSlice';
-import { setTestSearch, setSortValue } from '../../slice/testsSlice';
-import { selectTestSearchValue, selectSortValue, selectSelectedTest } from '../../slice/selectors';
+import { useGetTestsQuery } from '../../api/testApiSlice';
+import { useGetGamesQuery } from '../../api/gameApiSlice';
+import { useGetObserverGamesQuery } from '../../../../app/api/common/gameApiSlice';
+import { useGetObserverTestsQuery } from '../../../../app/api/common/testApiSlice';
+import {
+  setTestSearch,
+  setGameSearch,
+  setGamesSortValue,
+  setTestsSortValue,
+} from '../../slice/testsSlice';
+import {
+  selectTestSearchValue,
+  selectGameSearchValue,
+  selectSelectedTest,
+  selectGamesSortValue,
+  selectTestSortValue,
+} from '../../slice/selectors';
 
 import { Portal, FilteredList } from '../../../../components';
 import { Container, ButtonAddItemList } from '../../../../UI';
@@ -16,6 +29,32 @@ import AssignComponentModal from '../AssignComponentModal/AssignComponentModal';
 import { ROLES } from '../../../../utils/constants';
 import styles from './ComponentList.module.css';
 
+const gameSortList = [
+  {
+    label: 'По умолчанию',
+    value: 'id',
+  },
+  {
+    label: 'По имени (А-Я)',
+    value: 'name',
+  },
+];
+
+const testSortList = [
+  {
+    label: 'По умолчанию',
+    value: 'id',
+  },
+  {
+    label: 'По имени (А-Я)',
+    value: 'title',
+  },
+  {
+    label: 'По дате',
+    value: 'created_at',
+  },
+];
+
 const ComponentList = ({ currentUser, listType }) => {
   const { id, role } = currentUser;
 
@@ -23,8 +62,12 @@ const ComponentList = ({ currentUser, listType }) => {
   const [showAddGameModal, setShowAddGameModal] = useState(false);
   const [showAssignModal, setShowAssignModal] = useState(false);
 
-  const searchValue = useSelector(selectTestSearchValue);
-  const sortValue = useSelector(selectSortValue);
+  const testSearchValue = useSelector(selectTestSearchValue);
+  const testSortValue = useSelector(selectTestSortValue);
+
+  const gameSearchValue = useSelector(selectGameSearchValue);
+  const gamesSortValue = useSelector(selectGamesSortValue);
+
   const selectedTest = useSelector(selectSelectedTest);
 
   const useGetAdminQueryHook = listType === 'tests' ? useGetTestsQuery : useGetGamesQuery;
@@ -37,7 +80,10 @@ const ComponentList = ({ currentUser, listType }) => {
     isError,
     isFetching,
   } = useGetAdminQueryHook(
-    { search: searchValue.toLowerCase(), sort: sortValue },
+    {
+      search: listType === 'tests' ? testSearchValue.trim() : gameSearchValue.trim(),
+      sort: listType === 'tests' ? testSortValue : gamesSortValue,
+    },
     { skip: role === ROLES.observed.code },
   );
 
@@ -50,6 +96,19 @@ const ComponentList = ({ currentUser, listType }) => {
 
   const dispatch = useDispatch();
 
+  useEffect(
+    () => () => {
+      if (listType === 'tests') {
+        dispatch(setTestSearch(''));
+        dispatch(setTestsSortValue('id'));
+      } else {
+        dispatch(setGameSearch(''));
+        dispatch(setGamesSortValue('id'));
+      }
+    },
+    [],
+  );
+
   const toggleModal = (action) => () => {
     if (action === 'assign') {
       setShowAssignModal((prev) => !prev);
@@ -61,11 +120,19 @@ const ComponentList = ({ currentUser, listType }) => {
   };
 
   const onSearch = (query) => {
-    dispatch(setTestSearch(query));
+    if (listType === 'tests') {
+      dispatch(setTestSearch(query));
+    } else {
+      dispatch(setGameSearch(query));
+    }
   };
 
   const onSort = (sortProperty) => {
-    dispatch(setSortValue(sortProperty));
+    if (listType === 'tests') {
+      dispatch(setTestsSortValue(sortProperty));
+    } else {
+      dispatch(setGamesSortValue(sortProperty));
+    }
   };
 
   const onBtnAddClick = (type) => () => {
@@ -85,6 +152,7 @@ const ComponentList = ({ currentUser, listType }) => {
           items={components || observedComponents}
           onSearch={onSearch}
           onSort={onSort}
+          sortList={listType === 'tests' ? testSortList : gameSortList}
           isError={isError || isObservedComponentsError}
           isLoading={
             isLoading || isFetching || isObservedComponentsLoading || isObservedComponentsFetching
@@ -94,6 +162,7 @@ const ComponentList = ({ currentUser, listType }) => {
               return (
                 <TestListItem
                   test={item}
+                  userId={id}
                   toggleModal={toggleModal('assign')}
                 />
               );
@@ -109,7 +178,7 @@ const ComponentList = ({ currentUser, listType }) => {
             return null;
           }}
         >
-          {role !== ROLES.observed.code && (
+          {role !== ROLES.observed.code && role !== ROLES.tutor.code && (
             <ButtonAddItemList onClick={onBtnAddClick(listType)}>{addBtnText}</ButtonAddItemList>
           )}
         </FilteredList>
