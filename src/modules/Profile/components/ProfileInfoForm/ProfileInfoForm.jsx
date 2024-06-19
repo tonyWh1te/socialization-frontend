@@ -60,16 +60,24 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
         )}
 
         {user.role !== ROLES.observed.code && (
-          <UploadFile
-            fileRef={fileRef}
-            label="Изменить фото"
-            className={styles.upload}
-            onChange={onUpload(formikProps)}
-            inputProps={{
-              name: 'photo',
-              accept: 'image/png, image/jpeg, image/jpg',
-            }}
-          />
+          <div className={styles.leftButtonsContainer}>
+            <UploadFile
+              fileRef={fileRef}
+              label="Изменить фото"
+              className={styles.upload}
+              onChange={onUpload(formikProps)}
+              inputProps={{
+                name: 'photo',
+                accept: 'image/png, image/jpeg, image/jpg',
+              }}
+            />
+            <Button
+              className={styles.changePaswordButton}
+              onClick={onShowModal}
+            >
+              Сменить пароль
+            </Button>
+          </div>
         )}
       </div>
       <div className={styles.right}>
@@ -90,15 +98,6 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
           );
         })}
         <div className={styles.saveButtonWrapper}>
-          {user.role !== ROLES.observed.code && (
-            <Button
-              className={styles.saveButton}
-              onClick={onShowModal}
-            >
-              Смена пароля
-            </Button>
-          )}
-
           <Button
             className={styles.saveButton}
             type="submit"

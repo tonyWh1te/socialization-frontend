@@ -106,7 +106,14 @@ const Profile = () => {
               )}
             </Formik>
             <div className={styles.bottom}>
-              <Button onClick={onLogout}>Выйти</Button>
+              <div className={styles.logoutButtonContainer}>
+                <Button
+                  className={styles.logoutButton}
+                  onClick={onLogout}
+                >
+                  Выйти
+                </Button>
+              </div>
             </div>
           </div>
         </Container>
