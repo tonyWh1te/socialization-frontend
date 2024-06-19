@@ -41,7 +41,7 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType, 
     };
 
     if (showModal) {
-      onObservedsRequest({ search: '' });
+      onObservedsRequest({ text: '' });
     }
   }, [showModal]);
 
@@ -83,9 +83,9 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType, 
     }
   };
 
-  const onSearch = (isModalShowed) => (query) => {
+  const onSearch = (isModalShowed) => async (query) => {
     if (isModalShowed) {
-      getObserveds({ search: query.trim() });
+      await getObserveds({ text: query.trim().toLowerCase() });
     }
   };
 
