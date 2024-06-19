@@ -24,10 +24,11 @@ const gameApiSlice = apiSlice.injectEndpoints({
       query: (params) => {
         const { id } = params;
         return {
-          url: `/games/${id}/get_user_games/`,
+          url: `/games_list/${id}/get_obs_games/`,
         };
       },
-      transformResponse: (response) => response.result.games,
+      transformResponse: (response) => response.results,
+      providesTags: ['ObservedGames'],
     }),
     // Переместить игру в архив
     moveToArchiveGame: builder.mutation({
@@ -57,11 +58,11 @@ const gameApiSlice = apiSlice.injectEndpoints({
     // Назначить игру
     assignGame: builder.mutation({
       query: (data) => ({
-        url: '/games/appoint_game/',
+        url: '/games_list/appoint_game/',
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['Observeds'],
+      invalidatesTags: ['Observeds', 'ObservedGames'],
     }),
   }),
 });

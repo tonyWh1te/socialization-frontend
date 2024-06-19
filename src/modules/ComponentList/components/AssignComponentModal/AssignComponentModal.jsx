@@ -6,7 +6,7 @@ import { useAssignGameMutation } from '../../api/gameApiSlice';
 import AssignComponentLayout from '../AssignComponentLayout/AssignComponentLayout';
 import { Modal, ModalLayout } from '../../../../UI';
 
-const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }) => {
+const AssignComponentModal = ({ showModal, setShowModal, componentId, listType, component }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const [
@@ -26,7 +26,10 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
 
         const selectedObserved = observeds
           .filter(
-            ({ tests }) => tests.some(({ test }) => test.id === componentId),
+            ({ tests, games }) =>
+              (listType === 'tests' ? tests : games).some(
+                (entity) => entity[listType === 'tests' ? 'test' : 'game'].id === componentId,
+              ),
             // eslint-disable-next-line
           )
           .map((u) => u.id);
@@ -38,7 +41,7 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
     };
 
     if (showModal) {
-      onObservedsRequest({ search: '' });
+      onObservedsRequest({ text: '' });
     }
   }, [showModal]);
 
@@ -60,11 +63,19 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
     try {
       const unlinkUsers = users.filter((u) => !selectedUsers.includes(u.id)).map((u) => u.id);
 
-      await assignComponent({
-        test_id: componentId,
-        link: selectedUsers,
-        unlink: unlinkUsers,
-      }).unwrap();
+      if (listType === 'tests') {
+        await assignComponent({
+          test_id: componentId,
+          link: selectedUsers,
+          unlink: unlinkUsers,
+        }).unwrap();
+      } else if (listType === 'games') {
+        await assignComponent({
+          game_id: componentId,
+          link: selectedUsers,
+          unlink: unlinkUsers,
+        }).unwrap();
+      }
 
       toast.success('Успешно!');
     } catch (error) {
@@ -72,9 +83,9 @@ const AssignComponentModal = ({ showModal, setShowModal, componentId, listType }
     }
   };
 
-  const onSearch = (isModalShowed) => (query) => {
+  const onSearch = (isModalShowed) => async (query) => {
     if (isModalShowed) {
-      getObserveds({ search: query.trim() });
+      await getObserveds({ text: query.trim().toLowerCase() });
     }
   };
 
