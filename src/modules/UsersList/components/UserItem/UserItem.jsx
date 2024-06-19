@@ -6,7 +6,7 @@ import { selectCurrentUser } from '../../../Auth';
 import { ItemListWrapper } from '../../../../UI';
 import { userIconV2 } from '../../../../assets';
 import { ROLES } from '../../../../utils/constants';
-import { toInitial } from '../../utils/string.helper';
+import { toInitial } from '../../../../utils/helpers';
 import styles from './UserItem.module.css';
 
 const UserItem = ({ user }) => {

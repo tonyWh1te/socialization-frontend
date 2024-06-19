@@ -11,4 +11,5 @@ export const ROUTES = {
   PassingTest: '/tests/:id/pass',
   ResultTest: '/tests/:id/result',
   PlayingGame: '/games/:id/play',
+  MyObservers: '/my-observers',
 };

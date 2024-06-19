@@ -8,5 +8,18 @@ import EditTest from './EditTest/EditTest';
 import PassTest from './PassTest/PassTest';
 import PlayGame from './PlayGame/PlayGame';
 import ResultTest from './ResultTest/ResultTest';
+import Observers from './Observers/Observers';
 
-export { Home, AuthPage, Users, Games, Tests, Profile, EditTest, PassTest, PlayGame, ResultTest };
+export {
+  Home,
+  AuthPage,
+  Users,
+  Games,
+  Tests,
+  Profile,
+  EditTest,
+  PassTest,
+  PlayGame,
+  ResultTest,
+  Observers,
+};
