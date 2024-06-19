@@ -25,11 +25,14 @@ const GameWindow = ({ gameId, userId }) => {
 
   return (
     <div className={styles.wrapper}>
-      <iframe
-        className={styles.content}
-        title="GameWindow"
-        src={game.link}
-      />
+      <div className={styles.inner}>
+        <iframe
+          sandbox="allow-scripts allow-same-origin"
+          className={styles.content}
+          title="GameWindow"
+          src={game.link}
+        />
+      </div>
     </div>
   );
 };

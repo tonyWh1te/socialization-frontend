@@ -10,7 +10,7 @@ const PlayGame = () => {
   return (
     <GameWindow
       gameId={id}
-      userId={user.id}
+      userId={user?.id}
     />
   );
 };
