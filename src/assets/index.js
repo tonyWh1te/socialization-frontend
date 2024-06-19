@@ -10,6 +10,8 @@ import defaultGameIcon from './icons/default-game-icon.svg';
 import userIconV2Big from './icons/user-icon-v2-big.svg';
 import userIconV2 from './icons/user-icon-v2.svg';
 import addFileIcon from './icons/add-file-icon.svg';
+import burgerMenu from './icons/burger-menu.svg';
+import closeMenu from './icons/close-menu.svg';
 
 export {
   bg1Mobile,
@@ -24,4 +26,6 @@ export {
   defaultGameIcon,
   userIconV2Big,
   addFileIcon,
+  burgerMenu,
+  closeMenu,
 };
