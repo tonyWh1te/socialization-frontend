@@ -10,6 +10,7 @@ import {
   PassTest,
   PlayGame,
   ResultTest,
+  Observers,
 } from '../pages';
 import { RequireAuth } from '../components';
 import { PageLayout } from '../UI';
@@ -85,12 +86,16 @@ const Router = () => {
           />
         </Route>
 
-        <Route
-          element={<RequireAuth allowedRoles={[ROLES.administrator.code, ROLES.tutor.code]} />}
-        >
+        <Route element={<RequireAuth allowedRoles={[ROLES.administrator.code]} />}>
           <Route
             path={ROUTES.Users}
             element={<Users />}
+          />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={[ROLES.tutor.code]} />}>
+          <Route
+            path={ROUTES.MyObservers}
+            element={<Observers />}
           />
         </Route>
       </Route>

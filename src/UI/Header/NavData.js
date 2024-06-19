@@ -23,8 +23,8 @@ export const links = {
       path: '/',
     },
     {
-      title: 'Пользователи',
-      path: '/users',
+      title: 'Мои наблюдаемые',
+      path: '/my-observers',
     },
     {
       title: 'Игры',

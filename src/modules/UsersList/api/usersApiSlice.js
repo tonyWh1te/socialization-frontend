@@ -8,14 +8,14 @@ const usersApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'ObservedsTutor'],
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/users/${id}/`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'ObservedsTutor'],
     }),
   }),
 });
