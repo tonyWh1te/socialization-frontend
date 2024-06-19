@@ -24,7 +24,7 @@ const UsersList = () => {
   const [showModal, setShowModal] = useState(false);
 
   const { data, isLoading, isFetching, isError } = useGetUsersQuery({
-    search: searchValue.toLowerCase(),
+    search: searchValue.trim().toLowerCase(),
     ordering: sortValue,
   });
 

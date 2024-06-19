@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetTestsQuery, useGetObserverTestsQuery } from '../../api/testApiSlice';
 import { useGetGamesQuery, useGetObserverGamesQuery } from '../../api/gameApiSlice';
@@ -79,7 +79,10 @@ const ComponentList = ({ currentUser, listType }) => {
     isFetching,
   } = useGetAdminQueryHook(
     {
-      search: (listType === 'tests' ? testSearchValue : gameSearchValue).toLowerCase(),
+      search:
+        listType === 'tests'
+          ? testSearchValue.trim().toLowerCase()
+          : gameSearchValue.trim().toLowerCase(),
       sort: listType === 'tests' ? testSortValue : gamesSortValue,
     },
     { skip: role === ROLES.observed.code },
@@ -93,6 +96,19 @@ const ComponentList = ({ currentUser, listType }) => {
   } = useGetObserverQueryHook({ id }, { skip: role !== ROLES.observed.code });
 
   const dispatch = useDispatch();
+
+  useEffect(
+    () => () => {
+      if (listType === 'tests') {
+        dispatch(setTestSearch(''));
+        dispatch(setTestsSortValue('id'));
+      } else {
+        dispatch(setGameSearch(''));
+        dispatch(setGamesSortValue('id'));
+      }
+    },
+    [],
+  );
 
   const toggleModal = (action) => () => {
     if (action === 'assign') {
