@@ -4,7 +4,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   testSearch: '',
-  sortValue: 'id',
+  gameSearch: '',
+  gamesSortValue: 'id',
+  testsSortValue: 'id',
   selectedTest: null,
 };
 
@@ -16,17 +18,31 @@ const testsSlice = createSlice({
       state.testSearch = action.payload;
     },
 
-    setSortValue(state, action) {
-      state.sortValue = action.payload;
+    setTestsSortValue(state, action) {
+      state.testsSortValue = action.payload;
     },
 
     setSelectedTest(state, action) {
       state.selectedTest = action.payload;
+    },
+
+    setGameSearch(state, action) {
+      state.gameSearch = action.payload;
+    },
+
+    setGamesSortValue(state, action) {
+      state.gamesSortValue = action.payload;
     },
   },
 });
 
 const { actions, reducer } = testsSlice;
 
-export const { setTestSearch, setSortValue, setSelectedTest } = actions;
+export const {
+  setTestSearch,
+  setTestsSortValue,
+  setSelectedTest,
+  setGameSearch,
+  setGamesSortValue,
+} = actions;
 export default reducer;
