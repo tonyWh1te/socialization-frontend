@@ -28,6 +28,7 @@ const gameApiSlice = apiSlice.injectEndpoints({
         };
       },
       transformResponse: (response) => response.results,
+      providesTags: ['ObservedGames'],
     }),
     // Переместить игру в архив
     moveToArchiveGame: builder.mutation({
@@ -61,7 +62,7 @@ const gameApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['Observeds'],
+      invalidatesTags: ['Observeds', 'ObservedGames'],
     }),
   }),
 });
