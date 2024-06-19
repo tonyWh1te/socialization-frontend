@@ -11,6 +11,7 @@ export default {
       colors: {
         'dark-gray': '#5c5c5c',
         'main-yellow': '#FFE068',
+        'main-white': '#fff',
         'focus-blue': '#505cc9',
       },
       keyframes: {

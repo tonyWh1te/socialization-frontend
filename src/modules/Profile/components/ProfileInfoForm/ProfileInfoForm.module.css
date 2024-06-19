@@ -11,7 +11,7 @@
 }
 
 .saveButtonWrapper {
-  @apply text-center;
+  @apply flex items-center justify-center text-center;
 }
 
 .avatarWrapper {
@@ -58,7 +58,7 @@
   }
 
   .right {
-    @apply basis-2/3 border-l border-l-[#d0d8dd] py-4 pl-7;
+    @apply basis-2/3 py-4 pl-7;
   }
 
   .form {
@@ -67,5 +67,19 @@
 
   .saveButtonWrapper {
     @apply text-right;
+  }
+}
+
+.changePaswordButton {
+  @apply w-[160px] border-none bg-transparent p-1 shadow-none !important;
+}
+
+.leftButtonsContainer {
+  @apply mt-[40px] flex h-[130px] w-[250px] flex-col items-center justify-between;
+}
+
+@media (max-width: 640px) {
+  .left {
+    @apply flex flex-col items-center justify-center;
   }
 }
