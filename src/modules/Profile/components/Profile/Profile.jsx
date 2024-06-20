@@ -70,8 +70,6 @@ const Profile = () => {
     try {
       const res = await changeUserInfo({ id: user.id, data: newInfo }).unwrap();
 
-      console.log('res', res);
-
       if (!res.success) {
         throw new Error(res.errors[0]);
       }

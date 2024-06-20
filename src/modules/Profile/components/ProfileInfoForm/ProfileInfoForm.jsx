@@ -59,26 +59,24 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
           />
         )}
 
-        {user.role !== ROLES.observed.code && (
-          <div className={styles.leftButtonsContainer}>
-            <UploadFile
-              fileRef={fileRef}
-              label="Изменить фото"
-              className={styles.upload}
-              onChange={onUpload(formikProps)}
-              inputProps={{
-                name: 'photo',
-                accept: 'image/png, image/jpeg, image/jpg',
-              }}
-            />
-            <Button
-              className={styles.changePaswordButton}
-              onClick={onShowModal}
-            >
-              Сменить пароль
-            </Button>
-          </div>
-        )}
+        <div className={styles.leftButtonsContainer}>
+          <UploadFile
+            fileRef={fileRef}
+            label="Изменить фото"
+            className={styles.upload}
+            onChange={onUpload(formikProps)}
+            inputProps={{
+              name: 'photo',
+              accept: 'image/png, image/jpeg, image/jpg',
+            }}
+          />
+          <Button
+            className={styles.changePaswordButton}
+            onClick={onShowModal}
+          >
+            Сменить пароль
+          </Button>
+        </div>
       </div>
       <div className={styles.right}>
         {inputFields.map(({ name, label, type }) => {
@@ -93,7 +91,6 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
               label={label}
               name={name}
               type={type}
-              disabled={user.role === ROLES.observed.code}
             />
           );
         })}
@@ -101,7 +98,7 @@ const ProfileInfoForm = ({ formikProps, preview, onUpload, onShowModal, fileRef,
           <Button
             className={styles.saveButton}
             type="submit"
-            disabled={formikProps.isSubmitting || user.role === ROLES.observed.code}
+            disabled={formikProps.isSubmitting}
           >
             {submitBtnContent}
           </Button>

@@ -70,7 +70,7 @@ const UserItem = ({ user }) => {
               to={`/users/${id}`}
               className={styles.button}
             >
-              Профиль
+              Информация
             </Link>
             <button
               className={styles.delete}

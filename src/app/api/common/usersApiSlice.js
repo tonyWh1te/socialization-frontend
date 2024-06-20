@@ -37,6 +37,15 @@ const usersApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (res) => res.results,
     }),
+    appointObserveds: builder.mutation({
+      query: (data) => ({
+        url: '/users/appoint_observed/',
+        method: 'POST',
+        body: data,
+      }),
+      transformResponse: (res) => res.results,
+      invalidatesTags: ['ObservedsTutor', 'Observeds'],
+    }),
     getUserInfo: builder.query({
       query: () => ({
         url: '/users/me/',
@@ -65,4 +74,5 @@ export const {
   useLazyGetTutorsQuery,
   useGetObservedsByTutorQuery,
   useGetSingleUserQuery,
+  useAppointObservedsMutation,
 } = usersApiSlice;

@@ -4,6 +4,7 @@ import { SpinnerBig, ErrorMessage } from '../../UI';
 import { ROLES } from '../../utils/constants';
 import { ObservedTests } from '../../modules/ObservedTests';
 import { ObservedGames } from '../../modules/ObservedGames';
+import { ObservedListV2 } from '../../modules/ObservedListV2';
 
 const EntityProfile = () => {
   const { id } = useParams();
@@ -27,6 +28,7 @@ const EntityProfile = () => {
     <>
       {user.role === ROLES.observed.code && <ObservedTests userId={id} />}
       {user.role === ROLES.observed.code && <ObservedGames userId={id} />}
+      {user.role === ROLES.tutor.code && <ObservedListV2 userId={id} />}
     </>
   );
 };
