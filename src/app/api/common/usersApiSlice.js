@@ -20,11 +20,11 @@ const usersApiSlice = apiSlice.injectEndpoints({
     }),
     getObservedsByTutor: builder.query({
       query: (params) => {
-        const { id, text } = params;
+        const { id, text, ordering } = params;
         return {
           url: `/users/${id}/get_observeds_by_tutor/`,
           method: 'GET',
-          params: { text },
+          params: { text, ordering },
         };
       },
       providesTags: ['ObservedsTutor'],

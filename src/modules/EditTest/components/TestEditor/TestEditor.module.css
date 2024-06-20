@@ -11,9 +11,15 @@
 }
 
 .questionList {
-  @apply mb-5 flex w-full flex-col gap-3;
+  @apply mb-10 flex w-full flex-col gap-12;
 }
 
 .saveButton {
   @apply m-auto;
+}
+
+@media screen(sm) {
+  .questionList {
+    @apply mb-5 gap-3;
+  }
 }

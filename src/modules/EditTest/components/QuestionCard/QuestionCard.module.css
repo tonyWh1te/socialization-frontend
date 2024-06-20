@@ -7,5 +7,11 @@
 }
 
 .addButton {
-  @apply absolute -right-16 top-0;
+  @apply absolute right-0;
+}
+
+@media screen(sm) {
+  .addButton {
+    @apply -right-16 top-0;
+  }
 }

@@ -31,7 +31,7 @@
 }
 
 .button {
-  @apply self-end font-medium text-gray-500;
+  @apply self-center font-medium text-gray-500;
 }
 
 @media screen(sm) {
@@ -41,5 +41,9 @@
 
   .answerInputText {
     @apply mr-2;
+  }
+
+  .button {
+    @apply self-end;
   }
 }

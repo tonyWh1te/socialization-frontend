@@ -82,7 +82,7 @@ const QuestionEdit = ({ question, qIndex, arrayHelpers }) => {
           placeholder="Вопрос"
         />
         <FormikSelect
-          className="w-2/3"
+          className={styles.questionType}
           name={`questions[${qIndex}].type`}
           options={selectOptions}
           onChange={onChangeQuestionType(question, qIndex)}
